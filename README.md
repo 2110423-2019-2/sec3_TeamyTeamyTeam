@@ -3,8 +3,8 @@ Member
 
 Keerati Chuatanapinyo 6030053921 <br>
 Narin Trakarnvanish 6030320421 <br>
-Thanapun Yan-amporn 6031022621\n
-Pusana To-udomsab 6031048021\n
-Waritphon Sriphrom 6031052421\n
-Weerayut Thinchamlong 6031055321\n
-Setthanan Nakaphan 6031059921\n
+Thanapun Yan-amporn 6031022621 <br>
+Pusana To-udomsab 6031048021 <br>
+Waritphon Sriphrom 6031052421 <br>
+Weerayut Thinchamlong 6031055321 <br>
+Setthanan Nakaphan 6031059921 <br>
