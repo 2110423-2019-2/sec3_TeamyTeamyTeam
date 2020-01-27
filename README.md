@@ -1,8 +1,8 @@
 # sec3_TeamyTeamyTeam
 Member
 
-Keerati Chuatanapinyo 6030053921 \n
-Narin Trakarnvanish 6030320421\n
+Keerati Chuatanapinyo 6030053921 <br>
+Narin Trakarnvanish 6030320421 <br>
 Thanapun Yan-amporn 6031022621\n
 Pusana To-udomsab 6031048021\n
 Waritphon Sriphrom 6031052421\n
