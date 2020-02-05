@@ -1,10 +1,6 @@
-# sec3_TeamyTeamyTeam
-Member
+Basic Web with React Router
+---
 
-Keerati Chuatanapinyo 6030053921 <br>
-Narin Trakarnvanish 6030320421 <br>
-Thanapun Yan-amporn 6031022621 <br>
-Pusana To-udomsab 6031048021 <br>
-Waritphon Sriphrom 6031052421 <br>
-Weerayut Thinchamlong 6031055321 <br>
-Setthanan Nakaphan 6031059921 <br>
+![Screenshot](/screenshot.png)
+
+React Router Example : See more [ทำ Routing ให้กับ React ด้วย React Router v4](https://devahoy.com/blog/2018/02/basic-web-with-react-router-v4/)
