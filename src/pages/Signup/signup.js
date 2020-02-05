@@ -1,36 +1,76 @@
 import React, { Component } from "react";
+import { Radio } from "react-bootstrap";
 
 export default class SignUp extends Component {
     render() {
         return (
-            <form>
-                <h3>Sign Up</h3>
+            <section className=" container">
+                <div className="columns is-centered">
+                <div className="column is-half">
+                    <form>
+                    <div className="field">
+                        <label className="label">Fullname</label>
 
-                <div className="form-group">
-                    <label>First name</label>
-                    <input type="text" className="form-control" placeholder="First name" />
+                        <input className="input" type="Fullname" name="Fullname" />
+
+                    </div>
+
+                    <div className="field">
+                        <label className="label">Username</label>
+
+                        <input className="input" type="Username" name="Username" />
+
+                    </div>
+
+                    <div className="field">
+                        <label className="label">Password</label>
+
+                        <input className="input" type="Password" name="Password" />
+
+                    </div>
+
+                    <div className="field">
+                        <label className="label">Comfimed Password</label>
+
+                        <input className="input" type="Comfimed Password" name="Comfimed Password" />
+
+                    </div>
+
+                    <div className="field">
+                        <label className="label">Email</label>
+
+                        <input className="input" type="email" name="email" />
+
+                    </div>
+
+                    <div className="field">
+                        <label className="label">Telephone number.</label>
+
+                        <input className="input" type="Telephone number" name="Telephone number" />
+
+                    </div>
+
+                    <div className="field">
+                        <input type="radio" value="option1" checked={true} />
+                            <a> </a> I have read and agree to <a tabIndex >  Term of Service</a>
+                    </div>
+
+                    <div className="field is-grouped">
+
+                        
+                        <div className="control">
+                        <button className="button is-link">Submit</button>
+                        </div>
+                        <div className="control">
+                        <button className="button is-text">Cancel</button>
+                        </div>
+                        Already have registered <a href="/signup"> <a>  </a> Login? </a>
+                    </div>
+                    </form>
                 </div>
-
-                <div className="form-group">
-                    <label>Last name</label>
-                    <input type="text" className="form-control" placeholder="Last name" />
                 </div>
-
-                <div className="form-group">
-                    <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
-                </div>
-
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
-                </div>
-
-                <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
-                <p className="forgot-password text-right">
-                    Already registered <a href="/login">sign in?</a>
-                </p>
-            </form>
-        );
-    }
+            </section>
+    );
+  }
 }
+    

@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <div className="my-app">
         <nav className="navbar is-light"  aria-label="main navigation">
-          <div className="container">
+          <div className=" container">
             <div className="navbar-brand">
               <a className="navbar-item">
                 <img src={process.env.PUBLIC_URL + '/images/logo_engineer.jpg'} alt="DEVAHOY LOGO" width="112" height="28" />
