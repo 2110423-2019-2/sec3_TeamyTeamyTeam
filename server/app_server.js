@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const web_route = require("./route")
+const cors = require('cors')
+
 
 const app = express();
 //Top
@@ -21,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 
-
-app.use("/api/regis", web_route);
+app.use(cors())
+app.use("/", web_route);
 
 module.exports = app;

@@ -1,7 +1,13 @@
 import React, { Component } from "react";
-import { Radio } from "react-bootstrap";
 
-export default class SignUp extends Component {
+
+class SignUp extends Component {
+    
+    
+    
+    
+    
+    
     render() {
         return (
             <section className=" container">
@@ -56,10 +62,8 @@ export default class SignUp extends Component {
                     </div>
 
                     <div className="field is-grouped">
-
-                        
                         <div className="control">
-                        <button className="button is-link">Submit</button>
+                        <button className="button is-link" onClick={this.handleClick} >Submit</button>
                         </div>
                         <div className="control">
                         <button className="button is-text">Cancel</button>
@@ -74,3 +78,4 @@ export default class SignUp extends Component {
   }
 }
     
+export default SignUp ; 
