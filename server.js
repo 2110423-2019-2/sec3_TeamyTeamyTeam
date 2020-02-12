@@ -1,6 +1,5 @@
 const express = require('express')
-const app = require("./server/app_server");
-
+const app = require("./server/app_server")
 
 
 app.listen(9000, () => {

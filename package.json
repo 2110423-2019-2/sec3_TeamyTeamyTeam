@@ -1,39 +1,41 @@
 {
-  "name": "basic-web-with-react-router",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "mdbreact": "^4.25.1",
-    "mongoose": "^5.8.11",
-    "prettier": "^1.10.2",
-    "react": "^16.2.0",
-    "react-bootstrap": "^1.0.0-beta.16",
-    "react-dom": "^16.2.0",
-    "react-hooks-lib": "^0.1.0",
-    "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.1",
-    "react-search": "^2.1.1"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "prettier": "./node_modules/.bin/prettier --semi=false --single-quote=true --write src/*.js"
-  },
-  "devDependencies": {
-    "eslint": "^4.17.0",
-    "eslint-config-react-app": "^2.1.0",
-    "eslint-config-standard": "^11.0.0-beta.0",
-    "eslint-plugin-flowtype": "^2.42.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "standard": "^10.0.3"
-  }
+    "name": "basic-web-with-react-router",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "axios": "^0.19.2",
+        "body-parser": "^1.19.0",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "mdbreact": "^4.25.1",
+        "mongoose": "^5.8.11",
+        "prettier": "^1.10.2",
+        "react": "^16.2.0",
+        "react-bootstrap": "^1.0.0-beta.16",
+        "react-dom": "^16.2.0",
+        "react-hooks-lib": "^0.1.0",
+        "react-router-dom": "^4.2.2",
+        "react-scripts": "1.1.1",
+        "react-search": "^2.1.1"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject",
+        "prettier": "./node_modules/.bin/prettier --semi=false --single-quote=true --write src/*.js"
+    },
+    "devDependencies": {
+        "eslint": "^4.17.0",
+        "eslint-config-react-app": "^2.1.0",
+        "eslint-config-standard": "^11.0.0-beta.0",
+        "eslint-plugin-flowtype": "^2.42.0",
+        "eslint-plugin-import": "^2.20.1",
+        "eslint-plugin-jsx-a11y": "^6.0.3",
+        "eslint-plugin-node": "^5.2.1",
+        "eslint-plugin-promise": "^3.6.0",
+        "eslint-plugin-standard": "^3.0.1",
+        "standard": "^10.0.3"
+    },
+    "proxy": "http://localhost:9000"
 }
