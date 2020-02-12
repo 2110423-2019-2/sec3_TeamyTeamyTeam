@@ -2,13 +2,14 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
-const postsRoutes = require("./express_route/route");
+const userRoutes = require("./express_route/route");
 
 const app = express();
 //w2e3lrYEIuHewmb9
 mongoose
     .connect(
-        "mongodb+srv://max:w2e3lrYEIuHewmb9@cluster0-r60mt.mongodb.net/test?retryWrites=true&w=majority"
+        //"mongodb+srv://max:w2e3lrYEIuHewmb9@cluster0-r60mt.mongodb.net/test?retryWrites=true&w=majority"
+        "mongodb+srv://admin01:FwIS4yY0IL2gBBlN@cluster0-vkvxw.mongodb.net/test?retryWrites=true&w=majority"
     )
     .then(() => {
         console.log("Connected to database!");
@@ -16,6 +17,11 @@ mongoose
     .catch(() => {
         console.log("Connection failed!");
     });
+
+
+
+
+TestUser.save().then(() => console.log("compleate"));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -34,5 +40,5 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // });
 
 //app.use("/api/posts", postsRoutes);
-app.use("/api/posts", postsRoutes);
+app.use("/api", userRoutes);
 module.exports = app;
