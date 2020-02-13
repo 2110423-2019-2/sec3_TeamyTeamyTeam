@@ -28,13 +28,13 @@ class Home extends Component {
               <div class="row h-100 align-items-center">
                 <div class="col-12 text-center ">
                   <h1 class="font-weight-bold white-text">PHOMO matching system</h1>
-                  <p class="lead">A centralized platform to find and hire a photographer</p>
+                  <p class="lead">The best centralized platform to find and hire a photographer</p>
                   <div style={{marginTop:"5vh", marginBottom:"2vh"}}>
-                    <a href="/login" ><button className="btn btn-outline-light" style={{margin:"2vh"}}>Sign in</button></a>
-                    <a href="/signup"><button className="btn btn-outline-light" style={{margin:"2vh"}}>Sign up</button></a>
+                    <a href="/login" ><button className="btn btn-outline-dark" style={{margin:"2vh"}}>Sign in</button></a>
+                    <a href="/signup"><button className="btn btn-outline-dark" style={{margin:"2vh"}}>Sign up</button></a>
                   </div>
                   <div>
-                    <a href="/search">login as guest</a>
+                    <a href="/search">Login as guest</a>
                   </div>
                 </div>
               </div>

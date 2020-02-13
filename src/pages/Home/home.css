@@ -1,7 +1,7 @@
 .bg {
     height: 100vh;
     min-height: 500px;
-    background-image: url('https://mdbootstrap.com/img/Photos/Others/images/91.jpg');
+    background-image: url('/images/people.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
