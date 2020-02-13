@@ -28,11 +28,6 @@ export default class Navbar extends Component {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/portfolio">
-                Portfolio
-              </Link>
-            </li>
-            <li className="nav-item">
               <Link className="nav-link" to="/search">
                 Search
               </Link>
@@ -41,13 +36,13 @@ export default class Navbar extends Component {
 
           <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-              <Link to="/" className="nav-link">
+              <Link to="/login" className="nav-link">
                 Sign in
               </Link>
             </li>
             <span className="navbar-text">/</span>
             <li className="nav-item">
-              <Link to="/" className="nav-link">
+              <Link to="/signup" className="nav-link">
                 Sign up
               </Link>
             </li>

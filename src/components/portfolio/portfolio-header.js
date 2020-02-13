@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class PortfolioHeader extends Component {
   state = {};
@@ -24,9 +25,11 @@ class PortfolioHeader extends Component {
                     up the bulk of the card's content.
                   </span>
                   <form className="mt-3">
-                    <a href="/offer">
-                      <button className="btn btn-outline-light">Offer Job</button>
-                    </a>
+                    <Link to="../offer">
+                      <button className="btn btn-outline-light">
+                        Offer Job
+                      </button>
+                    </Link>
                   </form>
                 </div>
               </div>
