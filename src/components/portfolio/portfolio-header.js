@@ -24,7 +24,9 @@ class PortfolioHeader extends Component {
                     up the bulk of the card's content.
                   </span>
                   <form className="mt-3">
-                    <button className="btn btn-outline-light">Offer Job</button>
+                    <a href="/offer">
+                      <button className="btn btn-outline-light">Offer Job</button>
+                    </a>
                   </form>
                 </div>
               </div>

@@ -6,6 +6,7 @@ import Login from "../pages/Login/login";
 import SignUp from "../pages/Signup/signup";
 import Search from "../components/search/search";
 import Portfolio from "../components/portfolio/portfolio";
+import JobOffer from "../pages/JobOffer/offer";
 
 export default () => (
   <Switch>
@@ -14,5 +15,6 @@ export default () => (
     {<Route exact path="/signup" component={SignUp} /> }
     <Route exact path="/search" component={Search} />
     <Route exact path="/portfolio/:name" component={Portfolio} />
+    <Route exact path="/offer" component={JobOffer}/>
   </Switch>
 );
