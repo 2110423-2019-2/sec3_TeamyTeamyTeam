@@ -31,7 +31,16 @@ class JobOffer extends Component {
                     <div className="field">
                         <label className="label">Style</label>
 
-                        <input className="input" type="Password" name="Password" />
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Style
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <div class="dropdown-item">Portrait</div>
+                                <div class="dropdown-item">Wedding</div>
+                                <div class="dropdown-item">Graduation</div>
+                            </div>
+                        </div>
 
                     </div>
 
