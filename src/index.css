@@ -17,6 +17,13 @@ code {
   --input-padding-y: 1rem;
 }
 
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .form-search {
   width: 100%;
   margin: 0 auto;

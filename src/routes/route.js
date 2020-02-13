@@ -9,9 +9,9 @@ import Portfolio from "../components/portfolio/portfolio";
 
 export default () => (
   <Switch>
-    <Route exact path="/" component={Home} />
-    {/* <Route exact path="/login" component={Login} /> */}
-    {/* <Route exact path="/signup" component={SignUp} /> */}
+    <Route exact path="/home" component={Home} />
+    {<Route exact path="/login" component={Login} /> }
+    {<Route exact path="/signup" component={SignUp} /> }
     <Route exact path="/search" component={Search} />
     <Route exact path="/portfolio/:name" component={Portfolio} />
   </Switch>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import "./home.css"
 
 class Home extends Component {
   constructor(props) {
@@ -20,12 +21,28 @@ class Home extends Component {
   
   render   () {
     return (
-    <div className = "Home">
-       <header className="App-header">
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">{this.state.apiResponse}</p>
-    </div>   
+      <div className = "Home">
+        <div className="has-text-centered">
+          <div class="bg">
+            <div class="container h-100">
+              <div class="row h-100 align-items-center">
+                <div class="col-12 text-center ">
+                  <h1 class="font-weight-bold white-text">PHOMO matching system</h1>
+                  <p class="lead">A centralized platform to find and hire a photographer</p>
+                  <div style={{marginTop:"5vh", marginBottom:"2vh"}}>
+                    <a href="/login" ><button className="btn btn-outline-light" style={{margin:"2vh"}}>Sign in</button></a>
+                    <a href="/signup"><button className="btn btn-outline-light" style={{margin:"2vh"}}>Sign up</button></a>
+                  </div>
+                  <div>
+                    <a href="/search">login as guest</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p className="App-intro">{this.state.apiResponse}</p>
+        </div>
+      </div>
     );
   }
 }
