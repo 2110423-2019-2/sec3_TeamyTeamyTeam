@@ -1,41 +1,46 @@
 const express = require('express')
 const router = express.Router()
-const Schema = require('./Schema')
+const mongoose = require("mongoose");
+const portfolio = require('./schema/portfolio')
+const user = require('./schema/user')
 
-router.post("api/regis", (req, res, next) => {
-    const regis_post = new Schema({
-        name: req.body.name,
-        userName: req.body.username,
-        password: req.body.password,
+const ok = 200;
+const created = 201;
+
+router.post("/user", (req, res, next) => {
+    const user_post = new user({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         email: req.body.email,
+        username: req.body.username,
+        password: req.body.password,
+        nationalID: req.body.nationalID,
+        gender: req.body.gender,
+        birthDate: req.body.birthDate,
+        isPhotographer: req.body.isPhotographer,
+        phoneNo: req.body.phoneNo,
+        introduction: req.body.introduction,
+        profileImage: req.body.profileImage,
+        portfolioID: req.body.portfolioID,
+        avgRating: req.body.avgRating,
         authorize: false
     });
-    regis_post.save();
-    console.log(regis_post);
-    res.status(201).json({
+    user_post.save();
+    console.log(user_post);
+    res.status(created).json({
         message: "Post added successful"
     });
 });
 
-router.get("api/regis", (req, res, next) => {
-    Schema.find().then(documents => {
-        res.status(200).json({
+router.get("/user/:username.:password", (req, res, next) => {
+    user.find({username: req.params.username, password: req.params.password}).then(documents => {
+        res.status(ok).json({
             message: "Registor fetched successfully!",
-            posts: documents
+            data: documents
         });
         console.log(documents)
     });
 });
 
-
-router.get("", (req, res, next) => {
-    Schema.find().then(documents => {
-        res.status(200).json({
-            message: "Posts fetched successfully!",
-            posts: documents
-        });
-        console.log(documents)
-    });
-});
 
 module.exports = router;

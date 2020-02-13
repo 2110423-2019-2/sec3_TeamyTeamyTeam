@@ -14,7 +14,7 @@ var userSchema = new Schema({
     isPhotographer: {type: String, required: true},
     phoneNo: {type: String, required: true},
     introduction: {type: String, required: false},
-    profileImage: {type: String, required: false},
+    profileImage: {type: String, required: true},
     portfolioID: {type: String, required: false},
     avgRating: {type: double, required: false} //if it is -1 mean no avilable rating point
 })
