@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 
-class SignUp extends Component {
+class JobOffer extends Component {
     
     
     
@@ -15,42 +15,51 @@ class SignUp extends Component {
                 <div className="column is-half">
                     <form>
                     <div className="field">
-                        <label className="label">Fullname</label>
+                        <label className="label">Job title</label>
 
                         <input className="input" type="Fullname" name="Fullname" />
 
                     </div>
 
                     <div className="field">
-                        <label className="label">Username</label>
+                        <label className="label">Employer's name</label>
 
                         <input className="input" type="Username" name="Username" />
 
                     </div>
 
                     <div className="field">
-                        <label className="label">Password</label>
+                        <label className="label">Style</label>
 
-                        <input className="input" type="Password" name="Password" />
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Style
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <div class="dropdown-item">Portrait</div>
+                                <div class="dropdown-item">Wedding</div>
+                                <div class="dropdown-item">Graduation</div>
+                            </div>
+                        </div>
 
                     </div>
 
                     <div className="field">
-                        <label className="label">Comfimed Password</label>
+                        <label className="label">Date</label>
 
                         <input className="input" type="Comfimed Password" name="Comfimed Password" />
 
                     </div>
 
                     <div className="field">
-                        <label className="label">Email</label>
+                        <label className="label">Time</label>
 
                         <input className="input" type="email" name="email" />
 
                     </div>
 
                     <div className="field">
-                        <label className="label">Telephone number.</label>
+                        <label className="label">Location</label>
 
                         <input className="input" type="Telephone number" name="Telephone number" />
 
@@ -68,7 +77,6 @@ class SignUp extends Component {
                         <div className="control">
                         <button className="button is-text">Cancel</button>
                         </div>
-                        Already have registered <a href="/signup"> <a>  </a> Login? </a>
                     </div>
                     </form>
                 </div>
@@ -78,4 +86,4 @@ class SignUp extends Component {
   }
 }
     
-export default SignUp ; 
+export default JobOffer ; 

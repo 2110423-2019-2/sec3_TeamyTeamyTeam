@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 class LoginForm extends React.Component {
   render() {
@@ -34,8 +34,8 @@ class LoginForm extends React.Component {
           </div>
         </div>
       </section>
-    )
+    );
   }
 }
 
-export default LoginForm
+export default LoginForm;
