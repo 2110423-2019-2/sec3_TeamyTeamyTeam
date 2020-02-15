@@ -1,16 +1,17 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+/* eslint-disable jsx-a11y/href-no-hash */
+import React from 'react'
+import { withRouter } from 'react-router-dom'
 
-class ScrollToTop extends Component {
+class ScrollToTop extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
-      window.scrollTo(0, 0);
+      window.scrollTo(0, 0)
     }
   }
 
   render() {
-    return null;
+    return null
   }
 }
 
-export default withRouter(ScrollToTop);
+export default withRouter(ScrollToTop)
