@@ -4,8 +4,8 @@ const mongoose = require("mongoose");
 const portfolio = require('./schema/portfolio')
 const user = require('./schema/user')
 
-const ok = 200;
-const created = 201;
+const status_ok = 200;
+const status_created = 201;
 
 router.post("/user", (req, res, next) => {
     const user_post = new user({
@@ -27,14 +27,14 @@ router.post("/user", (req, res, next) => {
     });
     user_post.save();
     console.log(user_post);
-    res.status(created).json({
+    res.status(status_created).json({
         message: "Post added successful"
     });
 });
 
 router.get("/user/:username.:password", (req, res, next) => {
-    user.find({username: req.params.username, password: req.params.password}).then(documents => {
-        res.status(ok).json({
+    user.find({ username: req.params.username, password: req.params.password }).then(documents => {
+        res.status(status_ok).json({
             message: "Registor fetched successfully!",
             data: documents
         });

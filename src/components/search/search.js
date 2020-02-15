@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import SearchResultCard from "./search-result-card";
 
 export default class Search extends Component {

@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const web_route = require("./route")
 const cors = require('cors')
 
-const routes = require("./express_route/route");
+const routes = require("./route");
 
 
 const app = express();
@@ -26,7 +26,7 @@ mongoose
 
 
 
-TestUser.save().then(() => console.log("compleate"));
+//TestUser.save().then(() => console.log("compleate"));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
