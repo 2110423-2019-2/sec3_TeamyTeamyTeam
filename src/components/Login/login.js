@@ -9,6 +9,7 @@ class LoginForm extends React.Component {
     // eslint-disable-next-line react/no-direct-mutation-state
     // state ของตัว ค่าที่รับจาก Firebase uid เป็น unique id ที่ ใช้ในการทำงานร่วมกับ Firebase และเป็น state ที่เราจะเกิดไว้
     this.state = {
+      displayErrors: false,
       email: "",
       password: "",
       currentUser: null,
@@ -27,8 +28,7 @@ class LoginForm extends React.Component {
   };
   // ทำการส่งตัวของ การ crete Signup ไปให้กับตัวของ Firebase และ Firebase จะเป็นผู้จัดการที่เหลือให้
   onSubmit = e => {
-    e.preventDefault();
-
+    this.setState({ displayErrors: false });
     const { email, password } = this.state;
     auth
       .signInWithEmailAndPassword(email, password)
@@ -112,7 +112,6 @@ class LoginForm extends React.Component {
                 </div>
               </div>
               {message ? <p className="help is-danger">{message}</p> : null}
-
               <button className="btn btn-outline-primary">Submit</button>
               <button className="btn btn-outline-secondary mx-3">Cancel</button>
               <p>
@@ -122,7 +121,6 @@ class LoginForm extends React.Component {
           </div>
         </div>
         <h3>
-          {" "}
           Login test id: yolo@example.com
           <li> Password : 123456 </li>
         </h3>

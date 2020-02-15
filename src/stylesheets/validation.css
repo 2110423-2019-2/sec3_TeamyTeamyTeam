@@ -1,0 +1,7 @@
+.displayErrors input:invalid {
+  border-color: red;
+}
+
+.notChecked {
+  color: red;
+}

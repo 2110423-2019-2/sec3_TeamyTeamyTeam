@@ -1,21 +1,24 @@
 import React, { Component } from "react";
 import auth from "../Login/Firebase/index";
+import "../../stylesheets/validation.css";
 class SignUp extends Component {
   constructor() {
     super();
-
+    this.onSubmit = this.onSubmit.bind(this);
     // eslint-disable-next-line react/no-direct-mutation-state
     // state ของตัว ค่าที่รับจาก Firebase uid เป็น unique id ที่ ใช้ในการทำงานร่วมกับ Firebase และเป็น state ที่เราจะเกิดไว้
     this.state = {
       isChecked: false,
+      displayErrors: false,
       email: "",
       password: "",
+      confirmedPassword: "",
       currentUser: null,
       message: ""
     };
   }
 
-  onCheck = e => {
+  onCheck = () => {
     this.setState({ isChecked: !this.state.isChecked });
   };
 
@@ -32,18 +35,19 @@ class SignUp extends Component {
   // ทำการส่งตัวของ การ Login ไปให้กับตัวของ Firebase และ Firebase จะเป็นผู้จัดการที่เหลือให้
   onSubmit = e => {
     e.preventDefault();
-
-    if (this.state.isChecked) {
-      const { email, password } = this.state;
-      auth
-        .createUserWithEmailAndPassword(email, password)
-        .catch(function(error) {
-          // Handle Errors here.
-          this.setState({
-            message: error.message
-          });
-        });
+    if (!e.target.checkValidity()) {
+      this.setState({ displayErrors: true });
+      return;
     }
+    this.setState({ displayErrors: false });
+    console.log("Success!");
+    // const { email, password } = this.state;
+    // auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
+    //   // Handle Errors here.
+    //   this.setState({
+    //     message: error.message
+    //   });
+    // });
   };
   componentDidMount() {
     auth.onAuthStateChanged(user => {
@@ -59,7 +63,11 @@ class SignUp extends Component {
       <section className="section container">
         <div className="columns is-centered">
           <div className="column is-half">
-            <form onSubmit={this.onSubmit}>
+            <form
+              onSubmit={this.onSubmit}
+              noValidate
+              className={this.state.displayErrors ? "displayErrors" : ""}
+            >
               <div className="form-group">
                 <label>First name</label>
 
@@ -100,7 +108,7 @@ class SignUp extends Component {
                 <label>Password</label>
 
                 <input
-                  className="input"
+                  className="form-control"
                   type="password"
                   name="password"
                   onChange={this.onChange}
@@ -129,19 +137,29 @@ class SignUp extends Component {
                   name="telNo"
                   onChange={this.onChange}
                   required
+                  pattern="\d+"
                 />
               </div>
 
-              <div className="form-group">
+              <div className="form-group form-check">
                 <input
-                  type="checkbox"
+                  className="form-check-input"
                   checked={this.state.isChecked}
                   onChange={this.onCheck}
+                  type="checkbox"
                   name="isChecked"
                   required
                 />
-                {} I have read and agree to
-                <a> Term of Service</a>
+                <lable
+                  className={
+                    this.state.isChecked
+                      ? "form-check-label"
+                      : "form-check-label notChecked"
+                  }
+                >
+                  I have read and agree to {}
+                  <a href="/">Term of Service</a>
+                </lable>
               </div>
               <button className="btn btn-outline-primary">Submit</button>
               <button className="btn btn-outline-secondary mx-3">Cancel</button>
