@@ -2,24 +2,35 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 class PortfolioHeader extends Component {
-  state = {};
   render() {
+    const { name, profilePic, headerCoverImage } = this.props;
+    const headerCoverImageCSS = "url(" + headerCoverImage + ")";
     return (
-      <header className="header">
+      <header
+        className="header"
+        style={{
+          background:
+            "linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), " +
+            headerCoverImageCSS,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat"
+        }}
+      >
         <div className="container h-100">
           <div className="row h-100 align-items-center">
             <div className="col-10 mx-auto">
-              <div className="row">
+              <div className="row" style={{ marginTop: "-54px" }}>
                 <div className="col-md">
                   <img
                     className="img-fluid"
                     width="400px"
-                    src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"
-                    alt="Card image cap"
+                    src={profilePic}
+                    alt={name}
                   />
                 </div>
                 <div className="col-md">
-                  <h1 className="font-weight-light">{this.props.name}</h1>
+                  <h1 className="font-weight-light">{name}</h1>
                   <span className="">
                     Some quick example text to build on the card title and make
                     up the bulk of the card's content.
@@ -27,7 +38,7 @@ class PortfolioHeader extends Component {
                   <form className="mt-3">
                     <Link to="../offer">
                       <button className="btn btn-outline-light">
-                        Offer Job
+                        Offer {name} Job
                       </button>
                     </Link>
                   </form>

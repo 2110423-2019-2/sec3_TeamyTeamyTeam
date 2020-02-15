@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default class Navbar extends Component {
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark static-top">
         <Link className="navbar-brand" style={{ minHeight: "0" }} to="#">
           PHOMO
         </Link>
@@ -40,7 +40,7 @@ export default class Navbar extends Component {
                 Sign in
               </Link>
             </li>
-            <span className="navbar-text">/</span>
+            <span className="navbar-text d-none d-lg-block">/</span>
             <li className="nav-item">
               <Link to="/signup" className="nav-link">
                 Sign up

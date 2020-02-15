@@ -6,40 +6,52 @@ export default class Search extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onChangeKeyword = this.onChangeKeyword.bind(this);
+    this.state = {
+      searchResult: [],
+      inputKeyword: "", //inputKeyword and keyword are for a Category text display purpose
+      keyword: "",
+      isSubmit: false //Check if is user clicked on the submit button for a Category text display purpose
+    };
   }
 
-  state = {
-    searchResult: []
-  };
+  onChangeKeyword(e) {
+    this.setState({ inputKeyword: e.target.value });
+  }
 
-  getResult(keyword) {
+  getResult() {
+    //This function is where Back-end operates e.g. fetching photographer data from server
     let searchResult = [];
-    for (let i = 0; i < 5; i++) {
+    //Use this.state.keyword to query correct photographers
+    for (let i = 0; i < 10; i++) {
       searchResult.push({
         id: i,
         name: i,
-        tag: keyword
+        tag: "Portrait" //Edit this part for data to conform with correct data in the server e.g. name, id, profile pic
       });
     }
-    this.photographerFound();
+    this.setState({ isSubmit: true });
     this.setState({ searchResult });
   }
 
   handleSubmit(e) {
+    //Operate when we click on submit button to get the search keyword
     e.preventDefault();
-    let keyword = document.getElementById("inputSearch").value;
-    if (keyword !== "") {
-      this.getResult(keyword);
+    if (this.state.inputKeyword !== "") {
+      this.setState({ keyword: this.state.inputKeyword });
+      this.getResult();
     }
   }
 
-  photographerFound() {
-    return this.state.searchResult.length > 0
-      ? "Found " + this.state.searchResult.length + " Photographers"
-      : "";
-  }
-
   render() {
+    let numberOfResultText =
+      this.state.searchResult.length > 0
+        ? "Found " +
+          this.state.searchResult.length +
+          " Photographer in " +
+          this.state.keyword +
+          " Category"
+        : "There are no photographer in " + this.state.keyword + " category.";
     return (
       <div className="container my-5">
         <form method="post">
@@ -51,6 +63,8 @@ export default class Search extends Component {
               aria-label="Seach photographers"
               aria-describedby="basic-addon2"
               id="inputSearch"
+              value={this.state.inputKeyword}
+              onChange={this.onChangeKeyword}
             />
             <div className="input-group-append">
               <button
@@ -63,28 +77,17 @@ export default class Search extends Component {
             </div>
           </div>
         </form>
-        {/* <form method="post" className="form-search">
-          <div className="form-label-group form-row">
-            <input
-              type="text"
-              id="inputSearch"
-              className="form-control col-md-10"
-              placeholder="Search"
-              required
-            />
-            <label htmlFor="inputSearch" className="col-md-10">
-              Search
-            </label>
-            <button
-              type="submit"
-              className="btn btn-outline-dark col-md-2"
-              onClick={this.handleSubmit}
-            >
-              Submit
-            </button>
-          </div>
-        </form> */}
-        <p className="lead text-center mb-4">{this.photographerFound}</p>
+        <p
+          className="lead text-center mb-3"
+          style={{
+            visibility:
+              this.state.searchResult.length >= 0 && this.state.isSubmit
+                ? "visible"
+                : "hidden"
+          }}
+        >
+          {numberOfResultText}
+        </p>
         {/* Results show here */}
         <div className="row">
           {this.state.searchResult.map(card => (
