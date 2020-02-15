@@ -1,125 +1,134 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
-import React from 'react'
-import auth from './Firebase/index'
-import Home from '../home'
+import React from "react";
+import auth from "./Firebase/index";
+import Home from "../home";
 class LoginForm extends React.Component {
-
   constructor(props) {
-    super(props)
+    super(props);
 
     // eslint-disable-next-line react/no-direct-mutation-state
     // state ของตัว ค่าที่รับจาก Firebase uid เป็น unique id ที่ ใช้ในการทำงานร่วมกับ Firebase และเป็น state ที่เราจะเกิดไว้
     this.state = {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       currentUser: null,
-      uid: '',
-      message: ''
-    }
+      uid: "",
+      message: ""
+    };
   }
 
-  onChange = e => { //ตรวจค่าของ name ใน username และ set ค่าตามไปเรื่อยๆ 
-    const { name, value } = e.target
+  onChange = e => {
+    //ตรวจค่าของ name ใน username และ set ค่าตามไปเรื่อยๆ
+    const { name, value } = e.target;
 
     this.setState({
       [name]: value
-    })
-  }
+    });
+  };
   // ทำการส่งตัวของ การ crete Signup ไปให้กับตัวของ Firebase และ Firebase จะเป็นผู้จัดการที่เหลือให้
   onSubmit = e => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const { email, password } = this.state
-    auth.signInWithEmailAndPassword(email, password)
+    const { email, password } = this.state;
+    auth
+      .signInWithEmailAndPassword(email, password)
       .then(res => {
         this.setState({
           currentUser: res.user,
           uid: res.user.uid
-        })
+        });
         //console.log(res.user.uid)
       })
       .catch(error => {
         this.setState({
           message: error.message
-        })
-      })
-  }
+        });
+      });
+  };
 
-  logout = e => { // จัดการกับการทำงานของ login out 
-    e.preventDefault()
+  logout = e => {
+    // จัดการกับการทำงานของ login out
+    e.preventDefault();
     auth.signOut().then(response => {
       this.setState({
         currentUser: null,
-        uid: ''
-      })
-    })
-  }
+        uid: ""
+      });
+    });
+  };
 
   componentDidMount() {
     auth.onAuthStateChanged(user => {
       if (user) {
         this.setState({
           currentUser: user
-        })
+        });
       }
-    })
+    });
   }
 
   render() {
-    const { message, currentUser, uid } = this.state
+    const { message, currentUser, uid } = this.state;
     //ถ้ามีการ login สำเร็จเราก็จะไปที่หน้่า Logout
-    if (currentUser) { 
+    if (currentUser) {
       return (
         //อันนี้จะเป็นส่วนที่ เราอยากจะส่ง state ไปให้กับ Home ให้ Home อัพเดทค่า และใช้ state นี้ในการทำการทำงานต่อ ผ่าน UID ได้
-        <div>   
+        <div>
           <h1>
             <p>Hello {currentUser.email}</p>
-            <button onClick={this.logout}>Logout</button>    
+            <button onClick={this.logout}>Logout</button>
           </h1>
-
-          <Home tranfered_uid = {uid} />>   //บอกว่าเราจะส่งหน้า render ของ Home ไป (อันนี้เรายังไม่ได้แก้ให้ Code มันทำวานได้ แค่ให้เห็น state
-
+          <Home tranfered_uid={uid} />
+          {/* บอกว่าเราจะส่งหน้า render ของ Home ไป(อันนี้เรายังไม่ได้แก้ให้ Code มันทำวานได้ แค่ให้เห็น state */}
         </div>
-      )
+      );
     }
     return (
       <section className="section container">
         <div className="columns is-centered">
           <div className="column is-half">
-            <form onSubmit = {this.onSubmit}>
-              <div className="field">
-                <label className="label">Email</label>
+            <form onSubmit={this.onSubmit}>
+              <div className="form-group">
+                <label>Email</label>
                 <div className="control">
-                  <input className="input" type="email" name="email" onChange={this.onChange} />
+                  <input
+                    className="form-control"
+                    type="email"
+                    name="email"
+                    onChange={this.onChange}
+                  />
                 </div>
               </div>
 
-              <div className="field">
-                <label className="label">Password</label>
+              <div className="form-group">
+                <label>Password</label>
                 <div className="control">
-                  <input className="input" type="password" name="password" onChange={this.onChange} />
+                  <input
+                    className="form-control"
+                    type="password"
+                    name="password"
+                    onChange={this.onChange}
+                  />
                 </div>
               </div>
               {message ? <p className="help is-danger">{message}</p> : null}
 
-              <div className="field is-grouped">
-                <div className="control">
-                  <button className="button is-link">Submit</button>
-                </div>
-                <div className="control">
-                  <button className="button is-text">Cancel</button>
-                  Already registered <a href="/signup">sign up?</a>
-                </div>
-              </div>
+              <button className="btn btn-outline-primary">Submit</button>
+              <button className="btn btn-outline-secondary mx-3">Cancel</button>
+              <p>
+                Have any account yet? <a href="/signup">Sign up</a>
+              </p>
             </form>
           </div>
         </div>
-        <h3> Login test id: yolo@example.com 
-            <li> Password : 123456 </li>
+        <h3>
+          {" "}
+          Login test id: yolo@example.com
+          <li> Password : 123456 </li>
         </h3>
       </section>
     );
   }
 }
 
-export default LoginForm
+export default LoginForm;
