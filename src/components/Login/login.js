@@ -99,7 +99,6 @@ class LoginForm extends React.Component {
                   />
                 </div>
               </div>
-
               <div className="form-group">
                 <label>Password</label>
                 <div className="control">
@@ -112,8 +111,9 @@ class LoginForm extends React.Component {
                 </div>
               </div>
               {message ? <p className="help is-danger">{message}</p> : null}
-              <button className="btn btn-outline-primary">Submit</button>
-              <button className="btn btn-outline-secondary mx-3">Cancel</button>
+              <input type="submit" className="btn btn-outline-primary" />
+              <input type="reset" className="btn btn-outline-secondary mx-3" />
+              Cancel
               <p>
                 Have any account yet? <a href="/signup">Sign up</a>
               </p>

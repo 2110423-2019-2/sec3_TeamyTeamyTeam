@@ -161,8 +161,8 @@ class SignUp extends Component {
                   <a href="/">Term of Service</a>
                 </lable>
               </div>
-              <button className="btn btn-outline-primary">Submit</button>
-              <button className="btn btn-outline-secondary mx-3">Cancel</button>
+              <input type="submit" className="btn btn-outline-primary" />
+              <input type="reset" className="btn btn-outline-secondary mx-3" />
               <p>
                 Already registered? <a href="/login">Sign in</a>
               </p>
