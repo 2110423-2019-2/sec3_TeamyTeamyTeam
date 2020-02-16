@@ -1,6 +1,6 @@
 Basic Web with React Router
 ---
 
-![Screenshot](/screenshot.png)
+![Screenshot](/public/images/autumn.jpg)
 
 
