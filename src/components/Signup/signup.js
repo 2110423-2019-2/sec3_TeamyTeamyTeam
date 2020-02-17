@@ -1,27 +1,30 @@
 import React, { Component } from "react";
 import auth from "../Login/Firebase/index";
 import "../../stylesheets/validation.css";
+import axios from 'axios';
+import { Redirect } from 'react-router';
+
 class SignUp extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.onSubmit = this.onSubmit.bind(this);
     // eslint-disable-next-line react/no-direct-mutation-state
     // state ของตัว ค่าที่รับจาก Firebase uid เป็น unique id ที่ ใช้ในการทำงานร่วมกับ Firebase และเป็น state ที่เราจะเกิดไว้
     this.state = {
-      isChecked: false,
-      displayErrors: false,
+      firstName: "",
+      lastName: "",
       email: "",
       password: "",
       confirmedPassword: "",
-      currentUser: null,
-      message: ""
+      telNo: "",
+      redirect: false
     };
   }
 
   onCheck = () => {
     this.setState({ isChecked: !this.state.isChecked });
   };
-
+  
   onChange = e => {
     //ตรวจค่าของ name ใน Onchange และ set ค่าตามไปเรื่อยๆ
     const { name, value } = e.target;
@@ -33,7 +36,7 @@ class SignUp extends Component {
     // console.log(this.state);
   };
   // ทำการส่งตัวของ การ Login ไปให้กับตัวของ Firebase และ Firebase จะเป็นผู้จัดการที่เหลือให้
-  onSubmit = e => {
+  /*onSubmit = e => {
     e.preventDefault();
     if (!e.target.checkValidity()) {
       this.setState({ displayErrors: true });
@@ -57,8 +60,41 @@ class SignUp extends Component {
         });
       }
     });
-  }
+  }*/
+
+onSubmit = e =>{
+  axios
+    .post("http://localhost:9000/api/user",{
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      email: this.state.email,
+      username: this.state.email,
+      password: this.state.password,
+      nationalID: "-",
+      gender: "-",
+      birthDate: "2000-01-01",
+      isPhotographer: false,
+      phoneNo: this.state.telNo,
+      introduction: "-",
+      profileImage: "-",
+      portfolioID: "-",
+      avgRating: -1,
+    })
+    .then(res => {
+      console.log(res);
+      this.setState({redirect: true});
+    })
+    .catch(err => {
+      console.error(err)
+    });
+    e.preventDefault();
+
+}
+
   render() {
+    if(this.state.redirect){
+      return <Redirect push to="/home" />;
+    }
     return (
       <section className="section container">
         <div className="columns is-centered">

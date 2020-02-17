@@ -7,6 +7,14 @@ const user = require('./schema/user')
 const status_ok = 200;
 const status_created = 201;
 
+
+router.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
+
+
 router.post("/user", (req, res, next) => {
     const user_post = new user({
         firstName: req.body.firstName,
@@ -32,11 +40,12 @@ router.post("/user", (req, res, next) => {
     });
 });
 
-router.get("/user/:username.:password", (req, res, next) => {
-    user.find({ username: req.params.username, password: req.params.password }).then(documents => {
+router.get("/user/:email.:password", (req, res, next) => {
+    user.find({ email: req.params.email, password: req.params.password }).then(documents => {
+        documents[0].password = "*****"
         res.status(status_ok).json({
             message: "Registor fetched successfully!",
-            data: documents
+            data: documents 
         });
         console.log(documents)
     });
