@@ -8,12 +8,34 @@ import ScrollToTop from "./components/scrollToTop";
 import Navbar from "./components/navbar";
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isLogin: false,
+      email: "",
+      password: ""
+    }
+  }
+  login = (username, uid) => {
+    this.setState({
+      isLogin: true,
+      email: username,
+      password: uid
+    })
+  }
+  logout = () => {
+    this.setState({
+      isLogin: false,
+      email: "",
+      password: ""
+    })
+  }
   render() {
     return (
       <div>
-        <Navbar />
+        <Navbar appState = {this.state} login = {this.login.bind(this)} logout = {this.logout.bind(this)}/>
         <ScrollToTop />
-        <Routing />
+        <Routing appState = {this.state} login = {this.login.bind(this)} logout = {this.logout.bind(this)}/>
       </div>
     );
   }

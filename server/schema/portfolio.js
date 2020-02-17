@@ -4,8 +4,10 @@ var Schema = mongoose.Schema;
 
 var portfolioSchema = new Schema({
     portfolioName: {type: String, required: true},
-    ownerID: {type: mongoose.Types.ObjectId, required: true},
-    tags: {typr: [String]}
+    email: {type: String, required: true},
+    tags: {type: [String]},
+    minBath: Number,
+    maxBath: Number
 })
 
 var Portfolio = mongoose.model('portfolio',portfolioSchema);

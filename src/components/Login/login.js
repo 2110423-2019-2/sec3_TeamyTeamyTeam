@@ -2,6 +2,8 @@
 import React from "react";
 import auth from "./Firebase/index";
 import Home from "../home";
+import axios from 'axios';
+import { Redirect } from 'react-router';
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +16,8 @@ class LoginForm extends React.Component {
       password: "",
       currentUser: null,
       uid: "",
-      message: ""
+      message: "",
+      redirect: false
     };
   }
 
@@ -26,62 +29,26 @@ class LoginForm extends React.Component {
       [name]: value
     });
   };
-  // ทำการส่งตัวของ การ crete Signup ไปให้กับตัวของ Firebase และ Firebase จะเป็นผู้จัดการที่เหลือให้
+
   onSubmit = e => {
-    this.setState({ displayErrors: false });
-    const { email, password } = this.state;
-    auth
-      .signInWithEmailAndPassword(email, password)
+    axios
+      .get("http://localhost:9000/api/user/" + this.state.email + "." + this.state.password)
       .then(res => {
-        this.setState({
-          currentUser: res.user,
-          uid: res.user.uid
-        });
-        //console.log(res.user.uid)
+        console.log(res);
+        const email = res.data.data[0].email;
+        const password = res.data.data[0].password;
+        this.props.login(email, password);
+        this.setState({redirect: true});
       })
-      .catch(error => {
-        this.setState({
-          message: error.message
-        });
-      });
-  };
-
-  logout = e => {
-    // จัดการกับการทำงานของ login out
+      .catch(err => console.error(err));
     e.preventDefault();
-    auth.signOut().then(response => {
-      this.setState({
-        currentUser: null,
-        uid: ""
-      });
-    });
-  };
-
-  componentDidMount() {
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        this.setState({
-          currentUser: user
-        });
-      }
-    });
   }
 
   render() {
     const { message, currentUser, uid } = this.state;
     //ถ้ามีการ login สำเร็จเราก็จะไปที่หน้่า Logout
-    if (currentUser) {
-      return (
-        //อันนี้จะเป็นส่วนที่ เราอยากจะส่ง state ไปให้กับ Home ให้ Home อัพเดทค่า และใช้ state นี้ในการทำการทำงานต่อ ผ่าน UID ได้
-        <div>
-          <h1>
-            <p>Hello {currentUser.email}</p>
-            <button onClick={this.logout}>Logout</button>
-          </h1>
-          <Home tranfered_uid={uid} />
-          {/* บอกว่าเราจะส่งหน้า render ของ Home ไป(อันนี้เรายังไม่ได้แก้ให้ Code มันทำวานได้ แค่ให้เห็น state */}
-        </div>
-      );
+    if(this.state.redirect){
+      return <Redirect push to="/home" />;
     }
     return (
       <section className="section container">
@@ -124,6 +91,9 @@ class LoginForm extends React.Component {
           Login test id: yolo@example.com
           <li> Password : 123456 </li>
         </h3>
+        <h4>
+          {this.props.appState.email} {this.props.appState.password} Hello
+        </h4>
       </section>
     );
   }
