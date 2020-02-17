@@ -11,7 +11,7 @@ var userSchema = new Schema({
     nationalID: { type: String, required: true },
     gender: { type: String, required: true },
     birthDate: { type: String, required: true },
-    isPhotographer: { type: String, required: true },
+    isPhotographer: { type: Boolean, required: true },
     phoneNo: { type: String, required: true },
     introduction: { type: String, required: false },
     profileImage: { type: String, required: true },
