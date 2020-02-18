@@ -1,16 +1,25 @@
 import React, { Component } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 class JobOffer extends Component {
-    
-    
-    
-    
-    
+    constructor(props){
+        super(props);
+        this.state={
+            startDate: new Date()
+        };
+    }
+
+    handleChange = date => {
+        this.setState({
+            startDate : date
+        });
+    };
     
     render() {
         return (
-            <section className=" container">
+            <div className=" container">
                 <div className="columns is-centered">
                 <div className="column is-half">
                     <form>
@@ -22,40 +31,41 @@ class JobOffer extends Component {
                     </div>
 
                     <div className="field">
-                        <label className="label">Employer's name</label>
-
-                        <input className="input" type="Username" name="Username" />
-
-                    </div>
-
-                    <div className="field">
                         <label className="label">Style</label>
-
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Style
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <div class="dropdown-item">Portrait</div>
-                                <div class="dropdown-item">Wedding</div>
-                                <div class="dropdown-item">Graduation</div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <input className="input" type="Comfimed Password" name="Comfimed Password" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <select id="inputState" class="form-control">
+                                    <option selected>Graduation</option>
+                                    <option selected>Wedding</option>
+                                    <option selected>Potrait</option>
+                                </select>
                             </div>
                         </div>
-
                     </div>
 
                     <div className="field">
                         <label className="label">Date</label>
-
-                        <input className="input" type="Comfimed Password" name="Comfimed Password" />
-
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <DatePicker selected={this.state.startDate} onChange={this.handleChange}/>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="field">
                         <label className="label">Time</label>
-
-                        <input className="input" type="email" name="email" />
-
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <select id="inputState" class="form-control">
+                                    <option selected>Morning</option>
+                                    <option selected>Afternoon</option>
+                                    <option selected>Evening</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
                     <div className="field">
@@ -81,7 +91,7 @@ class JobOffer extends Component {
                     </form>
                 </div>
                 </div>
-            </section>
+            </div>
     );
   }
 }
