@@ -93,7 +93,7 @@ onSubmit = e =>{
 
   render() {
     if(this.state.redirect){
-      return <Redirect push to="/home" />;
+      return <Redirect push to="/" />;
     }
     return (
       <section className="section container">
