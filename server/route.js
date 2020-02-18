@@ -51,5 +51,15 @@ router.get("/user/:email.:password", (req, res, next) => {
     });
 });
 
+router.get("/portfolio", (req, res, next) => {
+    portfolio.find().then(documents => {
+        res.status(status_ok).json({
+            message: "Registor fetched successfully!",
+            data: documents 
+        });
+        console.log(documents)
+    });
+});
+
 
 module.exports = router;
