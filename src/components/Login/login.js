@@ -53,7 +53,7 @@ class LoginForm extends React.Component {
     const { message, currentUser, uid } = this.state;
     //ถ้ามีการ login สำเร็จเราก็จะไปที่หน้่า Logout
     if (this.state.redirect) {
-      return <Redirect push to="/home" />;
+      return <Redirect push to="/" />;
     }
     return (
       <section className="section container">
