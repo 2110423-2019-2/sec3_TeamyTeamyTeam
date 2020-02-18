@@ -61,5 +61,15 @@ router.get("/portfolio", (req, res, next) => {
     });
 });
 
+router.get("/portfolio/:name", (req, res, next) => {
+    portfolio.find({portfolioName: req.params.name}).then(documents => {
+        res.status(status_ok).json({
+            message: "Registor fetched successfully!",
+            data: documents 
+        });
+        console.log(documents)
+    });
+});
+
 
 module.exports = router;

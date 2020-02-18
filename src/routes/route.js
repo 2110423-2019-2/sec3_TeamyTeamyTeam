@@ -26,7 +26,7 @@ export default class Routing extends React.Component {
         <Route exact path="/signup" component={(props) => <SignUp {...this.props} {...props}/>} />
         <Route exact path="/search" component={(props) => <Search {...this.props} {...props}/>} />
         <Route exact path="/portfolio/:name" render={(props) => <Portfolio {...this.props} {...props}/>} />
-        <Route exact path="/offer" component={(props) => <JobOffer {...this.props} {...props}/>} />
+        <Route exact path="/offer/:name" component={(props) => <JobOffer {...this.props} {...props}/>} />
       </Switch>
     );
   }

@@ -3,6 +3,11 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 class PortfolioHeader extends Component {
+
+  getOfferLink = () =>{
+    return "../offer/" + this.props.name;
+  }
+
   render() {
     const { name, profilePic, headerCoverImage } = this.props;
     const headerCoverImageCSS = "url(" + headerCoverImage + ")";
@@ -37,7 +42,7 @@ class PortfolioHeader extends Component {
                     up the bulk of the card's content.
                   </span>
                   <form className="mt-3">
-                    <Link to="../offer">
+                    <Link to={this.getOfferLink()}>
                       <button className="btn btn-outline-light">
                         Offer {name} Job
                       </button>

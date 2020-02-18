@@ -1,22 +1,50 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import axios from "axios";
 
 class JobOffer extends Component {
     constructor(props){
         super(props);
         this.state={
-            startDate: new Date()
+            title: "",
+            style: "",
+            date: new Date(),
+            time: "",
+            location: "",
+            photographer: this.props.match.params.name
         };
     }
 
-    handleChange = date => {
+    handleChange = e => {
+        //ตรวจค่าของ name ใน Onchange และ set ค่าตามไปเรื่อยๆ
+        const { name, value } = e.target;
+        console.log(e.target.name);
+        console.log(e.target.value);
         this.setState({
-            startDate : date
+          [name]: value
         });
+        // console.log(this.state);
     };
     
+    handleDateChange = date => {
+        this.setState({
+            date: date
+        })
+        console.log(this.state.date);
+    };
+
+    onSubmit = e => {
+        e.preventDefault();
+        axios
+          .get("http://localhost:9000/api/portfolio/" + this.state.photographer)
+          .then(res => {
+              console.log(res);
+              const email = res.data.data[0].email;
+          })
+          .catch(err => console.error(err));
+    }
+
     render() {
         return (
             <div className=" container">
@@ -26,7 +54,7 @@ class JobOffer extends Component {
                     <div className="field">
                         <label className="label">Job title</label>
 
-                        <input className="input" type="Fullname" name="Fullname" />
+                        <input className="input" type="Fullname" name="title" onChange={this.handleChange}/>
 
                     </div>
 
@@ -34,13 +62,10 @@ class JobOffer extends Component {
                         <label className="label">Style</label>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <input className="input" type="Comfimed Password" name="Comfimed Password" />
-                            </div>
-                            <div class="form-group col-md-6">
-                                <select id="inputState" class="form-control">
-                                    <option selected>Graduation</option>
-                                    <option selected>Wedding</option>
-                                    <option selected>Potrait</option>
+                                <select id="inputState" class="form-control" name="style" onChange={this.handleChange}>
+                                    <option selected value = "Graduation">Graduation</option>
+                                    <option value = "Wedding">Wedding</option>
+                                    <option value = "Potrait">Potrait</option>
                                 </select>
                             </div>
                         </div>
@@ -50,7 +75,7 @@ class JobOffer extends Component {
                         <label className="label">Date</label>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <DatePicker selected={this.state.startDate} onChange={this.handleChange}/>
+                                <DatePicker selected={this.state.date} name = "date" onChange={this.handleDateChange}/>
                             </div>
                         </div>
                     </div>
@@ -59,10 +84,10 @@ class JobOffer extends Component {
                         <label className="label">Time</label>
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <select id="inputState" class="form-control">
-                                    <option selected>Morning</option>
-                                    <option selected>Afternoon</option>
-                                    <option selected>Evening</option>
+                                <select id="inputState" class="form-control" name="time" onChange={this.handleChange}>
+                                    <option selected value = "Morning">Morning</option>0
+                                    <option value = "Afternoon">Afternoon</option>
+                                    <option value = "Evening">Evening</option>
                                 </select>
                             </div>
                         </div>
@@ -71,7 +96,7 @@ class JobOffer extends Component {
                     <div className="field">
                         <label className="label">Location</label>
 
-                        <input className="input" type="Telephone number" name="Telephone number" />
+                        <input className="input" type="Telephone number" name="location" onChange={this.handleChange}/>
 
                     </div>
 
@@ -82,7 +107,7 @@ class JobOffer extends Component {
 
                     <div className="field is-grouped">
                         <div className="control">
-                        <button className="button is-link" onClick={this.handleClick} >Submit</button>
+                        <button className="button is-link" onClick={this.onSubmit} >Submit</button>
                         </div>
                         <div className="control">
                         <button className="button is-text">Cancel</button>
