@@ -2,8 +2,8 @@
 import React from "react";
 import auth from "./Firebase/index";
 import Home from "../home";
-import axios from 'axios';
-import { Redirect } from 'react-router';
+import axios from "axios";
+import { Redirect } from "react-router";
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
@@ -32,22 +32,27 @@ class LoginForm extends React.Component {
 
   onSubmit = e => {
     axios
-      .get("http://localhost:9000/api/user/" + this.state.email + "." + this.state.password)
+      .get(
+        "http://localhost:9000/api/user/" +
+          this.state.email +
+          "." +
+          this.state.password
+      )
       .then(res => {
         console.log(res);
         const email = res.data.data[0].email;
         const password = res.data.data[0].password;
         this.props.login(email, password);
-        this.setState({redirect: true});
+        this.setState({ redirect: true });
       })
       .catch(err => console.error(err));
     e.preventDefault();
-  }
+  };
 
   render() {
     const { message, currentUser, uid } = this.state;
     //ถ้ามีการ login สำเร็จเราก็จะไปที่หน้่า Logout
-    if(this.state.redirect){
+    if (this.state.redirect) {
       return <Redirect push to="/home" />;
     }
     return (
@@ -92,7 +97,7 @@ class LoginForm extends React.Component {
           <li> Password : 123456 </li>
         </h3>
         <h4>
-          {this.props.appState.email} {this.props.appState.password} Hello
+          Hello {this.props.appState.email} {this.props.appState.password}
         </h4>
       </section>
     );
