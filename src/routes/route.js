@@ -21,7 +21,7 @@ export default class Routing extends React.Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/home" component={() => <Home />} />
+        <Route exact path="/" component={() => <Home />} />
         <Route path="/login" render={() => <Login {...this.props} />} />
         <Route exact path="/signup" component={() => <SignUp />} />
         <Route exact path="/search" component={() => <Search />} />
