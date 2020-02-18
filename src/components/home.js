@@ -4,6 +4,7 @@
 import React, { Component } from "react";
 import "../stylesheets/home.css";
 import Proptype from "prop-types";
+import {Image, Video, Transformation, CloudinaryContext} from "cloudinary-react";
 
 class Home extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class Home extends Component {
           <div className="container h-100">
             <div className="row h-100 align-items-center">
               <div className="col-12 text-center ">
+                <Image cloudName="teamyteam" publicId="https://res.cloudinary.com/teamyteam/image/upload/v1582038467/samples/animals/three-dogs.jpg" width="300" />
                 <h1 className="font-weight-bold white-text">
                   PHOMO matching system
                 </h1>

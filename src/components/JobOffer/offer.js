@@ -26,7 +26,7 @@ class JobOffer extends Component {
                     <div className="field">
                         <label className="label">Job title</label>
 
-                        <input className="input" type="Fullname" name="Fullname" />
+                        <input className="input" />
 
                     </div>
 
@@ -34,7 +34,7 @@ class JobOffer extends Component {
                         <label className="label">Style</label>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <input className="input" type="Comfimed Password" name="Comfimed Password" />
+                                <input className="input"/>
                             </div>
                             <div class="form-group col-md-6">
                                 <select id="inputState" class="form-control">
@@ -71,7 +71,7 @@ class JobOffer extends Component {
                     <div className="field">
                         <label className="label">Location</label>
 
-                        <input className="input" type="Telephone number" name="Telephone number" />
+                        <input className="input"/>
 
                     </div>
 
