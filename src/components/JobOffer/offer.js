@@ -3,14 +3,15 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 
+
 class JobOffer extends Component {
     constructor(props){
         super(props);
         this.state={
             title: "",
-            style: "",
+            style: "Graduation",
             date: new Date(),
-            time: "",
+            time: "Morning",
             location: "",
             photographer: this.props.match.params.name
         };
@@ -36,13 +37,21 @@ class JobOffer extends Component {
 
     onSubmit = e => {
         e.preventDefault();
-        axios
-          .get("http://localhost:9000/api/portfolio/" + this.state.photographer)
-          .then(res => {
-              console.log(res);
-              const email = res.data.data[0].email;
-          })
-          .catch(err => console.error(err));
+          axios
+            .post("http://localhost:9000/api/offer",{
+                title: this.state.title,
+                portfolioName: this.state.photographer,
+                employerName: this.props.appState.email,
+                style: this.state.style,
+                date: this.state.date,
+                time: this.state.time,
+                location: this.state.location,
+                progress: "wait-photographer"
+              })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => console.error(err));
     }
 
     render() {
