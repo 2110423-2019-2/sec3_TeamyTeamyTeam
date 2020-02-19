@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import auth from "../Login/Firebase/index";
 import "../../stylesheets/validation.css";
-import axios from 'axios';
-import { Redirect } from 'react-router';
+import axios from "axios";
+import { Redirect } from "react-router";
 
 class SignUp extends Component {
   constructor(props) {
@@ -17,6 +17,7 @@ class SignUp extends Component {
       password: "",
       confirmedPassword: "",
       telNo: "",
+      displayErrors: false,
       redirect: false
     };
   }
@@ -24,7 +25,7 @@ class SignUp extends Component {
   onCheck = () => {
     this.setState({ isChecked: !this.state.isChecked });
   };
-  
+
   onChange = e => {
     //ตรวจค่าของ name ใน Onchange และ set ค่าตามไปเรื่อยๆ
     const { name, value } = e.target;
@@ -62,37 +63,46 @@ class SignUp extends Component {
     });
   }*/
 
-onSubmit = e =>{
-  axios
-    .post("http://localhost:9000/api/user",{
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      email: this.state.email,
-      username: this.state.email,
-      password: this.state.password,
-      nationalID: "-",
-      gender: "-",
-      birthDate: "2000-01-01",
-      isPhotographer: false,
-      phoneNo: this.state.telNo,
-      introduction: "-",
-      profileImage: "-",
-      portfolioID: "-",
-      avgRating: -1,
-    })
-    .then(res => {
-      console.log(res);
-      this.setState({redirect: true});
-    })
-    .catch(err => {
-      console.error(err)
-    });
+  onSubmit = e => {
     e.preventDefault();
-
-}
+    if (!e.target.checkValidity()) {
+      this.setState({ displayErrors: true });
+      return;
+    } else if (this.state.password !== this.state.confirmedPassword) {
+      window.alert("Password doesn't match");
+      return;
+    } else {
+      this.setState({ displayErrors: false });
+      console.log("success!");
+      axios
+        .post("http://localhost:9000/api/user", {
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          email: this.state.email,
+          username: this.state.email,
+          password: this.state.password,
+          nationalID: "-",
+          gender: "-",
+          birthDate: "2000-01-01",
+          isPhotographer: false,
+          phoneNo: this.state.telNo,
+          introduction: "-",
+          profileImage: "-",
+          portfolioID: "-",
+          avgRating: -1
+        })
+        .then(res => {
+          console.log(res);
+          this.setState({ redirect: true });
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
+  };
 
   render() {
-    if(this.state.redirect){
+    if (this.state.redirect) {
       return <Redirect push to="/" />;
     }
     return (
