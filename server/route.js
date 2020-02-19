@@ -69,7 +69,15 @@ router.get("/portfolio", (req, res, next) => {
         console.log(documents)
     });
 });
-
+router.get("/portfolioTags/:key", (req, res, next) => {
+    portfolio.find({tags: req.params.key}).then(documents => {
+        res.status(status_ok).json({
+            message: "Registor fetched successfully!",
+            data: documents 
+        });
+        console.log(documents)
+    });
+});
 router.get("/portfolio/:name", (req, res, next) => {
     portfolio.find({portfolioName: req.params.name}).then(documents => {
         res.status(status_ok).json({
@@ -107,7 +115,13 @@ router.post("/offer", (req, res, next) => {
             from: 'phomooffermanager@gmail.com',                // sender
             to: email,                // list of receivers
             subject: 'Phomo Job Offer',              // Mail subject
-            html: '<p>You have just got offer</p>'   // HTML body
+            html: '<p>Employer "'+ req.body.employerName +'"</p>'
+                + '<p>have just offer you a job</p>'
+                + '<p>Title: "'+ req.body.title +'"</p>'
+                + '<p>Style: "'+ req.body.style +'"</p>'
+                + '<p>Date: "'+ req.body.date.substring(0, 10) +'"</p>'
+                + '<p>Time: "'+ req.body.time +'"</p>'
+                + '<p>Location: "'+ req.body.location +'"</p>'
         };
         transporter.sendMail(mailOptions, function (err, info) {
             if(err)

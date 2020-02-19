@@ -24,7 +24,7 @@ export default class Search extends Component {
     let searchResult = [];
     //Use this.state.keyword to query correct photographers
     axios
-      .get("http://localhost:9000/api/portfolio")
+      .get("http://localhost:9000/api/portfolioTags/"+this.state.keyword).then(console.log(this.state.keyword))
       .then(res => {
         console.log(res.data.data);
         searchResult = res.data.data;
