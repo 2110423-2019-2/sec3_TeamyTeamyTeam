@@ -11,7 +11,9 @@ class JobOffer extends Component {
       date: new Date(),
       time: "Morning",
       location: "",
-      photographer: this.props.match.params.name
+      photographer: this.props.match.params.name,
+      displayErrors: false,
+      isChecked: false
     };
   }
 
@@ -33,8 +35,17 @@ class JobOffer extends Component {
     console.log(this.state.date);
   };
 
+  handleCheck = () => {
+    this.setState({ isChecked: !this.state.isChecked });
+  };
+
   onSubmit = e => {
     e.preventDefault();
+    if (!e.target.checkValidity()) {
+      this.setState({ displayErrors: true });
+      return;
+    }
+    this.setState({ displayErrors: false });
     axios
       .post("http://localhost:9000/api/offer", {
         title: this.state.title,
@@ -57,7 +68,11 @@ class JobOffer extends Component {
       <div className="section container">
         <div className="columns is-centered">
           <div className="column is-half">
-            <form>
+            <form
+              onSubmit={this.onSubmit}
+              noValidate
+              className={this.state.displayErrors ? "displayErrors" : ""}
+            >
               <div className="form-group">
                 <label>Job title</label>
 
@@ -92,33 +107,37 @@ class JobOffer extends Component {
               </div>
 
               <div className="form-group">
-                <div class="form-row"> 
-                    <div class="form-group col-md-6">
-                        <div><label>Date</label></div>
-                        <DatePicker
-                            className="form-control"
-                            selected={this.state.date}
-                            name="date"
-                            onChange={this.handleDateChange}
-                            required
-                         />
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <div>
+                      <label>Date</label>
                     </div>
-                    <div class="form-group col-md-6"> 
-                        <div><label>Time</label></div>
-                        <select
-                            id="inputState"
-                            class="form-control"
-                            name="time"
-                            onChange={this.handleChange}
-                            required
-                        >
-                            <option selected value="Half Day Morning">
-                                Half Day Morning
-                            </option>
-                            <option value="Half Day Evening">Half Day Evening</option>
-                            <option value="Full Day">Full Day</option>
-                        </select>
+                    <DatePicker
+                      className="form-control"
+                      selected={this.state.date}
+                      name="date"
+                      onChange={this.handleDateChange}
+                      required
+                    />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <div>
+                      <label>Time</label>
                     </div>
+                    <select
+                      id="inputState"
+                      class="form-control"
+                      name="time"
+                      onChange={this.handleChange}
+                      required
+                    >
+                      <option selected value="Half Day Morning">
+                        Half Day Morning
+                      </option>
+                      <option value="Half Day Evening">Half Day Evening</option>
+                      <option value="Full Day">Full Day</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
@@ -138,23 +157,25 @@ class JobOffer extends Component {
                 <input
                   className="form-check-input"
                   checked={this.state.isChecked}
-                  onChange={this.onCheck}
+                  onChange={this.handleCheck}
                   type="checkbox"
                   name="isChecked"
                   required
                 />
-                <lable>
+                <lable
+                  className={
+                    this.state.isChecked
+                      ? "form-check-label"
+                      : "form-check-label notChecked"
+                  }
+                >
                   I have read and agree to {}
                   <a href="/">Term of Service</a>
                 </lable>
               </div>
 
               <div className="field is-grouped">
-                <input
-                  type="submit"
-                  className="btn btn-outline-primary"
-                  onClick={this.onSubmit}
-                />
+                <input type="submit" className="btn btn-outline-primary" />
                 <input
                   type="reset"
                   className="btn btn-outline-secondary mx-3"

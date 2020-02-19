@@ -4,6 +4,7 @@ import auth from "./Firebase/index";
 import Home from "../home";
 import axios from "axios";
 import { Redirect } from "react-router";
+
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
