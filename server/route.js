@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const portfolio = require('./schema/portfolio')
 const user = require('./schema/user')
 const offer = require('./schema/offer')
+const nodemailer = require('nodemailer');
 
 const status_ok = 200;
 const status_created = 201;
@@ -122,6 +123,7 @@ router.get("/runOffer/:id.:type.:isAccept", (req, res, next) => {
     let content = "<p>undefine</p>";
     let email = "undefine";
     let used = offer.find({_id: req.body.type, progress: req.body.type});
+
 
     if(req.body.idAccept == "false") {
         update.progress = "decline";
