@@ -63,6 +63,7 @@ class JobOffer extends Component {
                     <div className="field">
                         <label className="label">Job title</label>
 
+
                         <input className="input" type="Fullname" name="title" onChange={this.handleChange}/>
 
                     </div>
@@ -71,6 +72,7 @@ class JobOffer extends Component {
                         <label className="label">Style</label>
                         <div class="form-row">
                             <div class="form-group col-md-6">
+
                                 <select id="inputState" class="form-control" name="style" onChange={this.handleChange}>
                                     <option selected value = "Graduation">Graduation</option>
                                     <option value = "Wedding">Wedding</option>
@@ -105,7 +107,9 @@ class JobOffer extends Component {
                     <div className="field">
                         <label className="label">Location</label>
 
+
                         <input className="input" type="Telephone number" name="location" onChange={this.handleChange}/>
+
 
                     </div>
 

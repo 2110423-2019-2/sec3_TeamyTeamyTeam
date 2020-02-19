@@ -56,8 +56,10 @@ export default class Navbar extends Component {
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
+          style={{ border: 0, borderRadius: 0 }}
         >
-          <span className="navbar-toggler-icon"></span>
+          {/* <span className="navbar-toggler-icon"></span> */}
+          <ion-icon size="large" name="menu-outline"></ion-icon>
         </button>
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">

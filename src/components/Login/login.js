@@ -85,7 +85,6 @@ class LoginForm extends React.Component {
               {message ? <p className="help is-danger">{message}</p> : null}
               <input type="submit" className="btn btn-outline-primary" />
               <input type="reset" className="btn btn-outline-secondary mx-3" />
-              Cancel
               <p>
                 Have any account yet? <a href="/signup">Sign up</a>
               </p>

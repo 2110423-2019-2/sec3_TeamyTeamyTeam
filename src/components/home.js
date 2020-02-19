@@ -4,6 +4,13 @@
 import React, { Component } from "react";
 import "../stylesheets/home.css";
 import Proptype from "prop-types";
+import { Link } from "react-router-dom";
+import {
+  Image,
+  Video,
+  Transformation,
+  CloudinaryContext
+} from "cloudinary-react";
 
 class Home extends Component {
   constructor(props) {
@@ -24,33 +31,33 @@ class Home extends Component {
           <div className="container h-100">
             <div className="row h-100 align-items-center">
               <div className="col-12 text-center ">
+                <Image
+                  cloudName="teamyteam"
+                  publicId="https://res.cloudinary.com/teamyteam/image/upload/v1582038467/samples/animals/three-dogs.jpg"
+                  width="300"
+                />
                 <h1 className="font-weight-bold white-text">
                   PHOMO matching system
                 </h1>
                 <p className="lead">
                   The best centralized platform to find and hire a photographer
                 </p>
-                <div style={{ marginTop: "5vh", marginBottom: "2vh" }}>
-                  <a href="/login">
-                    <button
-                      className="btn btn-outline-light"
-                      style={{ margin: "2vh" }}
-                    >
-                      Sign in
-                    </button>
-                  </a>
-                  <a href="/signup">
-                    <button
-                      className="btn btn-outline-light"
-                      style={{ margin: "2vh" }}
-                    >
-                      Sign up
-                    </button>
-                  </a>
-                </div>
-                <div>
-                  <a href="/search">Login as guest</a>
-                </div>
+                <Link to="/login">
+                  <button className="btn btn-outline-light mx-3">
+                    <i className="mr-2">
+                      <ion-icon name="person-outline"></ion-icon>
+                    </i>
+                    Sign in
+                  </button>
+                </Link>
+                <Link to="/signup">
+                  <button className="btn btn-outline-light mx-3">
+                    <i className="mr-2">
+                      <ion-icon name="person-add-outline"></ion-icon>
+                    </i>
+                    Sign up
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
