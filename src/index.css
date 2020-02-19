@@ -3,3 +3,11 @@
 body {
   font-family: "Questrial", sans-serif;
 }
+
+.displayErrors input:invalid {
+  border-color: red;
+}
+
+.notChecked {
+  color: red;
+}

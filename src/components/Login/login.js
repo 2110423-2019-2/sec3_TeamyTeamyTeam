@@ -31,6 +31,12 @@ class LoginForm extends React.Component {
   };
 
   onSubmit = e => {
+    e.preventDefault();
+    if (!e.target.checkValidity()) {
+      this.setState({ displayErrors: true });
+      return;
+    }
+    this.setState({ displayErrors: false });
     axios
       .get(
         "http://localhost:9000/api/user/" +
@@ -46,7 +52,6 @@ class LoginForm extends React.Component {
         this.setState({ redirect: true });
       })
       .catch(err => console.error(err));
-    e.preventDefault();
   };
 
   render() {
@@ -59,7 +64,11 @@ class LoginForm extends React.Component {
       <section className="section container">
         <div className="columns is-centered">
           <div className="column is-half">
-            <form onSubmit={this.onSubmit}>
+            <form
+              onSubmit={this.onSubmit}
+              noValidate
+              className={this.state.displayErrors ? "displayErrors" : ""}
+            >
               <div className="form-group">
                 <label>Email</label>
                 <div className="control">
@@ -68,6 +77,7 @@ class LoginForm extends React.Component {
                     type="email"
                     name="email"
                     onChange={this.onChange}
+                    required
                   />
                 </div>
               </div>
@@ -79,6 +89,7 @@ class LoginForm extends React.Component {
                     type="password"
                     name="password"
                     onChange={this.onChange}
+                    required
                   />
                 </div>
               </div>
