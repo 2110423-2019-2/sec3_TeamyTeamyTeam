@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SearchResultCard from "./search-result-card";
+import axios from "axios";
 
 export default class Search extends Component {
   constructor(props) {
@@ -22,15 +23,15 @@ export default class Search extends Component {
     //This function is where Back-end operates e.g. fetching photographer data from server
     let searchResult = [];
     //Use this.state.keyword to query correct photographers
-    for (let i = 0; i < 10; i++) {
-      searchResult.push({
-        id: i,
-        name: i,
-        tag: "Portrait" //Edit this part for data to conform with correct data in the server e.g. name, id, profile pic
-      });
-    }
-    this.setState({ isSubmit: true });
-    this.setState({ searchResult });
+    axios
+      .get("http://localhost:9000/api/portfolio")
+      .then(res => {
+        console.log(res.data.data);
+        searchResult = res.data.data;
+        this.setState({ isSubmit: true });
+        this.setState({ searchResult: searchResult });
+      })
+      .catch(err => console.error(err));
   }
 
   handleSubmit(e) {
@@ -90,7 +91,7 @@ export default class Search extends Component {
         {/* Results show here */}
         <div className="row">
           {this.state.searchResult.map(card => (
-            <SearchResultCard key={card.id} name={card.name} />
+            <SearchResultCard key={card._id} name={card.portfolioName} />
           ))}
         </div>
       </div>

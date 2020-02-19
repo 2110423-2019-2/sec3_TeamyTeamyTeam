@@ -23,7 +23,41 @@ mongoose
         console.log("Connection failed!");
     });
 
-//TestUser.save().then(() => console.log("compleate"));
+/*const photographer1 = new portfolio({
+    portfolioName: "photographer1",
+    email: "photographer1@example.com",
+    tags: ["portrait", "wedding"],
+    minBath: 10,
+    maxBath: 100
+});
+photographer1.save();
+
+const photographer2 = new portfolio({
+    portfolioName: "photographer2",
+    email: "photographer2@example.com",
+    tags: ["graduate"],
+    minBath: 20,
+    maxBath: 200
+});
+photographer2.save();
+
+const photographer3 = new portfolio({
+    portfolioName: "photographer3",
+    email: "photographer3@example.com",
+    tags: ["graduate","wedding"],
+    minBath: 30,
+    maxBath: 300
+});
+photographer3.save()
+
+const real = new portfolio({
+    portfolioName: "Nictrak",
+    email: "ntrakarnvanich@yahoo.com",
+    tags: ["portrait", "graduate", "wedding"],
+    minBath: 50,
+    maxBath: 500
+});
+real.save();*/
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
