@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 
 class JobOffer extends Component {
@@ -93,38 +92,33 @@ class JobOffer extends Component {
               </div>
 
               <div className="form-group">
-                <label>Date</label>
-                <div class="form-row">
-                  <div class="form-group col-md-12">
-                    <DatePicker
-                      className="form-control"
-                      selected={this.state.date}
-                      name="date"
-                      onChange={this.handleDateChange}
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label>Time</label>
-                <div class="form-row">
-                  <div class="form-group col-md-12">
-                    <select
-                      id="inputState"
-                      class="form-control"
-                      name="time"
-                      onChange={this.handleChange}
-                      required
-                    >
-                      <option selected value="Half Day Morning">
-                        Half Day Morning
-                      </option>
-                      <option value="Half Day Evening">Half Day Evening</option>
-                      <option value="Full Day">Full Day</option>
-                    </select>
-                  </div>
+                <div class="form-row"> 
+                    <div class="form-group col-md-6">
+                        <div><label>Date</label></div>
+                        <DatePicker
+                            className="form-control"
+                            selected={this.state.date}
+                            name="date"
+                            onChange={this.handleDateChange}
+                            required
+                         />
+                    </div>
+                    <div class="form-group col-md-6"> 
+                        <div><label>Time</label></div>
+                        <select
+                            id="inputState"
+                            class="form-control"
+                            name="time"
+                            onChange={this.handleChange}
+                            required
+                        >
+                            <option selected value="Half Day Morning">
+                                Half Day Morning
+                            </option>
+                            <option value="Half Day Evening">Half Day Evening</option>
+                            <option value="Full Day">Full Day</option>
+                        </select>
+                    </div>
                 </div>
               </div>
 

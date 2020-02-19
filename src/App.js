@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Routing from "./routes/route";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle";
+import "react-datepicker/dist/react-datepicker-cssmodules.min.css";
 
 import ScrollToTop from "./components/scrollToTop";
 import Navbar from "./components/navbar";
