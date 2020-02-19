@@ -24,11 +24,11 @@ export default class Search extends Component {
     let searchResult = [];
     //Use this.state.keyword to query correct photographers
     axios
-      .get("http://localhost:9000/api/portfolioTags/"+this.state.keyword).then(console.log(this.state.keyword))
+      .get("http://localhost:9000/api/portfolioTags/" + this.state.keyword)
+      .then(console.log(this.state.keyword))
       .then(res => {
         console.log(res.data.data);
         searchResult = res.data.data;
-        this.setState({ isSubmit: true });
         this.setState({ searchResult: searchResult });
       })
       .catch(err => console.error(err));
@@ -39,6 +39,7 @@ export default class Search extends Component {
     e.preventDefault();
     if (this.state.inputKeyword !== "") {
       this.setState({ keyword: this.state.inputKeyword });
+      this.setState({ isSubmit: true });
       this.getResult();
     }
   }
@@ -51,7 +52,7 @@ export default class Search extends Component {
           " Photographer in " +
           this.state.keyword +
           " Category"
-        : "There are no photographer in " + this.state.keyword + " category.";
+        : "There are no photographers in " + this.state.keyword + " category.";
     return (
       <div className="container my-5">
         <form method="post">
