@@ -9,3 +9,8 @@
   background-repeat: no-repeat;
   color: white;
 }
+
+ion-icon {
+  vertical-align: middle;
+  font-size: 1em;
+}
