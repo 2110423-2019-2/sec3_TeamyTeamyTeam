@@ -103,13 +103,6 @@ class LoginForm extends React.Component {
             </form>
           </div>
         </div>
-        <h3>
-          Login test id: yolo@example.com
-          <li> Password : 123456 </li>
-        </h3>
-        <h4>
-          Hello {this.props.appState.email} {this.props.appState.password}
-        </h4>
       </section>
     );
   }
