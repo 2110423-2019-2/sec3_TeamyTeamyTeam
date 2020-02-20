@@ -24,11 +24,14 @@ class SearchResultCard extends Component {
           />
           <div className="card-body">
             <h5 className="card-title">{this.state.photographerName}</h5>
-            <p className="card-text">
+            {/* <p className="card-text">
               Some quick example text to build on the card title and make up the
               bulk of the card's content.
-            </p>
-            <Link to={this.state.portfolioLink} className="btn btn-primary">
+            </p> */}
+            <Link
+              to={this.state.portfolioLink}
+              className="btn btn-primary mx-auto"
+            >
               See {this.state.photographerName}'s Portfolio
             </Link>
           </div>
