@@ -15,12 +15,12 @@ export default class Navbar extends Component {
       return (
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-            <p className="nav-link">{this.props.appState.email}</p>
+            <span className="navbar-text">{this.props.appState.email}</span>
           </li>
           <li className="nav-item">
-            <p className="nav-link" onClick={this.onSingout}>
+            <Link to="/login" className="nav-link" onClick={this.onSingout}>
               Sign out
-            </p>
+            </Link>
           </li>
         </ul>
       );
