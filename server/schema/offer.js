@@ -3,16 +3,17 @@ const mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var offerSchema = new Schema({
-    title: {type: String, required: true},
-    portfolioName: {type: String, required: true},
-    employerName: {type: String, required: true},
-    style: {type: String, required: true},
-    date: {type: Date, required: true},
-    time: {type: String, required: true},
-    location: {type: String, required: true},
-    progress: {type: String, required: true}
+    title: { type: String, required: true },
+    portfolioID: { type: String, required: true }, // portfolioName == portfolioID
+    employerID: { type: String, required: true },
+    style: { type: String, required: true },
+    Actdate: { type: Date, required: true }, // data_tag in server !!!
+    meetUpTime: { type: String, required: true }, // meetUpTime เวลาที่มาเจอกัน
+    location: { type: String, required: true },
+    progress: { type: String, required: true },
+    OptionalRequest: { type: String } // Text_block สำหรับการคุยคร่าวๆ
 })
 
-var Offer = mongoose.model('offer',offerSchema);
+var Offer = mongoose.model('offer', offerSchema);
 
 module.exports = Offer;

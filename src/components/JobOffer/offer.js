@@ -16,7 +16,7 @@ class JobOffer extends Component {
       isChecked: false
     };
   }
-
+ 
   handleChange = e => {
     //ตรวจค่าของ name ใน Onchange และ set ค่าตามไปเรื่อยๆ
     const { name, value } = e.target;
