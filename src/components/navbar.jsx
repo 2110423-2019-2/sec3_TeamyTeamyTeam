@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import NotificationBell from "./Notification/notificationBell";
+import Notification from "./Notification/notification";
 
 export default class Navbar extends Component {
   constructor(props) {
@@ -36,7 +36,7 @@ export default class Navbar extends Component {
           {/* <span className="navbar-text d-none d-lg-block">
             <ion-icon name="notifications-outline"></ion-icon>
           </span> */}
-          <NotificationBell />
+          <Notification />
           <span className="navbar-text d-none d-lg-block">/</span>
           <li className="nav-item">
             <Link to="/signup" className="nav-link">

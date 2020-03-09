@@ -2,6 +2,26 @@
 .nav-pills .show > .nav-link {
   background-color: #17a2b8;
 }
+
+[data-badge] {
+  position: relative;
+}
+[data-badge]:after {
+  position: absolute;
+  right: -3px;
+  top: -3px;
+  min-width: 10px;
+  min-height: 10px;
+  line-height: 10px;
+  padding: 5px;
+  color: #fff;
+  background-color: #bf1f1f;
+  font-size: 10px;
+  border-radius: 50%;
+  content: attr(data-badge);
+  border: solid 1px #c93a3a;
+}
+
 .dropdown-menu {
   top: 58px;
   right: 0px;
