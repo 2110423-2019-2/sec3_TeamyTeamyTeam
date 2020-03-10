@@ -9,9 +9,9 @@
 [data-badge]:after {
   position: absolute;
   right: -10px;
-  top: -16px;
-  min-width: 20px;
-  min-height: 20px;
+  top: -12px;
+  min-width: 10px;
+  min-height: 10px;
   line-height: 10px;
   text-align: center;
   padding: 5px;
