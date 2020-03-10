@@ -8,10 +8,10 @@
 }
 [data-badge]:after {
   position: absolute;
-  right: -3px;
-  top: -3px;
-  min-width: 10px;
-  min-height: 10px;
+  right: -10px;
+  top: -16px;
+  width: 20px;
+  height: 20px;
   line-height: 10px;
   padding: 5px;
   color: #fff;
@@ -48,8 +48,14 @@
   border-radius: 0px 0px 3px 3px;
 }
 .notification-box {
-  padding: 10px 0px;
+  padding: 5px 0px;
+  border-width: 1px;
 }
+
+.notification-box:hover {
+  background-color: rgb(208, 209, 226);
+}
+
 .bg-gray {
   background-color: #eee;
 }
