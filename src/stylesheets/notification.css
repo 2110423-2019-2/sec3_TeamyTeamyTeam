@@ -10,14 +10,15 @@
   position: absolute;
   right: -10px;
   top: -16px;
-  width: 20px;
-  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
   line-height: 10px;
+  text-align: center;
   padding: 5px;
   color: #fff;
   background-color: #bf1f1f;
   font-size: 10px;
-  border-radius: 50%;
+  border-radius: 100%;
   content: attr(data-badge);
   border: solid 1px #c93a3a;
 }

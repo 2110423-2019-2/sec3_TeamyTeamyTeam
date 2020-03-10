@@ -15,8 +15,8 @@ class Notification extends Component {
 
   componentDidMount() {
     //Retrieve notification's object
-    let toTalnotification = 15; //จำนวนnotiทั้งหมดของusers
-    let numberOfUnreadNotification = 15; //จำนวนnotiที่ยังไม่ได้อ่าน
+    let toTalnotification = 1; //จำนวนnotiทั้งหมดของusers
+    let numberOfUnreadNotification = 1; //จำนวนnotiที่ยังไม่ได้อ่าน
     this.setState({ numberOfUnreadNotification });
     //จะกำหนดให้แสดงผล10อันล่าสุดเท่านั้น แต่ตัวnotiที่ยังไม่อ่านจะแสดงตามจริง
     let notifications = [];
