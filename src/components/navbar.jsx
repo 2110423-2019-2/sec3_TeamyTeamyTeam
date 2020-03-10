@@ -25,7 +25,7 @@ export default class Navbar extends Component {
           </li>
         </ul>
       );
-    else
+    else 
       return (
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">

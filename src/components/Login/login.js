@@ -40,7 +40,7 @@ class LoginForm extends React.Component {
     this.setState({ displayErrors: false });
     axios
       .get(
-        "http://localhost:9000/api/user/" +
+        "http://localhost:9000/api/login/" +
           this.state.email +
           "." +
           this.state.password
@@ -48,8 +48,9 @@ class LoginForm extends React.Component {
       .then(res => {
         console.log(res);
         const email = res.data.data[0].email;
-        const password = res.data.data[0].password;
-        this.props.login(email, password);
+        const uid = res.data.data[0]._id;
+        const token = res.data.token;
+        this.props.login(email, uid, token);
         this.setState({ redirect: true });
       })
       .catch(err => console.error(err));
