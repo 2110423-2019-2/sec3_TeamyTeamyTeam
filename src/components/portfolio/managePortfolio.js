@@ -9,8 +9,7 @@ class ManagePortfolio extends Component {
       name: this.props.match.params.name,
       photoLists: [] //เก็บjsonของรูป
     };
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
+
     this.handleAddPhoto = this.handleAddPhoto.bind(this);
   }
 
@@ -23,17 +22,6 @@ class ManagePortfolio extends Component {
     document.getElementById("uploader").click();
   }
 
-  handleDelete(e) {
-    e.preventDefault();
-    window.location.reload(false);
-    //ลบรูปตามid
-  }
-
-  handleEdit(e) {
-    console.log("Edit");
-    //แก้tagของรูป
-  }
-
   render() {
     return (
       <div className="section container">
@@ -42,32 +30,9 @@ class ManagePortfolio extends Component {
         </h1>
         <div className="row">
           <UploadedPhoto
-            onDelete={this.handleDelete}
-            onEdit={this.handleEdit}
-          />
-          <UploadedPhoto
-            onDelete={this.handleDelete}
-            onEdit={this.handleEdit}
-          />
-          <UploadedPhoto
-            onDelete={this.handleDelete}
-            onEdit={this.handleEdit}
-          />
-          <UploadedPhoto
-            onDelete={this.handleDelete}
-            onEdit={this.handleEdit}
-          />
-          <UploadedPhoto
-            onDelete={this.handleDelete}
-            onEdit={this.handleEdit}
-          />
-          <UploadedPhoto
-            onDelete={this.handleDelete}
-            onEdit={this.handleEdit}
-          />
-          <UploadedPhoto
-            onDelete={this.handleDelete}
-            onEdit={this.handleEdit}
+            photoID={99}
+            tag={"Wedding"}
+            imgLink="https://images.pexels.com/photos/1800994/pexels-photo-1800994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
           />
           <div className="col-lg-3 col-md-4 col-xs-4 ">
             <button
