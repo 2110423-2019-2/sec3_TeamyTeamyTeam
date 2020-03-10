@@ -5,12 +5,7 @@ import React, { Component } from "react";
 import "../stylesheets/home.css";
 import Proptype from "prop-types";
 import { Link } from "react-router-dom";
-import {
-  Image,
-  Video,
-  Transformation,
-  CloudinaryContext
-} from "cloudinary-react";
+
 
 class Home extends Component {
   constructor(props) {
