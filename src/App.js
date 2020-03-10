@@ -6,16 +6,36 @@ import "react-datepicker/dist/react-datepicker-cssmodules.min.css";
 
 import ScrollToTop from "./components/scrollToTop";
 import Navbar from "./components/navbar";
+import cookie from 'react-cookies';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLogin: false,
-      email: "",
-      password: ""
+      email: "-",
+      uid: "-",
     };
   }
+
+  
+
+  loadStorage() {
+    var isLogin = false;
+    if(localStorage.getItem("isLogin") == "true") isLogin = true
+    this.setState({
+      isLogin: isLogin,
+      email: localStorage.getItem("email"),
+      uid: localStorage.getItem("uid")
+    })
+  }
+
+  storeStorage(isLogin, email, uid, token) {
+    localStorage.setItem("isLogin", isLogin);
+    localStorage.setItem("email", email);
+    localStorage.setItem("uid", uid);
+  }
+
 
   componentDidMount() {
     const ionIconScript = document.createElement("script");
@@ -24,22 +44,28 @@ class App extends Component {
     ionIconScript.async = true;
 
     document.body.appendChild(ionIconScript);
+    
+    this.loadStorage();
+    console.log(this.state);
   }
 
-  login = (username, uid) => {
+  login = (username, uid, token) => {
     this.setState({
       isLogin: true,
       email: username,
-      password: uid
+      uid: uid,
     });
+    this.storeStorage(true, username);
   };
   logout = () => {
     this.setState({
       isLogin: false,
-      email: "",
-      password: ""
+      email: "-",
+      uid: "-",
     });
+    this.storeStorage(false, "-", "-");
   };
+
   render() {
     return (
       <div>

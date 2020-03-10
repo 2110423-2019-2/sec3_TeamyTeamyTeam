@@ -5,6 +5,7 @@ const portfolio = require('./schema/portfolio')
 const user = require('./schema/user')
 const offer = require('./schema/offer')
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
 const status_ok = 200;
 const status_created = 201;
@@ -49,17 +50,27 @@ router.post("/user", (req, res, next) => {
     });
 });
 
-router.get("/user/:email.:password", (req, res, next) => {
+router.get("/login/:email.:password", (req, res, next) => {
     user.find({ email: req.params.email, password: req.params.password }).then(documents => {
         documents[0].password = "*****"
+        var token = crypto.randomBytes(64).toString('hex');
         res.status(status_ok).json({
             message: "Registor fetched successfully!",
-            data: documents 
+            data: documents,
+            token: token
         });
         console.log(documents)
     });
 });
-
+router.get("/access/:uid", (req, res, next) => {
+    user.find({ _id: req.params.uid }).then(documents => {
+        var token = crypto.randomBytes(64).toString('hex');
+        res.status(status_ok).json({
+            token: token
+        });
+        console.log(documents)
+    });
+});
 router.get("/portfolio", (req, res, next) => {
     portfolio.find().then(documents => {
         res.status(status_ok).json({
@@ -129,39 +140,6 @@ router.post("/offer", (req, res, next) => {
             else
               console.log(info);
         });
-    });
-});
-
-router.get("/runOffer/:id.:type.:isAccept", (req, res, next) => {
-    let update = {progress: req.body.type};
-    let content = "<p>undefine</p>";
-    let email = "undefine";
-    let used = offer.find({_id: req.body.type, progress: req.body.type});
-
-
-    if(req.body.idAccept == "false") {
-        update.progress = "decline";
-    }
-    else if(req.body.idAccept == "true"){
-        if(req.body.type == "wait-photographer") {
-            update.progress = "wait-employer";
-        }
-        else if(req.body.type == "wait-employer") {
-            update.progress = "accept"
-        };
-    }
-    let mailOptions = {
-        from: 'phomooffermanager@gmail.com',                // sender
-        to: email,                // list of receivers
-        subject: 'Phomo Job Offer',              // Mail subject
-        html: content   // HTML body
-    };
-    offer.findOneAndUpdate({_id: req.body.id, progress: req.body.type})
-    transporter.sendMail(mailOptions, function (err, info) {
-            if(err)
-              console.log(err)
-            else
-              console.log(info);
     });
 });
 module.exports = router;
