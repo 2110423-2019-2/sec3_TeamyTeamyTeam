@@ -17,6 +17,7 @@ export default class Navbar extends Component {
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <span className="navbar-text">{this.props.appState.email}</span>
+            <Notification />
           </li>
           <li className="nav-item">
             <Link to="/login" className="nav-link" onClick={this.onSingout}>
@@ -36,7 +37,6 @@ export default class Navbar extends Component {
           {/* <span className="navbar-text d-none d-lg-block">
             <ion-icon name="notifications-outline"></ion-icon>
           </span> */}
-          <Notification />
           <span className="navbar-text d-none d-lg-block">/</span>
           <li className="nav-item">
             <Link to="/signup" className="nav-link">
