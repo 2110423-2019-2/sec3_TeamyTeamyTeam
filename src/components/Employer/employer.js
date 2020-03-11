@@ -4,13 +4,13 @@ class Employer extends Component{
     constructor(props) {
         super(props);
         this.state = {
-          name: "Otto",
-          numberOfJob :2,
-          style: [{s:"Graduation"},{s:"Portrait"},{s:"Wedding"}],
-          date: new Date(),
-          time: "Full day",
-          location: "123456",
-          photographer: "0",
+          name: "Otto Otto",
+          numberOfJob :2, // from history that has the same employer's name
+          style: [{s:"Graduation"},{s:"Portrait"},{s:"Wedding"}], // can edit
+          email:"123@gmail.com", // can edit
+          phone:"08x-xxx-xxxx", // can edit
+          firstRegister:"1/1/2019", //date of first register
+          latestOffer:"11/3/2020" //date of the latest offer base on photographers' history
         };
       }
 
@@ -25,32 +25,24 @@ class Employer extends Component{
 
     render(){
         return(
-            <div>
             <div className="container h-100 has-text-centered">
-                <div className="row"
-                style={{
-                    height:"100vh"
-                  }}>
-                    <div className="col-6 h-100"
-                    style={{
-                        padding:"10vh"
-                      }}>
-                        <div style={{height:"auto", maxWidth:"100%", paddingBottom:"5vh"}}>
-                            <img src="https://cdn.pixabay.com/photo/2020/03/08/11/21/british-4912211_1280.jpg" class="img-fluid"/>
+                <div className="row" style={{height:"100vh"}}>
+                    <div className="col-6 h-100" style={{padding:"10vh"}}>
+                        <div style={{height:"auto", maxWidth:"100%", paddingBottom:"5vh", overflow:"hidden", position:"relative"}}>
+                            <img src="https://cdn.pixabay.com/photo/2020/03/08/11/21/british-4912211_1280.jpg" class="img-fluid full-width rounded mx-auto d-block"/>
                         </div>
-                        <h3>Interest</h3>
+                        <p>Interest</p>
                             {this.renderStyle()}
                     </div>
-                    <div className="col-md-6 ml-auto"
-                    style={{
-                        padding:"10vh"
-                      }}>
-                        <h1>{this.state.name}</h1>
-                        
-                        {this.state.numberOfJob}
+                    <div className="col-6 h-100 has-text-left" style={{padding:"10vh"}}>
+                        <p>{this.state.name}</p>
+                        <p>Email: {this.state.email}</p>
+                        <p>Telephone number: {this.state.phone}</p>
+                        <p>Number of job offer: {this.state.numberOfJob}</p>
+                        <p>Register on: {this.state.firstRegister}</p>
+                        <p>Latest job offer: {this.state.latestOffer}</p>
                     </div>
                 </div>
-            </div>
             </div>
         );
     }
