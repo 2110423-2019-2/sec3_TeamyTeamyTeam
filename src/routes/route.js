@@ -17,11 +17,6 @@ export default class Routing extends React.Component {
     super(props);
   }
 
-  appState = this.props.appState;
-
-  login = (username, uid) => {
-    return this.props.login(username, uid);
-  };
   render() {
     return (
       <Switch>

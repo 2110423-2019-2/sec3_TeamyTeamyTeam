@@ -49,13 +49,16 @@ class JobOffer extends Component {
     axios
       .post("http://localhost:9000/api/offer", {
         title: this.state.title,
-        portfolioName: this.state.photographer,
-        employerName: this.props.appState.email,
+        portfolioName: this.state.photographer, // portfolioName == portfolioID
+        employerID: this.props.appState.uid,
+        employerEmail: this.props.appState.email,
         style: this.state.style,
-        date: this.state.date,
-        time: this.state.time,
+        actDate: this.state.date, // data_tag in server !!!
+        meetUpTime: this.state.time, // meetUpTime เวลาที่มาเจอกัน
         location: this.state.location,
-        progress: "wait-photographer"
+        progress: "wait photographer reply",
+        optionalRequest: "", // Text_block สำหรับการคุยคร่าวๆ
+        isReply: true
       })
       .then(res => {
         console.log(res);

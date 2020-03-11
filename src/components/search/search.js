@@ -92,7 +92,7 @@ export default class Search extends Component {
         {/* Results show here */}
         <div className="row">
           {this.state.searchResult.map(card => (
-            <SearchResultCard key={card._id} name={card.portfolioName} />
+            <SearchResultCard pid={card._id} name={card.portfolioName} />
           ))}
         </div>
       </div>

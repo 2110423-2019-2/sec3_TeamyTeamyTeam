@@ -9,7 +9,7 @@ class SearchResultCard extends Component {
       photographerName: this.props.name,
       profilePic:
         "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
-      portfolioLink: "/portfolio/" + this.props.name
+      portfolioLink: "/portfolio/" + this.props.name + "." + this.props.uid
     };
   }
 
