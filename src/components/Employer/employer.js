@@ -39,7 +39,7 @@ class Employer extends Component{
                     <div className="col-lg-6 h-100 has-text-left" style={{padding:"10vh"}}>
                         <dt>
                             <div class="col" style={{fontSize:"30px", fontStyle:"oblique", paddingBottom:"5vh"}}>{this.state.name}
-                                <Link to="">
+                                <Link to="/editEmployerProfile">
                                     <button className="btn btn-outline-light mx-3" style={{fontSize:"10px", marginLeft:"5vh"}}>Edit</button>
                                 </Link>
                             </div>
