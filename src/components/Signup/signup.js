@@ -28,8 +28,6 @@ class SignUp extends Component {
   onChange = e => {
     //ตรวจค่าของ name ใน Onchange และ set ค่าตามไปเรื่อยๆ
     const { name, value } = e.target;
-    console.log(e.target.name);
-    console.log(e.target.value);
     this.setState({
       [name]: value
     });

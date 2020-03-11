@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PortfolioHeader from "./portfolio-header";
 import PhotoCategory from "./photo-category";
+import { Link } from "react-router-dom";
 import "../../stylesheets/portfolio.css";
 
 class Portfolio extends Component {
@@ -46,6 +47,15 @@ class Portfolio extends Component {
   render() {
     return (
       <div>
+        <a href={this.state.photographerName + "/" + "edit"}>
+          <button
+            className="btn btn-md btn-primary position-fixed m-3"
+            style={{ right: "0", bottom: "0" }}
+          >
+            <ion-icon name="settings-outline"></ion-icon> Edit Portfolio
+          </button>
+        </a>
+
         <PortfolioHeader
           name={this.state.photographerName}
           profilePic={this.state.profilePic}
