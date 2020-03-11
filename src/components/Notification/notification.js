@@ -13,14 +13,16 @@ class Notification extends Component {
       notifications: [],
       allUnreadNotify: []
     };
+    this.handleAcceptJob = this.handleAcceptJob.bind(this);
+    this.handleDeclineJob = this.handleDeclineJob.bind(this);
   }
 
-  getNotify(){
+  getNotify() {
     axios
       .get("http://localhost:9000/api/notify/" + this.props.appState.email)
       .then(res => {
         console.log(res);
-        this.setState({allUnreadNotify: res});
+        this.setState({ allUnreadNotify: res });
       })
       .catch(err => console.error(err));
   }
@@ -30,7 +32,7 @@ class Notification extends Component {
     let toTalnotification = 15; //จำนวนnotiทั้งหมดของusers
     let numberOfUnreadNotification = 15; //จำนวนnotiที่ยังไม่ได้อ่าน
     let notifications = [];
-    this.setState({ 
+    this.setState({
       numberOfUnreadNotification: numberOfUnreadNotification,
       toTalnotification: toTalnotification,
       notifications: []
@@ -41,6 +43,16 @@ class Notification extends Component {
       notifications.push(this.state.allUnreadNotify[i]);
     }
     this.setState({ notifications: notifications });
+  }
+
+  handleAcceptJob() {
+    //ถ้ากดaccept
+    console.log("Accept");
+  }
+
+  handleDeclineJob() {
+    //ถ้ากดdecline
+    console.log("Decline");
   }
 
   render() {
@@ -77,7 +89,13 @@ class Notification extends Component {
           </li>
           <div className="overflow-auto" style={{ maxHeight: "400px" }}>
             {this.state.notifications.length > 0 ? (
-              this.state.notifications.map(() => <NotificationBox />)
+              this.state.notifications.map(() => (
+                <NotificationBox
+                  type="offer"
+                  handleAcceptJob={this.handleAcceptJob}
+                  handleDeclineJob={this.handleDeclineJob}
+                />
+              ))
             ) : (
               <div className="text-center m-3">
                 <span>

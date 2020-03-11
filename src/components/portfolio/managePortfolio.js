@@ -34,6 +34,26 @@ class ManagePortfolio extends Component {
             tag={"Wedding"}
             imgLink="https://images.pexels.com/photos/1800994/pexels-photo-1800994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
           />
+          <UploadedPhoto
+            photoID={99}
+            tag={"Wedding"}
+            imgLink="https://images.pexels.com/photos/1800994/pexels-photo-1800994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+          />
+          <UploadedPhoto
+            photoID={99}
+            tag={"Wedding"}
+            imgLink="https://images.pexels.com/photos/1800994/pexels-photo-1800994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+          />
+          <UploadedPhoto
+            photoID={99}
+            tag={"Wedding"}
+            imgLink="https://images.pexels.com/photos/1800994/pexels-photo-1800994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+          />
+          <UploadedPhoto
+            photoID={99}
+            tag={"Wedding"}
+            imgLink="https://images.pexels.com/photos/1800994/pexels-photo-1800994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+          />
           <div className="col-lg-3 col-md-4 col-xs-4 ">
             <button
               type="file"
