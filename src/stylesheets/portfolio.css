@@ -37,6 +37,7 @@
   width: max-content;
   height: max-content;
   opacity: 0;
+  transition: ease-in-out 0.2s;
 }
 
 .managePhoto:hover .manageOverlay {

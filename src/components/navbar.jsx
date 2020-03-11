@@ -15,18 +15,42 @@ export default class Navbar extends Component {
     if (isLogin)
       return (
         <ul className="navbar-nav ml-auto">
-          <li className="nav-item">
-            <span className="navbar-text">{this.props.appState.email}</span>
-            <Notification {...this.props} />
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="userDropdown"
+              role="button"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i className="mr-1">
+                <ion-icon name="person-circle-outline"></ion-icon>
+              </i>
+              {this.props.appState.email}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="userDropdown">
+              <a class="dropdown-item" href="/employer">
+                <ion-icon name="reader-outline"></ion-icon> Profile
+              </a>
+              <a class="dropdown-item" href="/portfolio/users">
+                <ion-icon name="images-outline"></ion-icon> Portfolio
+              </a>
+              <a class="dropdown-item" href="/history">
+                <ion-icon name="file-tray-full-outline"></ion-icon> History
+              </a>
+              <a class="dropdown-item" href="/login" onClick={this.onSingout}>
+                <ion-icon name="log-out-outline"></ion-icon> Sign out
+              </a>
+            </div>
           </li>
           <li className="nav-item">
-            <Link to="/login" className="nav-link" onClick={this.onSingout}>
-              Sign out
-            </Link>
+            <Notification {...this.props} />
           </li>
         </ul>
       );
-    else 
+    else
       return (
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
@@ -50,7 +74,7 @@ export default class Navbar extends Component {
   render() {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-        <Link className="navbar-brand" style={{ minHeight: "0" }} to="#">
+        <Link className="navbar-brand" style={{ minHeight: "0" }} to="/">
           PHOMO
         </Link>
         <button
@@ -70,9 +94,9 @@ export default class Navbar extends Component {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link className="nav-link" to="/">
+              {/* <Link className="nav-link" to="/">
                 Home
-              </Link>
+              </Link> */}
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="/search">

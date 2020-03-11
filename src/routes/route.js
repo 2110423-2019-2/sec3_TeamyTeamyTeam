@@ -56,7 +56,7 @@ export default class Routing extends React.Component {
           component={props => <OfferProgress {...this.props} {...props} />}
         />
         <Route
-          path="/photoHis"
+          path="/history"
           render={props => <PhotoHis {...this.props} {...props} />}
         />
         <Route
