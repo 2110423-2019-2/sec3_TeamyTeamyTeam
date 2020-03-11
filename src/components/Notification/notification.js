@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../../stylesheets/notification.css";
 import NotificationBox from "./notificationBox";
+import axios from "axios";
 
 class Notification extends Component {
   constructor(props) {
@@ -9,21 +10,37 @@ class Notification extends Component {
       UID: 0,
       numberOfUnreadNotification: 0,
       toTalnotification: 0,
-      notifications: []
+      notifications: [],
+      allUnreadNotify: []
     };
+  }
+
+  getNotify(){
+    axios
+      .get("http://localhost:9000/api/notify/" + this.props.appState.email)
+      .then(res => {
+        console.log(res);
+        this.setState({allUnreadNotify: res});
+      })
+      .catch(err => console.error(err));
   }
 
   componentDidMount() {
     //Retrieve notification's object
     let toTalnotification = 15; //จำนวนnotiทั้งหมดของusers
     let numberOfUnreadNotification = 15; //จำนวนnotiที่ยังไม่ได้อ่าน
-    this.setState({ numberOfUnreadNotification });
-    //จะกำหนดให้แสดงผล10อันล่าสุดเท่านั้น แต่ตัวnotiที่ยังไม่อ่านจะแสดงตามจริง
     let notifications = [];
+    this.setState({ 
+      numberOfUnreadNotification: numberOfUnreadNotification,
+      toTalnotification: toTalnotification,
+      notifications: []
+    });
+    //จะกำหนดให้แสดงผล10อันล่าสุดเท่านั้น แต่ตัวnotiที่ยังไม่อ่านจะแสดงตามจริง
+    this.getNotify();
     for (let i = 0; i < Math.min(toTalnotification, 10); i += 1) {
-      notifications.push("");
+      notifications.push(this.state.allUnreadNotify[i]);
     }
-    this.setState({ notifications });
+    this.setState({ notifications: notifications });
   }
 
   render() {

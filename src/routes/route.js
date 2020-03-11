@@ -15,11 +15,6 @@ export default class Routing extends React.Component {
     super(props);
   }
 
-  appState = this.props.appState;
-
-  login = (username, uid) => {
-    return this.props.login(username, uid);
-  };
   render() {
     return (
       <Switch>
@@ -27,8 +22,8 @@ export default class Routing extends React.Component {
         <Route path="/login" render={(props) => <Login {...this.props} {...props} />} />
         <Route exact path="/signup" component={(props) => <SignUp {...this.props} {...props}/>} />
         <Route exact path="/search" component={(props) => <Search {...this.props} {...props}/>} />
-        <Route exact path="/portfolio/:name" render={(props) => <Portfolio {...this.props} {...props}/>} />
-        <Route exact path="/offer/:name" component={(props) => <JobOffer {...this.props} {...props}/>} />
+        <Route exact path="/portfolio/:name.:pid" render={(props) => <Portfolio {...this.props} {...props}/>} />
+        <Route exact path="/offer/:name.:pid" component={(props) => <JobOffer {...this.props} {...props}/>} />
         <Route exact path="/offerProgress/:id.:type.:isAccept" component={(props) => <OfferProgress {...this.props} {...props}/>} />
         <Route path="/photoHis" render={(props) => <PhotoHis {...this.props} {...props}/>} />
       </Switch>

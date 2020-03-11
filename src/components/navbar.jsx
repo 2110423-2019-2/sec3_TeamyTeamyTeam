@@ -17,7 +17,7 @@ export default class Navbar extends Component {
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <span className="navbar-text">{this.props.appState.email}</span>
-            <Notification />
+            <Notification {...this.props} />
           </li>
           <li className="nav-item">
             <Link to="/login" className="nav-link" onClick={this.onSingout}>

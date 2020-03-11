@@ -30,7 +30,7 @@ class App extends Component {
     })
   }
 
-  storeStorage(isLogin, email, uid, token) {
+  storeStorage(isLogin, email, uid) {
     localStorage.setItem("isLogin", isLogin);
     localStorage.setItem("email", email);
     localStorage.setItem("uid", uid);
@@ -49,13 +49,13 @@ class App extends Component {
     console.log(this.state);
   }
 
-  login = (username, uid, token) => {
+  login = (username, uid) => {
     this.setState({
       isLogin: true,
       email: username,
       uid: uid,
     });
-    this.storeStorage(true, username);
+    this.storeStorage(true, username, uid);
   };
   logout = () => {
     this.setState({
