@@ -6,9 +6,9 @@ class Employer extends Component{
         this.state = {
           name: "Otto Otto",
           numberOfJob :2, // from history that has the same employer's name
-          style: [{s:"Graduation"},{s:"Portrait"},{s:"Wedding"}], // can edit
-          email:"123@gmail.com", // can edit
-          phone:"08x-xxx-xxxx", // can edit
+          style: [{s:"Graduation"},{s:"Portrait"},{s:"Wedding"}], // default, can edit
+          email:"123@gmail.com", // from sign up, can edit
+          phone:"08x-xxx-xxxx", // from sign up, can edit
           firstRegister:"1/1/2019", //date of first register
           latestOffer:"11/3/2020" //date of the latest offer base on photographers' history
         };
