@@ -22,6 +22,7 @@ const transporter = nodemailer.createTransport({
 router.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     next();
   });
 
@@ -109,7 +110,7 @@ router.post("/offer", (req, res, next) => {
         portfolio.find({portfolioName: offer_post.portfolioName}).then(documents => {
             const notify_post = new notify({
                 email: documents[0].email,
-                content: offer_post.title + " => " + offer_post.progress,
+                content: offer_post.title + ": " + offer_post.progress,
                 redirectLink: "-", // redirect to the  accept/decline section
                 isRead: false,
                 isReply: req.body.isReply
@@ -139,12 +140,17 @@ router.post("/portfolio", (req, res, next) => {
     });
 });
 router.get("/notify/:email", (req, res, next) => {
-    notify.find({email: req.params.email, isRead: false}).then(documents => {
+    notify.find({email: req.params.email}).then(documents => {
         res.status(status_ok).json({
             message: "Registor fetched successfully!",
             data: documents 
         });
         console.log(documents)
     });
+});
+router.put("/readNotify/:email", (req, res, next) => {
+    notify.update({email: req.params.email, isRead: false},{
+        isRead: true
+    }).exec();
 });
 module.exports = router;
