@@ -22,27 +22,30 @@ class Notification extends Component {
       .get("http://localhost:9000/api/notify/" + this.props.appState.email)
       .then(res => {
         console.log(res);
-        this.setState({ allUnreadNotify: res });
+        //Retrieve notification's object
+        let notifications = [];
+        let numberOfUnreadNotification = 0;
+        //จะกำหนดให้แสดงผล10อันล่าสุดเท่านั้น แต่ตัวnotiที่ยังไม่อ่านจะแสดงตามจริง
+        let toTalnotification = res.data.data.length;
+        for (let i = 0; i < Math.min(toTalnotification, 10); i += 1) {
+          notifications.push(res.data.data[i]);
+          if(res.data.data[i].isRead == false) {
+            numberOfUnreadNotification = numberOfUnreadNotification + 1;
+            axios.put("http://localhost:9000/api/readNotify/" + this.props.appState.email,{})
+          }
+        }
+        this.setState({ 
+          toTalnotification: toTalnotification,
+          numberOfUnreadNotification: numberOfUnreadNotification,
+          notifications: notifications 
+        });
       })
       .catch(err => console.error(err));
   }
 
   componentDidMount() {
     //Retrieve notification's object
-    let toTalnotification = 15; //จำนวนnotiทั้งหมดของusers
-    let numberOfUnreadNotification = 15; //จำนวนnotiที่ยังไม่ได้อ่าน
-    let notifications = [];
-    this.setState({
-      numberOfUnreadNotification: numberOfUnreadNotification,
-      toTalnotification: toTalnotification,
-      notifications: []
-    });
-    //จะกำหนดให้แสดงผล10อันล่าสุดเท่านั้น แต่ตัวnotiที่ยังไม่อ่านจะแสดงตามจริง
     this.getNotify();
-    for (let i = 0; i < Math.min(toTalnotification, 10); i += 1) {
-      notifications.push(this.state.allUnreadNotify[i]);
-    }
-    this.setState({ notifications: notifications });
   }
 
   handleAcceptJob() {
@@ -68,11 +71,8 @@ class Notification extends Component {
           aria-expanded="false"
         >
           <ion-icon name="notifications-outline"></ion-icon>
-          {this.state.numberOfUnreadNotification > 0 ? (
-            <span data-badge={this.state.numberOfUnreadNotification}></span>
-          ) : (
-            ""
-          )}
+          <span data-badge={this.state.numberOfUnreadNotification}></span>
+
         </a>
         <ul className="dropdown-menu">
           <li className="head text-light bg-dark">
@@ -89,13 +89,12 @@ class Notification extends Component {
           </li>
           <div className="overflow-auto" style={{ maxHeight: "400px" }}>
             {this.state.notifications.length > 0 ? (
-              this.state.notifications.map(() => (
-                <NotificationBox
-                  type="offer"
-                  handleAcceptJob={this.handleAcceptJob}
-                  handleDeclineJob={this.handleDeclineJob}
-                />
-              ))
+              this.state.notifications.map(
+                res => <NotificationBox res={res}
+                type="offer"
+                handleAcceptJob={this.handleAcceptJob}
+                handleDeclineJob={this.handleDeclineJob}
+              />)
             ) : (
               <div className="text-center m-3">
                 <span>

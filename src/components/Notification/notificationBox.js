@@ -6,9 +6,9 @@ class NotificationBox extends Component {
     super(props);
     this.handleRead = this.handleRead.bind(this);
     this.state = {
-      type: this.props.type,
-      sender: "Alexander Wang", //userID
-      message: "Your job is accepted",
+      type: "",
+      sender: this.props.res.email, //userID
+      message: this.props.res.content,
       date: "Dec 12, 2019",
       isRead: false
     };
