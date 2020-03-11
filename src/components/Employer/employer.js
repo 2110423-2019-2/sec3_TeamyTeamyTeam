@@ -6,13 +6,22 @@ class Employer extends Component{
         this.state = {
           name: "Otto",
           numberOfJob :2,
-          style: "Graduation",
+          style: [{s:"Graduation"},{s:"Portrait"},{s:"Wedding"}],
           date: new Date(),
           time: "Full day",
           location: "123456",
           photographer: "0",
         };
       }
+
+      renderStyle() {
+        return this.state.style.map((style, index) => {
+           const {s} = style //destructuring
+           return (
+              <div>{s}</div>
+           )
+        })
+     }
 
     render(){
         return(
@@ -24,24 +33,20 @@ class Employer extends Component{
                   }}>
                     <div className="col-6 h-100"
                     style={{
-                        background:"orange",
-                        backgroundSize: "cover",
-                        backgroundRepeat: "no-repeat",
                         padding:"10vh"
                       }}>
+                        <div style={{height:"auto", maxWidth:"100%", paddingBottom:"5vh"}}>
+                            <img src="https://cdn.pixabay.com/photo/2020/03/08/11/21/british-4912211_1280.jpg" class="img-fluid"/>
+                        </div>
                         <h3>Interest</h3>
-                            <div>{this.state.style}</div>
+                            {this.renderStyle()}
                     </div>
                     <div className="col-md-6 ml-auto"
                     style={{
-                        background:"lightblue",
-                        backgroundSize: "cover",
-                        backgroundRepeat: "no-repeat",
                         padding:"10vh"
                       }}>
                         <h1>{this.state.name}</h1>
-                        <h3>Interest</h3>
-                            <div>{this.state.style}</div>
+                        
                         {this.state.numberOfJob}
                     </div>
                 </div>
