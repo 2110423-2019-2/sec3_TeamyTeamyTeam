@@ -6,7 +6,7 @@ import "react-datepicker/dist/react-datepicker-cssmodules.min.css";
 
 import ScrollToTop from "./components/scrollToTop";
 import Navbar from "./components/navbar";
-import cookie from 'react-cookies';
+
 
 class App extends Component {
   constructor(props) {

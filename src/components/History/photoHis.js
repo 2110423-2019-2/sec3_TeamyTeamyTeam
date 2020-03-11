@@ -1,32 +1,51 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-class PhotoHis extends Component {
+// //////////////// refactor ใหม่หมด ////////////////// //
+class PhotoHis extends Component { 
   constructor(props) {
     super(props);
+    this.getResult = this.getResult.bind(this);
     this.state = {
-      history: [
-        { id: 1, title: 'Title1', style: 'Graduation', name: 'Otto', date: '2/2/2020', time: 'Full day', location:'123456', status:'In progress' },
-        { id: 2, title: 'Title2', style: 'Wedding', name: 'Ton', date: '1/1/2020', time: 'Half day morning', location:'123456', status:'Cancelled' },
-        { id: 3, title: 'Title3', style: 'Portrait', name: 'Jane', date: '17/10/2019', time: 'Half day evening', location:'123456', status:'Finished' },
-        { id: 4, title: 'Title4', style: 'Graduation', name: 'Otto', date: '16/9/2019', time: 'Full day', location:'123456', status:'Finished' },
-     ]
+       historyResult: []
     };
   }
 
+  getResult() {
+    console.log("this.props.email",localStorage.getItem("email")) // ควรจะเป็น this.props.appState.email
+    //This function is where Back-end operates e.g. fetching photographer data from server
+    let history = []; // use next sprint to match real case
+    //Use this.state.keyword to query correct photographers
+    axios
+      .get("http://localhost:9000/api/offer/"+ localStorage.getItem("email")) // ควรจะเป็น this.props.appState.email
+      .then(res => {
+        console.log(res.data.data);
+        //historyResult = res.data.data;
+        //console.log(historyResult)
+        console.log([ {  title: 'Title1', style: 'Graduation', portfolioName: 'Otto', meetUpTime: '2/2/2020', actDate: 'Full day', location:'123456', progress:'In progress' } ])
+        this.setState( {historyResult: [ {  title: 'Title1', style: 'Graduation', portfolioName: 'Otto', meetUpTime: '2/2/2020', actDate: 'Full day', location:'123456', progress:'In progress' } ] })
+
+          // {  title: 'Title2', style: 'Wedding', portfolioName: 'Ton', meetUpTime: '1/1/2020', actDate: 'Half day morning', location:'123456', progress:'Cancelled' },
+          // { title: 'Title3', style: 'Portrait', portfolioName: 'Jane', meetUpTime: '17/10/2019', actDate: 'Half day evening', location:'123456', progress:'Finished' },
+          // {  title: 'Title4', style: 'Graduation', portfolioName: 'Otto', meetUpTime: '16/9/2019', actDate: 'Full day', location:'123456', progress:'Finished' }
+
+      })
+      .catch(err => console.error(err));
+  }
+
   renderTableData() {
-    return this.state.history.map((hist, index) => {
-       const { id, title, style, name, date, time, location, status} = hist //destructuring
+    return this.state.historyResult.map((hist) => {
+       const { title, style, portfolioName, actDate, meetUpTime, location, progress} = hist //destructuring
        return (
-          <tr key={id}>
-            <th scope="row">{id}</th>
+          <tr key={title}>
+            <th scope="row">{title}</th>
              <td>{title}</td>
              <td>{style}</td>
-             <td>{name}</td>
-             <td>{date}</td>
-             <td>{time}</td>
+             <td>{portfolioName}</td>
+             <td>{actDate}</td>
+             <td>{meetUpTime}</td>
              <td>{location}</td>
-             <td>{status}</td>
+             <td>{progress}</td>
           </tr>
        )
     })
@@ -35,10 +54,14 @@ class PhotoHis extends Component {
   render() {
     return (
       <div className="section container">
+        
         <div className="columns is-centered">
         <div class="table-responsive">
             <table class="table" id="history" responsive="lg">
                 <thead class="thead-dark">
+                     <li> <button className="btn btn-outline-dark" type="submit"
+                     onClick={this.getResult}> View history </button>
+                     </li>
                     <tr>
                         <th scope="col">Number</th>
                         <th scope="col">Job title</th>
