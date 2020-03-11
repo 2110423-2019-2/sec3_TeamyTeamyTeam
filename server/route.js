@@ -24,7 +24,7 @@ router.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     next();
-  });
+});
 
 
 router.post("/user", (req, res, next) => {
@@ -67,26 +67,29 @@ router.get("/portfolio", (req, res, next) => {
     portfolio.find().then(documents => {
         res.status(status_ok).json({
             message: "Registor fetched successfully!",
-            data: documents 
+            data: documents
         });
         console.log(documents)
     });
 });
 
 router.get("/portfolioTags/:key", (req, res, next) => {
-    portfolio.find({tags: req.params.key}).then(documents => {
+    portfolio.find({ tags: req.params.key }).then(documents => {
         res.status(status_ok).json({
             message: "Registor fetched successfully!",
-            data: documents 
+            data: documents
         });
         console.log(documents)
     });
 });
-router.get("/portfolio/:name", (req, res, next) => {
-    portfolio.find({portfolioName: req.params.name}).then(documents => {
+
+router.get("/offer/:email", (req, res, next) => {
+    user.find({ email: req.params.email }).then(user_mail => {
+        offer.find({ employerEmail: req.params.user_mail })
+    }).then(documents => {
         res.status(status_ok).json({
-            message: "Registor fetched successfully!",
-            data: documents 
+            message: "offer get fetched successfully!",
+            data: documents
         });
         console.log(documents)
     });
@@ -107,7 +110,7 @@ router.post("/offer", (req, res, next) => {
         optionalRequest: req.body.optionalRequest // Text_block สำหรับการคุยคร่าวๆ
     });
     offer_post.save().then(() => {
-        portfolio.find({portfolioName: offer_post.portfolioName}).then(documents => {
+        portfolio.find({ portfolioName: offer_post.portfolioName }).then(documents => {
             const notify_post = new notify({
                 email: documents[0].email,
                 content: offer_post.title + ": " + offer_post.progress,
@@ -117,10 +120,10 @@ router.post("/offer", (req, res, next) => {
             });
             notify_post.save();
             console.log(offer_post);
-            console.log(notify_post); 
-        }); 
+            console.log(notify_post);
+        });
     });
-    
+
     res.status(status_created).json({
         message: "Post added successful"
     });
@@ -143,11 +146,68 @@ router.get("/notify/:email", (req, res, next) => {
     notify.find({email: req.params.email}).then(documents => {
         res.status(status_ok).json({
             message: "Registor fetched successfully!",
-            data: documents 
+            data: documents
         });
         console.log(documents)
     });
 });
+
+
+// router.put("/user", (req, res, next) => {
+//     const user_profile = user.find(m => user.email === parseInt(req.params.email));
+//     if (!user_profile) {
+//         res.status(404).send('The profile with the given ID was not found ')
+//     } else {
+
+
+
+
+
+
+
+//         if (user_profile.firstName === '') {
+//             user_profile.firstName = req.params.firstName
+//         }
+
+//         res.send(user_profile);
+//     }
+//     user_post.save();
+
+
+
+
+//     // firstName: req.body.firstName,
+//     // lastName: req.body.lastName,
+//     // email: req.body.email,
+//     // username: req.body.username,
+//     // password: req.body.password,
+//     // nationalID: req.body.nationalID,
+//     // gender: req.body.gender,
+//     // birthDate: req.body.birthDate,
+//     // isPhotographer: req.body.isPhotographer,
+//     // phoneNo: req.body.phoneNo,
+//     // introduction: req.body.introduction,
+//     // profileImage: req.body.profileImage,
+//     // portfolioID: req.body.portfolioID,
+//     // avgRating: req.body.avgRating,
+//     // authorize: false
+
+//     console.log(user_post);
+//     res.status(status_created).json({
+//         message: "Put update profile successful"
+//     });
+// });
+
+router.get("/user/:email", (req, res, next) => {
+    user.find({ email: req.params.email }).then(documents => {
+        res.status(status_ok).json({
+            message: "get employee fetched successfully!",
+            data: documents
+        });
+        console.log(documents)
+    });
+});
+
 router.put("/readNotify/:email", (req, res, next) => {
     notify.update({email: req.params.email, isRead: false},{
         isRead: true

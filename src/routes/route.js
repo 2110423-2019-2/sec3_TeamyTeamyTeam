@@ -11,6 +11,7 @@ import OfferProgress from "../components/offerProgress/offerProgress";
 import PhotoHis from "../components/History/photoHis";
 import ManagePortfolio from "../components/portfolio/managePortfolio";
 import Employer from "../components/Employer/employer";
+import EditEmployerProfile from "../components/Employer/editEmployerProfile";
 
 export default class Routing extends React.Component {
   constructor(props) {
@@ -67,6 +68,11 @@ export default class Routing extends React.Component {
           exact
           path="/employer"
           render={props => <Employer {...this.props} {...props} />}
+        />
+        <Route
+          exact
+          path="/editEmployerProfile"
+          render={props => <EditEmployerProfile {...this.props} {...props} />}
         />
       </Switch>
     );

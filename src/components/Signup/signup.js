@@ -33,33 +33,7 @@ class SignUp extends Component {
     });
     // console.log(this.state);
   };
-  // ทำการส่งตัวของ การ Login ไปให้กับตัวของ Firebase และ Firebase จะเป็นผู้จัดการที่เหลือให้
-  /*onSubmit = e => {
-    e.preventDefault();
-    if (!e.target.checkValidity()) {
-      this.setState({ displayErrors: true });
-      return;
-    }
-    this.setState({ displayErrors: false });
-    console.log("Success!");
-    // const { email, password } = this.state;
-    // auth.createUserWithEmailAndPassword(email, password).catch(function(error) {
-    //   // Handle Errors here.
-    //   this.setState({
-    //     message: error.message
-    //   });
-    // });
-  };
-  componentDidMount() {
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        this.setState({
-          currentUser: user
-        });
-      }
-    });
-  }*/
-
+ 
   onSubmit = e => {
     e.preventDefault();
     if (!e.target.checkValidity()) {

@@ -13,9 +13,11 @@ class Notification extends Component {
       notifications: [],
       allUnreadNotify: []
     };
+    this.handleAcceptJob = this.handleAcceptJob.bind(this);
+    this.handleDeclineJob = this.handleDeclineJob.bind(this);
   }
 
-  getNotify(){
+  getNotify() {
     axios
       .get("http://localhost:9000/api/notify/" + this.props.appState.email)
       .then(res => {
@@ -44,6 +46,16 @@ class Notification extends Component {
   componentDidMount() {
     //Retrieve notification's object
     this.getNotify();
+  }
+
+  handleAcceptJob() {
+    //ถ้ากดaccept
+    console.log("Accept");
+  }
+
+  handleDeclineJob() {
+    //ถ้ากดdecline
+    console.log("Decline");
   }
 
   render() {
@@ -77,7 +89,12 @@ class Notification extends Component {
           </li>
           <div className="overflow-auto" style={{ maxHeight: "400px" }}>
             {this.state.notifications.length > 0 ? (
-              this.state.notifications.map(res => <NotificationBox res={res}/>)
+              this.state.notifications.map(
+                res => <NotificationBox res={res}
+                type="offer"
+                handleAcceptJob={this.handleAcceptJob}
+                handleDeclineJob={this.handleDeclineJob}
+              />)
             ) : (
               <div className="text-center m-3">
                 <span>

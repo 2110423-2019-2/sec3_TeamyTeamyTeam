@@ -1,24 +1,40 @@
-import React, { Component } from "react"; 
+import React, { Component } from "react";
+import { Link } from "react-router-dom"; 
+import axios from "axios";
 
 class Employer extends Component{
     constructor(props) {
         super(props);
+        //this.renderStyle = this.renderStyle.bind(this);
+        //this.getData = this.getData.bind(this);
         this.state = {
           name: "Otto Otto",
           numberOfJob :2, // from history that has the same employer's name
           style: [{s:"Graduation"},{s:"Portrait"},{s:"Wedding"}], // default, can edit
-          email:"123@gmail.com", // from sign up, can edit
+          email:this.props.appState.email, // from sign up, can edit
           phone:"08x-xxx-xxxx", // from sign up, can edit
           firstRegister:"1/1/2019", //date of first register
           latestOffer:"11/3/2020" //date of the latest offer base on photographers' history
         };
       }
 
+    //   getData(){
+    //     let EmployeeResult = {}
+    //     axios.get("http://localhost:9000/user/"+ localStorage.getItem("email"))
+    //     .then(res => {
+    //         EmployeeResult = res.data.data;
+    //         const {name  , email ,phone } = EmployeeResult;
+    //         this.setState({name: name , email:email, phone:phone })
+    //     })
+        
+    //   };
+ 
       renderStyle() {
+        //this.getData()
         return this.state.style.map((style, index) => {
            const {s} = style //destructuring
            return (
-              <div>{s}</div>
+              <div style={{fontSize:"18px", paddingBottom:"1vh"}}>{s}</div>
            )
         })
      }
@@ -26,21 +42,38 @@ class Employer extends Component{
     render(){
         return(
             <div className="container h-100 has-text-centered">
+                
                 <div className="row" style={{height:"100vh"}}>
                     <div className="col-6 h-100" style={{padding:"10vh"}}>
                         <div style={{height:"auto", maxWidth:"100%", paddingBottom:"5vh", overflow:"hidden", position:"relative"}}>
                             <img src="https://cdn.pixabay.com/photo/2020/03/08/11/21/british-4912211_1280.jpg" class="img-fluid full-width rounded mx-auto d-block"/>
                         </div>
-                        <p>Interest</p>
+                        <p style={{fontSize:"30px", fontStyle:"lead", paddingBottom:"1vh"}}>Interest</p>
                             {this.renderStyle()}
                     </div>
-                    <div className="col-6 h-100 has-text-left" style={{padding:"10vh"}}>
-                        <p>{this.state.name}</p>
-                        <p>Email: {this.state.email}</p>
-                        <p>Telephone number: {this.state.phone}</p>
-                        <p>Number of job offer: {this.state.numberOfJob}</p>
-                        <p>Register on: {this.state.firstRegister}</p>
-                        <p>Latest job offer: {this.state.latestOffer}</p>
+                    
+                    <div className="col-lg-6 h-100 has-text-left" style={{padding:"10vh"}}>
+                        <dt>
+                            <div class="col" style={{fontSize:"30px", fontStyle:"oblique", paddingBottom:"5vh"}}>{this.state.name}
+                                <Link to="/editEmployerProfile">
+                                    <button className="btn btn-outline-light mx-3" style={{fontSize:"10px", marginLeft:"5vh"}}>Edit</button>
+                                </Link>
+                            </div>
+                        </dt>    
+                        <dt class="col-sm-6">Email:</dt>
+                            <dd class="col-sm-6" style={{paddingBottom:"2vh"}}>{this.state.email}</dd>
+                        <dt class="col-sm-6">Telephone number:</dt>
+                            <dd class="col-sm-6" style={{paddingBottom:"2vh"}}>{this.state.phone}</dd>
+                        <dt class="col-sm-6">Number of job offer:</dt>
+                            <dd class="col-sm-6" style={{paddingBottom:"2vh"}}>{this.state.numberOfJob}</dd>
+                        <dt class="col-sm-6">Register on:</dt>
+                            <dd class="col-sm-6" style={{paddingBottom:"2vh"}}>{this.state.firstRegister}</dd>
+                        <dt class="col-sm-6">Latest job offer:</dt>
+                            <dd class="col-sm-6" style={{paddingBottom:"2vh"}}>{this.state.latestOffer}</dd>
+                        <Link to="/editEmployerProfile">
+                        <button className="btn btn-outline-dark"> Edit Profile</button>
+                        </Link>
+                     
                     </div>
                 </div>
             </div>
