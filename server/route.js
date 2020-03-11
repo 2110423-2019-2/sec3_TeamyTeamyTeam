@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const portfolio = require('./schema/portfolio')
 const user = require('./schema/user')
 const offer = require('./schema/offer')
+const notify = require('./schema/notify')
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 
@@ -56,17 +57,7 @@ router.get("/login/:email.:password", (req, res, next) => {
         var token = crypto.randomBytes(64).toString('hex');
         res.status(status_ok).json({
             message: "Registor fetched successfully!",
-            data: documents,
-            token: token
-        });
-        console.log(documents)
-    });
-});
-router.get("/access/:uid", (req, res, next) => {
-    user.find({ _id: req.params.uid }).then(documents => {
-        var token = crypto.randomBytes(64).toString('hex');
-        res.status(status_ok).json({
-            token: token
+            data: documents
         });
         console.log(documents)
     });
@@ -80,6 +71,7 @@ router.get("/portfolio", (req, res, next) => {
         console.log(documents)
     });
 });
+
 router.get("/portfolioTags/:key", (req, res, next) => {
     portfolio.find({tags: req.params.key}).then(documents => {
         res.status(status_ok).json({
@@ -102,44 +94,57 @@ router.get("/portfolio/:name", (req, res, next) => {
 router.post("/offer", (req, res, next) => {
     const offer_post = new offer({
         title: req.body.title,
-        portfolioName: req.body.portfolioName,
-        employerName: req.body.employerName,
+        photographerID: req.body.photographerID,
+        portfolioName: req.body.portfolioName, // portfolioName == portfolioID
+        employerID: req.body.employerID,
+        employerEmail: req.body.employerEmail,
         style: req.body.style,
-        date: req.body.date,
-        time: req.body.time,
+        actDate: req.body.actDate, // data_tag in server !!!
+        meetUpTime: req.body.meetUpTime, // meetUpTime เวลาที่มาเจอกัน
         location: req.body.location,
-        progress: req.body.progress
+        progress: req.body.progress,
+        optionalRequest: req.body.optionalRequest // Text_block สำหรับการคุยคร่าวๆ
     });
-    offer_post.save();
+    offer_post.save().then(() => {
+        portfolio.find({portfolioName: offer_post.portfolioName}).then(documents => {
+            const notify_post = new notify({
+                email: documents[0].email,
+                content: offer_post.title + " => " + offer_post.progress,
+                redirectLink: "-", // redirect to the  accept/decline section
+                isRead: false,
+                isReply: req.body.isReply
+            });
+            notify_post.save();
+            console.log(offer_post);
+            console.log(notify_post); 
+        }); 
+    });
+    
+    res.status(status_created).json({
+        message: "Post added successful"
+    });
+});
+router.post("/portfolio", (req, res, next) => {
+    const port = new portfolio({
+        photographerName: req.body.photographerName, // gather email by ID
+        email: req.body.email,
+        tags: req.body.tags,
+        minBath: req.body.minBath,
+        maxBath: req.body.maxBath
+    });
+    port.save();
     console.log(offer_post);
     res.status(status_created).json({
         message: "Post added successful"
     });
-
-    portfolio.find({portfolioName: req.body.portfolioName}).then(documents => {
-        console.log(documents)
-        const email = documents[0].email;
-        const nodemailer = require('nodemailer');
-        
-    
-        let mailOptions = {
-            from: 'phomooffermanager@gmail.com',                // sender
-            to: email,                // list of receivers
-            subject: 'Phomo Job Offer',              // Mail subject
-            html: '<p>Employer "'+ req.body.employerName +'"</p>'
-                + '<p>have just offer you a job</p>'
-                + '<p>Title: "'+ req.body.title +'"</p>'
-                + '<p>Style: "'+ req.body.style +'"</p>'
-                + '<p>Date: "'+ req.body.date.substring(0, 10) +'"</p>'
-                + '<p>Time: "'+ req.body.time +'"</p>'
-                + '<p>Location: "'+ req.body.location +'"</p>'
-        };
-        transporter.sendMail(mailOptions, function (err, info) {
-            if(err)
-              console.log(err)
-            else
-              console.log(info);
+});
+router.get("/notify/:email", (req, res, next) => {
+    notify.find({email: req.params.email, isRead: false}).then(documents => {
+        res.status(status_ok).json({
+            message: "Registor fetched successfully!",
+            data: documents 
         });
+        console.log(documents)
     });
 });
 module.exports = router;
