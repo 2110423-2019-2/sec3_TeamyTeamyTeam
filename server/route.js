@@ -150,4 +150,61 @@ router.get("/notify/:email", (req, res, next) => {
         console.log(documents)
     });
 });
+
+
+// router.put("/user", (req, res, next) => {
+//     const user_profile = user.find(m => user.email === parseInt(req.params.email));
+//     if (!user_profile) {
+//         res.status(404).send('The profile with the given ID was not found ')
+//     } else {
+
+
+
+
+
+
+
+//         if (user_profile.firstName === '') {
+//             user_profile.firstName = req.params.firstName
+//         }
+
+//         res.send(user_profile);
+//     }
+//     user_post.save();
+
+
+
+
+//     // firstName: req.body.firstName,
+//     // lastName: req.body.lastName,
+//     // email: req.body.email,
+//     // username: req.body.username,
+//     // password: req.body.password,
+//     // nationalID: req.body.nationalID,
+//     // gender: req.body.gender,
+//     // birthDate: req.body.birthDate,
+//     // isPhotographer: req.body.isPhotographer,
+//     // phoneNo: req.body.phoneNo,
+//     // introduction: req.body.introduction,
+//     // profileImage: req.body.profileImage,
+//     // portfolioID: req.body.portfolioID,
+//     // avgRating: req.body.avgRating,
+//     // authorize: false
+
+//     console.log(user_post);
+//     res.status(status_created).json({
+//         message: "Put update profile successful"
+//     });
+// });
+
+router.get("/user/:email", (req, res, next) => {
+    user.find({ email: req.params.email }).then(documents => {
+        res.status(status_ok).json({
+            message: "get employee fetched successfully!",
+            data: documents
+        });
+        console.log(documents)
+    });
+});
+
 module.exports = router;

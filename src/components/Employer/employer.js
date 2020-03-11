@@ -1,21 +1,36 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom"; 
+import axios from "axios";
 
 class Employer extends Component{
     constructor(props) {
         super(props);
+        //this.renderStyle = this.renderStyle.bind(this);
+        //this.getData = this.getData.bind(this);
         this.state = {
           name: "Otto Otto",
           numberOfJob :2, // from history that has the same employer's name
           style: [{s:"Graduation"},{s:"Portrait"},{s:"Wedding"}], // default, can edit
-          email:"123@gmail.com", // from sign up, can edit
+          email:this.props.appState.email, // from sign up, can edit
           phone:"08x-xxx-xxxx", // from sign up, can edit
           firstRegister:"1/1/2019", //date of first register
           latestOffer:"11/3/2020" //date of the latest offer base on photographers' history
         };
       }
 
+    //   getData(){
+    //     let EmployeeResult = {}
+    //     axios.get("http://localhost:9000/user/"+ localStorage.getItem("email"))
+    //     .then(res => {
+    //         EmployeeResult = res.data.data;
+    //         const {name  , email ,phone } = EmployeeResult;
+    //         this.setState({name: name , email:email, phone:phone })
+    //     })
+        
+    //   };
+ 
       renderStyle() {
+        //this.getData()
         return this.state.style.map((style, index) => {
            const {s} = style //destructuring
            return (
@@ -27,6 +42,7 @@ class Employer extends Component{
     render(){
         return(
             <div className="container h-100 has-text-centered">
+                
                 <div className="row" style={{height:"100vh"}}>
                     <div className="col-6 h-100" style={{padding:"10vh"}}>
                         <div style={{height:"auto", maxWidth:"100%", paddingBottom:"5vh", overflow:"hidden", position:"relative"}}>
@@ -54,7 +70,10 @@ class Employer extends Component{
                             <dd class="col-sm-6" style={{paddingBottom:"2vh"}}>{this.state.firstRegister}</dd>
                         <dt class="col-sm-6">Latest job offer:</dt>
                             <dd class="col-sm-6" style={{paddingBottom:"2vh"}}>{this.state.latestOffer}</dd>
-                    
+                        <Link to="/editEmployerProfile">
+                        <button className="btn btn-outline-dark"> Edit Profile</button>
+                        </Link>
+                     
                     </div>
                 </div>
             </div>
