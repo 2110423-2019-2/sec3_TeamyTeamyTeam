@@ -23,8 +23,8 @@
   border: solid 1px #c93a3a;
 }
 
-.dropdown-menu {
-  top: 58px;
+.noti-menu {
+  top: 56px;
   right: 0px;
   left: unset;
   width: 400px;
@@ -32,7 +32,7 @@
   padding-bottom: 0px;
   padding: 0px;
 }
-.dropdown-menu:before {
+.noti-menu:before {
   content: "";
   position: absolute;
   top: -20px;
@@ -61,7 +61,7 @@
   background-color: #eee;
 }
 @media (max-width: 640px) {
-  .dropdown-menu {
+  .noti-menu {
     top: 50px;
     left: -16px;
     width: 290px;

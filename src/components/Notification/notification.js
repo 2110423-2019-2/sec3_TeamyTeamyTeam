@@ -33,14 +33,14 @@ class Notification extends Component {
         let toTalnotification = res.data.data.length;
         for (let i = 0; i < Math.min(toTalnotification, 10); i += 1) {
           notifications.push(res.data.data[i]);
-          if(res.data.data[i].isRead == false) {
+          if (res.data.data[i].isRead == false) {
             numberOfUnreadNotification = numberOfUnreadNotification + 1;
           }
         }
-        this.setState({ 
+        this.setState({
           toTalnotification: toTalnotification,
           numberOfUnreadNotification: numberOfUnreadNotification,
-          notifications: notifications 
+          notifications: notifications
         });
       })
       .catch(err => console.error(err));
@@ -59,7 +59,7 @@ class Notification extends Component {
   }
   render() {
     return (
-      <li className="nav-item dropdown" style={{ marginLeft: "-5px" }}>
+      <li className="nav-item dropdown">
         <a
           className="nav-link"
           href="#"
@@ -72,9 +72,8 @@ class Notification extends Component {
         >
           <ion-icon name="notifications-outline" ></ion-icon>
           <span data-badge={this.state.numberOfUnreadNotification}></span>
-
         </a>
-        <ul className="dropdown-menu">
+        <ul className="dropdown-menu noti-menu">
           <li className="head text-light bg-dark">
             <div className="row">
               <div className="col-lg-12 col-sm-12 col-12">
