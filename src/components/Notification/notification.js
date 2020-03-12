@@ -17,9 +17,12 @@ class Notification extends Component {
 
   readNotify = e => {
     e.preventDefault();
-    axios.put("http://localhost:9000/api/readNotify/" + this.props.appState.email,{});
+    axios.put(
+      "http://localhost:9000/api/readNotify/" + this.props.appState.email,
+      {}
+    );
     console.log("read notification");
-  }
+  };
 
   getNotify() {
     axios
@@ -50,7 +53,7 @@ class Notification extends Component {
   componentDidMount() {
     //Retrieve notification's object
     this.getNotify();
-    this.interval = setInterval(() =>{
+    this.interval = setInterval(() => {
       this.getNotify();
     }, 10000);
   }
@@ -68,10 +71,14 @@ class Notification extends Component {
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
-          onClick = {this.readNotify}
+          onClick={this.readNotify}
         >
-          <ion-icon name="notifications-outline" ></ion-icon>
-          <span data-badge={this.state.numberOfUnreadNotification}></span>
+          <ion-icon name="notifications-outline"></ion-icon>
+          {this.state.numberOfUnreadNotification > 0 ? (
+            <span data-badge={this.state.numberOfUnreadNotification}></span>
+          ) : (
+            ""
+          )}
         </a>
         <ul className="dropdown-menu noti-menu">
           <li className="head text-light bg-dark">
@@ -88,9 +95,7 @@ class Notification extends Component {
           </li>
           <div className="overflow-auto" style={{ maxHeight: "400px" }}>
             {this.state.notifications.length > 0 ? (
-              this.state.notifications.map(
-                res => <NotificationBox res={res}
-              />)
+              this.state.notifications.map(res => <NotificationBox res={res} />)
             ) : (
               <div className="text-center m-3">
                 <span>
