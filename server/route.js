@@ -114,7 +114,7 @@ router.post("/offer", (req, res, next) => {
             const notify_post = new notify({
                 email: documents[0].email,
                 content: offer_post.title + ": " + offer_post.progress,
-                redirectLink: "-", // redirect to the  accept/decline section
+                redirectLink: offer_post._id, // redirect to the  accept/decline section
                 isRead: false,
                 isReply: req.body.isReply
             });
@@ -152,6 +152,35 @@ router.get("/notify/:email", (req, res, next) => {
     });
 });
 
+router.put("/readNotify/:email", (req, res, next) => {
+    notify.update({email: req.params.email, isRead: false},{
+        isRead: true
+    }).exec();
+});
+
+router.get("/replyNotify/:id.:progress.:isAccept", (req, res, next) => {
+    if(req.params.isAccept == "true"){
+        if(req.params.progress == "wait_photographer_reply") {
+            var nf;
+            notify.find({redirectLink: req.params.id, isReply: true}).then(documents => {
+                nf = documents[0];
+            })
+            notify.update({redirectLink: req.params.id, isReply: true},{
+                isReply: false
+            }).exec();
+            offer.update({_id: req.params.id},{
+                progress: "wait_employer_reply"
+            }).exec();
+        }
+        else if(req.params.progress == "wait_employer_reply"){
+        }
+        notify.update({redirectLink: req.params.id},{
+            
+        }).exec();
+    }else{
+
+    }
+});
 
 // router.put("/user", (req, res, next) => {
 //     const user_profile = user.find(m => user.email === parseInt(req.params.email));

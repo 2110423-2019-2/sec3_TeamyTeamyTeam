@@ -13,8 +13,12 @@ class Notification extends Component {
       notifications: [],
       allUnreadNotify: []
     };
-    this.handleAcceptJob = this.handleAcceptJob.bind(this);
-    this.handleDeclineJob = this.handleDeclineJob.bind(this);
+  }
+
+  readNotify = e => {
+    e.preventDefault();
+    axios.put("http://localhost:9000/api/readNotify/" + this.props.appState.email,{});
+    console.log("read notification");
   }
 
   getNotify() {
@@ -31,7 +35,6 @@ class Notification extends Component {
           notifications.push(res.data.data[i]);
           if(res.data.data[i].isRead == false) {
             numberOfUnreadNotification = numberOfUnreadNotification + 1;
-            axios.put("http://localhost:9000/api/readNotify/" + this.props.appState.email,{})
           }
         }
         this.setState({ 
@@ -41,23 +44,19 @@ class Notification extends Component {
         });
       })
       .catch(err => console.error(err));
+    console.log("update notification");
   }
 
   componentDidMount() {
     //Retrieve notification's object
     this.getNotify();
+    this.interval = setInterval(() =>{
+      this.getNotify();
+    }, 10000);
   }
-
-  handleAcceptJob() {
-    //ถ้ากดaccept
-    console.log("Accept");
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
-
-  handleDeclineJob() {
-    //ถ้ากดdecline
-    console.log("Decline");
-  }
-
   render() {
     return (
       <li className="nav-item dropdown" style={{ marginLeft: "-5px" }}>
@@ -69,8 +68,9 @@ class Notification extends Component {
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
+          onClick = {this.readNotify}
         >
-          <ion-icon name="notifications-outline"></ion-icon>
+          <ion-icon name="notifications-outline" ></ion-icon>
           <span data-badge={this.state.numberOfUnreadNotification}></span>
 
         </a>
@@ -91,9 +91,6 @@ class Notification extends Component {
             {this.state.notifications.length > 0 ? (
               this.state.notifications.map(
                 res => <NotificationBox res={res}
-                type="offer"
-                handleAcceptJob={this.handleAcceptJob}
-                handleDeclineJob={this.handleDeclineJob}
               />)
             ) : (
               <div className="text-center m-3">
