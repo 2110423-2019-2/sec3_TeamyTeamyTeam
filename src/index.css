@@ -2,6 +2,7 @@
 
 body {
   font-family: "Roboto", sans-serif;
+  color: #302a55;
 }
 
 .displayErrors input:invalid {

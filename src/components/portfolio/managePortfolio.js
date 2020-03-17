@@ -8,7 +8,9 @@ class ManagePortfolio extends Component {
     super(props);
     this.state = {
       name: this.props.match.params.name,
-      photoLists: [] //เก็บjsonของรูป
+      photoLists: [
+        "https://images.pexels.com/photos/1800994/pexels-photo-1800994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+      ] //เก็บjsonของรูป
     };
 
     this.handleAddPhoto = this.handleAddPhoto.bind(this);
@@ -29,7 +31,7 @@ class ManagePortfolio extends Component {
     if (photoFile) {
       var uploadTask = storage
         .ref()
-        .child(photoFile.name)
+        .child("images/" + photoFile.name)
         .put(photoFile);
       uploadTask.on(
         "state_changed",
@@ -40,6 +42,9 @@ class ManagePortfolio extends Component {
         () => {
           uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
             console.log("File available at", downloadURL);
+            let { photoLists } = this.state;
+            photoLists.push(downloadURL);
+            this.setState({ photoLists });
           });
         }
       );
@@ -53,31 +58,9 @@ class ManagePortfolio extends Component {
           <ion-icon name="images-outline"></ion-icon> Manage Portfolio
         </h1>
         <div className="row">
-          <UploadedPhoto
-            photoID={99}
-            tag={"Wedding"}
-            imgLink="https://images.pexels.com/photos/1800994/pexels-photo-1800994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-          />
-          <UploadedPhoto
-            photoID={99}
-            tag={"Wedding"}
-            imgLink="https://images.pexels.com/photos/1800994/pexels-photo-1800994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-          />
-          <UploadedPhoto
-            photoID={99}
-            tag={"Wedding"}
-            imgLink="https://images.pexels.com/photos/1800994/pexels-photo-1800994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-          />
-          <UploadedPhoto
-            photoID={99}
-            tag={"Wedding"}
-            imgLink="https://images.pexels.com/photos/1800994/pexels-photo-1800994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-          />
-          <UploadedPhoto
-            photoID={99}
-            tag={"Wedding"}
-            imgLink="https://images.pexels.com/photos/1800994/pexels-photo-1800994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-          />
+          {this.state.photoLists.map(img => (
+            <UploadedPhoto photoID={99} tag={"Wedding"} imgLink={img} />
+          ))}
           <div className="col-lg-3 col-md-4 col-xs-4 ">
             <button
               type="file"
