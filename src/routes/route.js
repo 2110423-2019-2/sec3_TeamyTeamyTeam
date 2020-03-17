@@ -5,11 +5,11 @@ import Home from "../components/home";
 import Login from "../components/Login/login";
 import SignUp from "../components/Signup/signup";
 import Search from "../components/search/search";
-import Portfolio from "../components/portfolio/portfolio";
+import Portfolio from "../components/Portfolio/portfolio";
 import JobOffer from "../components/JobOffer/offer";
 import OfferProgress from "../components/offerProgress/offerProgress";
 import PhotoHis from "../components/History/photoHis";
-import ManagePortfolio from "../components/portfolio/managePortfolio";
+import ManagePortfolio from "../components/Portfolio/managePortfolio";
 import Employer from "../components/Employer/employer";
 import EditEmployerProfile from "../components/Employer/editEmployerProfile";
 

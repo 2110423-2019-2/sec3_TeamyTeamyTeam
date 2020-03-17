@@ -25,15 +25,13 @@ class Home extends Component {
           <div className="container h-100">
             <div className="row h-100 align-items-center">
               <div className="col-12 text-center ">
-                <h1 className="font-weight-bold white-text">
-                  PHOMO matching system
-                </h1>
+                <h1>PHOMO matching system</h1>
                 <p className="lead">
                   The best centralized platform to find and hire a photographer
                 </p>
                 {this.props.appState.isLogin ? (
                   <Link to="/search">
-                    <button className="btn btn-lg btn-light shadow">
+                    <button className="btn btn-lg btn-purple shadow">
                       <i className="mr-3" style={{ fontSize: "24px" }}>
                         <ion-icon name="search-sharp"></ion-icon>
                       </i>

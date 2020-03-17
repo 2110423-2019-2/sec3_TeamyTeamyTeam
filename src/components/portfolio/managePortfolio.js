@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import UploadedPhoto from "./uploadedPhoto";
 import "../../stylesheets/portfolio.css";
+import { storage } from "../../firebase";
 
 class ManagePortfolio extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class ManagePortfolio extends Component {
     };
 
     this.handleAddPhoto = this.handleAddPhoto.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -20,6 +22,28 @@ class ManagePortfolio extends Component {
   handleAddPhoto(e) {
     e.preventDefault();
     document.getElementById("uploader").click();
+  }
+
+  handleChange(e) {
+    let photoFile = e.target.files[0];
+    if (photoFile) {
+      var uploadTask = storage
+        .ref()
+        .child(photoFile.name)
+        .put(photoFile);
+      uploadTask.on(
+        "state_changed",
+        snapshot => {},
+        error => {
+          console.log(error);
+        },
+        () => {
+          uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
+            console.log("File available at", downloadURL);
+          });
+        }
+      );
+    }
   }
 
   render() {
@@ -67,7 +91,12 @@ class ManagePortfolio extends Component {
                 name="add-circle-outline"
               ></ion-icon>
             </button>
-            <input type="file" id="uploader" style={{ display: "none" }} />
+            <input
+              type="file"
+              id="uploader"
+              style={{ display: "none" }}
+              onChange={this.handleChange}
+            />
           </div>
         </div>
       </div>

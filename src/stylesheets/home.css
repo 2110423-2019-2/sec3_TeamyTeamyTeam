@@ -12,5 +12,8 @@
 
 ion-icon {
   vertical-align: middle;
-  font-size: 1em;
+}
+
+.btn-warning {
+  background-color: #613bea;
 }

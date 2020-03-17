@@ -75,7 +75,7 @@ export default class Navbar extends Component {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark static-top">
         <Link className="navbar-brand" style={{ minHeight: "0" }} to="/">
-          PHOMO
+          PHOMO.
         </Link>
         <button
           className="navbar-toggler"

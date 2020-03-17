@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import auth from "../Login/Firebase/index";
 import axios from "axios";
 import { Redirect } from "react-router";
 
@@ -33,7 +32,7 @@ class SignUp extends Component {
     });
     // console.log(this.state);
   };
- 
+
   onSubmit = e => {
     e.preventDefault();
     if (!e.target.checkValidity()) {
