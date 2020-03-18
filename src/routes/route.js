@@ -2,16 +2,16 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import Home from "../components/home";
-import Login from "../components/User/signin";
-import SignUp from "../components/User/signup";
+import Login from "../components/UserManagement/signin";
+import SignUp from "../components/UserManagement/signup";
 import Search from "../components/Search/search";
 import Portfolio from "../components/Portfolio/portfolio";
 import JobOffer from "../components/JobManagement/offer";
 import OfferProgress from "../components/JobManagement/offerProgress";
 import PhotoHis from "../components/JobManagement/jobHistory";
 import ManagePortfolio from "../components/Portfolio/managePortfolio";
-import Employer from "../components/User/Employer/employer";
-import EditEmployerProfile from "../components/User/Employer/editEmployerProfile";
+import Employer from "../components/UserManagement/Employer/employer";
+import EditEmployerProfile from "../components/UserManagement/Employer/editEmployerProfile";
 
 export default class Routing extends React.Component {
   constructor(props) {
