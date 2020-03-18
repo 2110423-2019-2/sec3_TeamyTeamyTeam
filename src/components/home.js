@@ -40,8 +40,8 @@ class Home extends Component {
                   </Link>
                 ) : (
                   <div>
-                    <Link to="/login">
-                      <button className="btn btn-outline-light mx-3">
+                    <Link to="/signin">
+                      <button className="btn btn-purple mx-3">
                         <i className="mr-2">
                           <ion-icon name="person-outline"></ion-icon>
                         </i>
@@ -49,7 +49,7 @@ class Home extends Component {
                       </button>
                     </Link>
                     <Link to="/signup">
-                      <button className="btn btn-outline-light mx-3">
+                      <button className="btn btn-purple mx-3">
                         <i className="mr-2">
                           <ion-icon name="person-add-outline"></ion-icon>
                         </i>

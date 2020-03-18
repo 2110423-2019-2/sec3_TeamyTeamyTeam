@@ -2,16 +2,16 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import Home from "../components/home";
-import Login from "../components/Login/login";
-import SignUp from "../components/Signup/signup";
-import Search from "../components/search/search";
+import Login from "../components/User/signin";
+import SignUp from "../components/User/signup";
+import Search from "../components/Search/search";
 import Portfolio from "../components/Portfolio/portfolio";
-import JobOffer from "../components/JobOffer/offer";
-import OfferProgress from "../components/offerProgress/offerProgress";
-import PhotoHis from "../components/History/photoHis";
+import JobOffer from "../components/JobManagement/offer";
+import OfferProgress from "../components/JobManagement/offerProgress";
+import PhotoHis from "../components/JobManagement/jobHistory";
 import ManagePortfolio from "../components/Portfolio/managePortfolio";
-import Employer from "../components/Employer/employer";
-import EditEmployerProfile from "../components/Employer/editEmployerProfile";
+import Employer from "../components/User/Employer/employer";
+import EditEmployerProfile from "../components/User/Employer/editEmployerProfile";
 
 export default class Routing extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ export default class Routing extends React.Component {
           component={props => <Home {...this.props} {...props} />}
         />
         <Route
-          path="/login"
+          path="/signin"
           render={props => <Login {...this.props} {...props} />}
         />
         <Route

@@ -54,7 +54,7 @@ export default class Navbar extends Component {
       return (
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
-            <Link to="/login" className="nav-link">
+            <Link to="/signin" className="nav-link">
               Sign in
             </Link>
           </li>
