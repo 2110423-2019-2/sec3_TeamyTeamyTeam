@@ -10,7 +10,9 @@ class ManagePortfolio extends Component {
       name: this.props.match.params.name,
       photoLists: [
         "https://images.pexels.com/photos/1800994/pexels-photo-1800994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-      ] //เก็บjsonของรูป
+      ], //เก็บjsonของรูป
+      isUploading: false,
+      progress: 0
     };
 
     this.handleAddPhoto = this.handleAddPhoto.bind(this);
@@ -23,7 +25,9 @@ class ManagePortfolio extends Component {
 
   handleAddPhoto(e) {
     e.preventDefault();
-    document.getElementById("uploader").click();
+    if (!this.state.isUploading) {
+      document.getElementById("uploader").click();
+    }
   }
 
   handleChange(e) {
@@ -35,7 +39,13 @@ class ManagePortfolio extends Component {
         .put(photoFile);
       uploadTask.on(
         "state_changed",
-        snapshot => {},
+        snapshot => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          this.setState({ progress });
+          this.setState({ isUploading: true });
+        },
         error => {
           console.log(error);
         },
@@ -44,7 +54,9 @@ class ManagePortfolio extends Component {
             console.log("File available at", downloadURL);
             let { photoLists } = this.state;
             photoLists.push(downloadURL);
+            this.setState({ isUploading: false });
             this.setState({ photoLists });
+            //append list ใน database ของ photographer นั้น ๆ
           });
         }
       );
@@ -59,21 +71,28 @@ class ManagePortfolio extends Component {
         </h1>
         <div className="row">
           {this.state.photoLists.map(img => (
-            <UploadedPhoto photoID={99} tag={"Wedding"} imgLink={img} />
+            <UploadedPhoto key={img} tag={"Wedding"} imgLink={img} />
           ))}
           <div className="col-lg-3 col-md-4 col-xs-4 ">
             <button
               type="file"
-              className="w-100 mx-auto my-auto btn btn-lg btn-primary"
+              className="w-100 mx-auto my-auto btn btn-lg btn-yellow"
               style={{ height: "180px", borderRadius: "0px" }}
               onClick={this.handleAddPhoto}
             >
-              Add Photo
-              <ion-icon
-                style={{ margin: "0.5rem" }}
-                name="add-circle-outline"
-              ></ion-icon>
+              {this.state.isUploading ? (
+                this.state.progress + "%"
+              ) : (
+                <div>
+                  Add Photo
+                  <ion-icon
+                    style={{ margin: "0.5rem" }}
+                    name="add-circle-outline"
+                  ></ion-icon>
+                </div>
+              )}
             </button>
+
             <input
               type="file"
               id="uploader"

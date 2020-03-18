@@ -2,7 +2,6 @@
 
 body {
   font-family: "Roboto", sans-serif;
-  color: #302a55;
 }
 
 .displayErrors input:invalid {
@@ -44,7 +43,7 @@ body {
 
 .btn-purple:not(:disabled):not(.disabled):active,
 .btn-purple:not(:disabled):not(.disabled).active,
-.show > .btn-primary.dropdown-toggle {
+.show > .btn-purple.dropdown-toggle {
   color: #fff;
   background-color: #5e36f1;
   border-color: #582fe9;
@@ -53,6 +52,47 @@ body {
 .btn-purple:not(:disabled):not(.disabled):active:focus,
 .btn-purple:not(:disabled):not(.disabled).active:focus,
 .show > .btn-purple.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+
+.btn-yellow {
+  color: #1d1d1d;
+  background-color: #ffa135;
+  border-color: #ffa135;
+}
+
+.btn-yellow:hover {
+  color: #1d1d1d;
+  background-color: #fdab4c;
+  border-color: #fdab4c;
+}
+
+.btn-yellow:focus,
+.btn-yellow.focus {
+  color: #1d1d1d;
+  background-color: #f8a443;
+  border-color: #f8a443;
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+
+.btn-yellow.disabled,
+.btn-yellow:disabled {
+  color: #1d1d1d;
+  background-color: #ffa135;
+  border-color: #ffa135;
+}
+
+.btn-yellow:not(:disabled):not(.disabled):active,
+.btn-yellow:not(:disabled):not(.disabled).active,
+.show > .btn-yellow.dropdown-toggle {
+  color: #1d1d1d;
+  background-color: #fdab4c;
+  border-color: #fdab4c;
+}
+
+.btn-yellow:not(:disabled):not(.disabled):active:focus,
+.btn-yellow:not(:disabled):not(.disabled).active:focus,
+.show > .btn-yellow.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
 }
 

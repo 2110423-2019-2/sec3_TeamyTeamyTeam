@@ -31,7 +31,7 @@ class Home extends Component {
                 </p>
                 {this.props.appState.isLogin ? (
                   <Link to="/search">
-                    <button className="btn btn-lg btn-purple shadow">
+                    <button className="btn btn-lg btn-yellow shadow">
                       <i className="mr-3" style={{ fontSize: "24px" }}>
                         <ion-icon name="search-sharp"></ion-icon>
                       </i>
