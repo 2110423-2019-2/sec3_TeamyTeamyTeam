@@ -92,6 +92,8 @@ class SignUp extends Component {
                   type="text"
                   name="firstName"
                   onChange={this.onChange}
+                  pattern="[a-zA-Z]+"
+                  maxlength="20"
                   required
                 />
               </div>
@@ -104,6 +106,8 @@ class SignUp extends Component {
                   type="text"
                   name="lastName"
                   onChange={this.onChange}
+                  pattern="[a-zA-Z]+"
+                  maxlength="20"
                   required
                 />
               </div>
@@ -116,6 +120,7 @@ class SignUp extends Component {
                   type="email"
                   name="email"
                   onChange={this.onChange}
+                  pattern=".+[@].+[.][a-zA-z]+"
                   required
                 />
               </div>
@@ -128,6 +133,9 @@ class SignUp extends Component {
                   type="password"
                   name="password"
                   onChange={this.onChange}
+                  pattern="\S+"
+                  minlength="8"
+                  maxlength="20"
                   required
                 />
               </div>
@@ -140,6 +148,9 @@ class SignUp extends Component {
                   type="password"
                   name="confirmedPassword"
                   onChange={this.onChange}
+                  pattern="\S+"
+                  minlength="8"
+                  maxlength="20"
                   required
                 />
               </div>
@@ -167,6 +178,8 @@ class SignUp extends Component {
                   onChange={this.onChange}
                   required
                   pattern="\d+"
+                  minlength="10"
+                  maxlength="10"
                 />
               </div>
 
