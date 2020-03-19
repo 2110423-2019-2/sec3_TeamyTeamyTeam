@@ -1,15 +1,17 @@
 const express = require('express')
 const router = express.Router()
-const mongoose = require("mongoose");
+    // const mongoose = require("mongoose")
 const portfolio = require('./schema/portfolio')
 const user = require('./schema/user')
 const offer = require('./schema/offer')
 const notify = require('./schema/notify')
-const nodemailer = require('nodemailer');
-const crypto = require('crypto');
+const nodemailer = require('nodemailer')
+const crypto = require('crypto')
+const { checkoutCreditCard, checkoutInternetBanking, omiseWebHooks, getInternetBankingCharge } = require('../controlller/checkoutControl')
 
-const status_ok = 200;
-const status_created = 201;
+// define http status
+const status_ok = 200
+const status_created = 201
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -206,5 +208,11 @@ router.get("/user/:email", (req, res, next) => {
         console.log(documents)
     });
 });
+
+// Payment method
+// router.post('/checkout-credit-card', checkoutCreditCard)
+// router.post('/checkout-internet-banking', checkoutInternetBanking)
+// router.post('/webhooks', omiseWebHooks)
+// router.get('/bank-charge', getInternetBankingCharge)
 
 module.exports = router;

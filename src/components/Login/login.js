@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import React from "react";
-import auth from "./Firebase/index";
-import Home from "../home";
+// import auth from "./Firebase/index";
+// import Home from "../home";
 import axios from "axios";
 import { Redirect } from "react-router";
 
