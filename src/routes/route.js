@@ -2,19 +2,6 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import Home from "../components/home";
-<<<<<<< HEAD
-import Login from "../components/Login/login";
-import SignUp from "../components/Signup/signup";
-import Search from "../components/search/search";
-import Portfolio from "../components/portfolio/portfolio";
-import JobOffer from "../components/JobOffer/offer";
-import OfferProgress from "../components/offerProgress/offerProgress";
-import PhotoHis from "../components/History/photoHis";
-import ManagePortfolio from "../components/portfolio/managePortfolio";
-import Employer from "../components/Employer/employer";
-import EditEmployerProfile from "../components/Employer/editEmployerProfile";
-import PaymentOmise from "../components/Payment/paymentOmise";
-=======
 import Login from "../components/UserManagement/signin";
 import SignUp from "../components/UserManagement/signup";
 import Search from "../components/Search/search";
@@ -25,8 +12,8 @@ import PhotoHis from "../components/JobManagement/jobHistory";
 import ManagePortfolio from "../components/Portfolio/managePortfolio";
 import Employer from "../components/UserManagement/Employer/employer";
 import EditEmployerProfile from "../components/UserManagement/Employer/editEmployerProfile";
+import PaymentOmise from "../components/Payment/paymentOmise";
 
->>>>>>> 1a60f82806ff5950833444980f573ef728f737d2
 export default class Routing extends React.Component {
   constructor(props) {
     super(props);
