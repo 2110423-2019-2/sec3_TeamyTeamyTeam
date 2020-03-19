@@ -2,6 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import Home from "../components/home";
+<<<<<<< HEAD
 import Login from "../components/Login/login";
 import SignUp from "../components/Signup/signup";
 import Search from "../components/search/search";
@@ -13,6 +14,19 @@ import ManagePortfolio from "../components/portfolio/managePortfolio";
 import Employer from "../components/Employer/employer";
 import EditEmployerProfile from "../components/Employer/editEmployerProfile";
 import PaymentOmise from "../components/Payment/paymentOmise";
+=======
+import Login from "../components/UserManagement/signin";
+import SignUp from "../components/UserManagement/signup";
+import Search from "../components/Search/search";
+import Portfolio from "../components/Portfolio/portfolio";
+import JobOffer from "../components/JobManagement/offer";
+import OfferProgress from "../components/JobManagement/offerProgress";
+import PhotoHis from "../components/JobManagement/jobHistory";
+import ManagePortfolio from "../components/Portfolio/managePortfolio";
+import Employer from "../components/UserManagement/Employer/employer";
+import EditEmployerProfile from "../components/UserManagement/Employer/editEmployerProfile";
+
+>>>>>>> 1a60f82806ff5950833444980f573ef728f737d2
 export default class Routing extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +41,7 @@ export default class Routing extends React.Component {
           component={props => <Home {...this.props} {...props} />}
         />
         <Route
-          path="/login"
+          path="/signin"
           render={props => <Login {...this.props} {...props} />}
         />
         <Route
@@ -56,7 +70,7 @@ export default class Routing extends React.Component {
           component={props => <OfferProgress {...this.props} {...props} />}
         />
         <Route
-          path="/photoHis"
+          path="/history"
           render={props => <PhotoHis {...this.props} {...props} />}
         />
         <Route

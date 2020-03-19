@@ -6,12 +6,20 @@ class NotificationBox extends Component {
     super(props);
     this.handleRead = this.handleRead.bind(this);
     this.state = {
-      type: this.props.type,
-      sender: "Alexander Wang", //userID
-      message: "Your job is accepted",
+      isReply: this.props.res.isReply,
+      sender: this.props.res.email, //userID
+      message: this.props.res.content,
       date: "Dec 12, 2019",
       isRead: false
     };
+  }
+
+  handleAcceptJob(){
+
+  }
+
+  handleDeclineJob(){
+
   }
 
   handleRead() {
@@ -19,7 +27,7 @@ class NotificationBox extends Component {
   }
 
   render() {
-    const { sender, message, date, isRead, type } = this.state;
+    const { sender, message, date, isRead, isReply } = this.state;
     return (
       <li
         className={isRead ? "notification-box" : "notification-box bg-gray"}
@@ -36,24 +44,21 @@ class NotificationBox extends Component {
             <div className="col-lg-8 col-sm-8 col-8">
               <strong className="text-primary">{sender}</strong>
               <div className="text-dark">
-                {this.state.type == "offer" ? (
                   <div>
                     <button
                       className="btn btn-sm btn-success mr-2"
-                      onClick={this.props.handleAcceptJob}
+                      onClick={this.handleAcceptJob}
                     >
                       Accept Offer
                     </button>
                     <button
                       className="btn btn-sm btn-danger"
-                      onClick={this.props.handleDeclineJob}
+                      onClick={this.handleDeclineJob}
                     >
                       Decline Offer
                     </button>
                   </div>
-                ) : (
-                  message
-                )}
+                  {message}
               </div>
               <small className="text-dark">{date}</small>
             </div>

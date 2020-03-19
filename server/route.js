@@ -24,6 +24,7 @@ const transporter = nodemailer.createTransport({
 router.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     next();
 });
 
@@ -114,8 +115,8 @@ router.post("/offer", (req, res, next) => {
         portfolio.find({ portfolioName: offer_post.portfolioName }).then(documents => {
             const notify_post = new notify({
                 email: documents[0].email,
-                content: offer_post.title + " => " + offer_post.progress,
-                redirectLink: "-", // redirect to the  accept/decline section
+                content: offer_post.title + ": " + offer_post.progress,
+                redirectLink: offer_post._id, // redirect to the  accept/decline section
                 isRead: false,
                 isReply: req.body.isReply
             });
@@ -144,7 +145,7 @@ router.post("/portfolio", (req, res, next) => {
     });
 });
 router.get("/notify/:email", (req, res, next) => {
-    notify.find({ email: req.params.email, isRead: false }).then(documents => {
+    notify.find({email: req.params.email}).then(documents => {
         res.status(status_ok).json({
             message: "Registor fetched successfully!",
             data: documents
@@ -153,6 +154,35 @@ router.get("/notify/:email", (req, res, next) => {
     });
 });
 
+router.put("/readNotify/:email", (req, res, next) => {
+    notify.update({email: req.params.email, isRead: false},{
+        isRead: true
+    }).exec();
+});
+
+router.get("/replyNotify/:id.:progress.:isAccept", (req, res, next) => {
+    if(req.params.isAccept == "true"){
+        if(req.params.progress == "wait_photographer_reply") {
+            var nf;
+            notify.find({redirectLink: req.params.id, isReply: true}).then(documents => {
+                nf = documents[0];
+            })
+            notify.update({redirectLink: req.params.id, isReply: true},{
+                isReply: false
+            }).exec();
+            offer.update({_id: req.params.id},{
+                progress: "wait_employer_reply"
+            }).exec();
+        }
+        else if(req.params.progress == "wait_employer_reply"){
+        }
+        notify.update({redirectLink: req.params.id},{
+            
+        }).exec();
+    }else{
+
+    }
+});
 
 // router.put("/user", (req, res, next) => {
 //     const user_profile = user.find(m => user.email === parseInt(req.params.email));
@@ -209,10 +239,18 @@ router.get("/user/:email", (req, res, next) => {
     });
 });
 
+<<<<<<< HEAD
 // Payment method
 // router.post('/checkout-credit-card', checkoutCreditCard)
 // router.post('/checkout-internet-banking', checkoutInternetBanking)
 // router.post('/webhooks', omiseWebHooks)
 // router.get('/bank-charge', getInternetBankingCharge)
 
+=======
+router.put("/readNotify/:email", (req, res, next) => {
+    notify.update({email: req.params.email, isRead: false},{
+        isRead: true
+    }).exec();
+});
+>>>>>>> 1a60f82806ff5950833444980f573ef728f737d2
 module.exports = router;

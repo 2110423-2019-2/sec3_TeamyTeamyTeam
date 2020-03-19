@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap");
 
 body {
-  font-family: "Quicksand", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .displayErrors input:invalid {
@@ -11,3 +11,89 @@ body {
 .notChecked {
   color: red;
 }
+
+/* custom bootstrap-based css */
+
+.btn-purple {
+  color: #fff;
+  background-color: #613bea;
+  border-color: #613bea;
+}
+
+.btn-purple:hover {
+  color: #fff;
+  background-color: #7651fc;
+  border-color: #7651fc;
+}
+
+.btn-purple:focus,
+.btn-purple.focus {
+  color: #fff;
+  background-color: #5e36f1;
+  border-color: #5e36f1;
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+
+.btn-purple.disabled,
+.btn-purple:disabled {
+  color: #fff;
+  background-color: #613bea;
+  border-color: #613bea;
+}
+
+.btn-purple:not(:disabled):not(.disabled):active,
+.btn-purple:not(:disabled):not(.disabled).active,
+.show > .btn-purple.dropdown-toggle {
+  color: #fff;
+  background-color: #5e36f1;
+  border-color: #582fe9;
+}
+
+.btn-purple:not(:disabled):not(.disabled):active:focus,
+.btn-purple:not(:disabled):not(.disabled).active:focus,
+.show > .btn-purple.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+
+.btn-yellow {
+  color: #1d1d1d;
+  background-color: #ffa135;
+  border-color: #ffa135;
+}
+
+.btn-yellow:hover {
+  color: #1d1d1d;
+  background-color: #fdab4c;
+  border-color: #fdab4c;
+}
+
+.btn-yellow:focus,
+.btn-yellow.focus {
+  color: #1d1d1d;
+  background-color: #f8a443;
+  border-color: #f8a443;
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+
+.btn-yellow.disabled,
+.btn-yellow:disabled {
+  color: #1d1d1d;
+  background-color: #ffa135;
+  border-color: #ffa135;
+}
+
+.btn-yellow:not(:disabled):not(.disabled):active,
+.btn-yellow:not(:disabled):not(.disabled).active,
+.show > .btn-yellow.dropdown-toggle {
+  color: #1d1d1d;
+  background-color: #fdab4c;
+  border-color: #fdab4c;
+}
+
+.btn-yellow:not(:disabled):not(.disabled):active:focus,
+.btn-yellow:not(:disabled):not(.disabled).active:focus,
+.show > .btn-yellow.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+
+/* end custom bootstrap-based css */

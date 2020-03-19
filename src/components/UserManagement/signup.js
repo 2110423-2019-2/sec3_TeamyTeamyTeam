@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import auth from "../Login/Firebase/index";
 import axios from "axios";
 import { Redirect } from "react-router";
 
@@ -15,6 +14,7 @@ class SignUp extends Component {
       email: "",
       password: "",
       confirmedPassword: "",
+      userType: "Employer",
       telNo: "",
       displayErrors: false,
       redirect: false
@@ -31,9 +31,9 @@ class SignUp extends Component {
     this.setState({
       [name]: value
     });
-    // console.log(this.state);
+    console.log(this.state);
   };
- 
+
   onSubmit = e => {
     e.preventDefault();
     if (!e.target.checkValidity()) {
@@ -142,6 +142,19 @@ class SignUp extends Component {
                   onChange={this.onChange}
                   required
                 />
+              </div>
+
+              <div className="form-group">
+                <label for="userTypeSelect">User Type</label>
+                <select
+                  class="form-control"
+                  name="userType"
+                  id="userTypeSelect"
+                  onChange={this.onChange}
+                >
+                  <option>Employer</option>
+                  <option>Photographer</option>
+                </select>
               </div>
 
               <div className="form-group">

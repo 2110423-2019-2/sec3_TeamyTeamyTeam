@@ -13,51 +13,56 @@ class Notification extends Component {
       notifications: [],
       allUnreadNotify: []
     };
-    this.handleAcceptJob = this.handleAcceptJob.bind(this);
-    this.handleDeclineJob = this.handleDeclineJob.bind(this);
   }
+
+  readNotify = e => {
+    e.preventDefault();
+    axios.put(
+      "http://localhost:9000/api/readNotify/" + this.props.appState.email,
+      {}
+    );
+    console.log("read notification");
+  };
 
   getNotify() {
     axios
       .get("http://localhost:9000/api/notify/" + this.props.appState.email)
       .then(res => {
         console.log(res);
-        this.setState({ allUnreadNotify: res });
+        //Retrieve notification's object
+        let notifications = [];
+        let numberOfUnreadNotification = 0;
+        //จะกำหนดให้แสดงผล10อันล่าสุดเท่านั้น แต่ตัวnotiที่ยังไม่อ่านจะแสดงตามจริง
+        let toTalnotification = res.data.data.length;
+        for (let i = 0; i < Math.min(toTalnotification, 10); i += 1) {
+          notifications.push(res.data.data[i]);
+          if (res.data.data[i].isRead == false) {
+            numberOfUnreadNotification = numberOfUnreadNotification + 1;
+          }
+        }
+        this.setState({
+          toTalnotification: toTalnotification,
+          numberOfUnreadNotification: numberOfUnreadNotification,
+          notifications: notifications
+        });
       })
       .catch(err => console.error(err));
+    console.log("update notification");
   }
 
   componentDidMount() {
     //Retrieve notification's object
-    let toTalnotification = 15; //จำนวนnotiทั้งหมดของusers
-    let numberOfUnreadNotification = 15; //จำนวนnotiที่ยังไม่ได้อ่าน
-    let notifications = [];
-    this.setState({
-      numberOfUnreadNotification: numberOfUnreadNotification,
-      toTalnotification: toTalnotification,
-      notifications: []
-    });
-    //จะกำหนดให้แสดงผล10อันล่าสุดเท่านั้น แต่ตัวnotiที่ยังไม่อ่านจะแสดงตามจริง
     this.getNotify();
-    for (let i = 0; i < Math.min(toTalnotification, 10); i += 1) {
-      notifications.push(this.state.allUnreadNotify[i]);
-    }
-    this.setState({ notifications: notifications });
+    this.interval = setInterval(() => {
+      this.getNotify();
+    }, 10000);
   }
-
-  handleAcceptJob() {
-    //ถ้ากดaccept
-    console.log("Accept");
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
-
-  handleDeclineJob() {
-    //ถ้ากดdecline
-    console.log("Decline");
-  }
-
   render() {
     return (
-      <li className="nav-item dropdown" style={{ marginLeft: "-5px" }}>
+      <li className="nav-item dropdown">
         <a
           className="nav-link"
           href="#"
@@ -66,6 +71,7 @@ class Notification extends Component {
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
+          onClick={this.readNotify}
         >
           <ion-icon name="notifications-outline"></ion-icon>
           {this.state.numberOfUnreadNotification > 0 ? (
@@ -74,7 +80,7 @@ class Notification extends Component {
             ""
           )}
         </a>
-        <ul className="dropdown-menu">
+        <ul className="dropdown-menu noti-menu">
           <li className="head text-light bg-dark">
             <div className="row">
               <div className="col-lg-12 col-sm-12 col-12">
@@ -89,13 +95,7 @@ class Notification extends Component {
           </li>
           <div className="overflow-auto" style={{ maxHeight: "400px" }}>
             {this.state.notifications.length > 0 ? (
-              this.state.notifications.map(() => (
-                <NotificationBox
-                  type="offer"
-                  handleAcceptJob={this.handleAcceptJob}
-                  handleDeclineJob={this.handleDeclineJob}
-                />
-              ))
+              this.state.notifications.map(res => <NotificationBox res={res} />)
             ) : (
               <div className="text-center m-3">
                 <span>

@@ -6,7 +6,6 @@ import "../stylesheets/home.css";
 import Proptype from "prop-types";
 import { Link } from "react-router-dom";
 
-
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -26,28 +25,39 @@ class Home extends Component {
           <div className="container h-100">
             <div className="row h-100 align-items-center">
               <div className="col-12 text-center ">
-                <h1 className="font-weight-bold white-text">
-                  PHOMO matching system
-                </h1>
+                <h1>PHOMO matching system</h1>
                 <p className="lead">
                   The best centralized platform to find and hire a photographer
                 </p>
-                <Link to="/login">
-                  <button className="btn btn-outline-light mx-3">
-                    <i className="mr-2">
-                      <ion-icon name="person-outline"></ion-icon>
-                    </i>
-                    Sign in
-                  </button>
-                </Link>
-                <Link to="/signup">
-                  <button className="btn btn-outline-light mx-3">
-                    <i className="mr-2">
-                      <ion-icon name="person-add-outline"></ion-icon>
-                    </i>
-                    Sign up
-                  </button>
-                </Link>
+                {this.props.appState.isLogin ? (
+                  <Link to="/search">
+                    <button className="btn btn-lg btn-yellow shadow">
+                      <i className="mr-3" style={{ fontSize: "24px" }}>
+                        <ion-icon name="search-sharp"></ion-icon>
+                      </i>
+                      Let's match your preferred photographer!
+                    </button>
+                  </Link>
+                ) : (
+                  <div>
+                    <Link to="/signin">
+                      <button className="btn btn-purple mx-3">
+                        <i className="mr-2">
+                          <ion-icon name="person-outline"></ion-icon>
+                        </i>
+                        Sign in
+                      </button>
+                    </Link>
+                    <Link to="/signup">
+                      <button className="btn btn-purple mx-3">
+                        <i className="mr-2">
+                          <ion-icon name="person-add-outline"></ion-icon>
+                        </i>
+                        Sign up
+                      </button>
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>
