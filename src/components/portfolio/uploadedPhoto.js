@@ -3,10 +3,10 @@ class UploadedPhoto extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      photoID: this.props.photoID,
+      photoID: this.props.key,
       //   date: ""
       tag: this.props.tag,
-      imgLink: this.props.imgLink
+      url: this.props.url
     };
     this.handleDelete = this.handleDelete.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
@@ -37,7 +37,7 @@ class UploadedPhoto extends Component {
   }
 
   render() {
-    const { photoID, tag, imgLink } = this.state;
+    const { photoID, tag, url } = this.state;
     return (
       <div className="col-lg-3 col-md-4 col-xs-4 ">
         {/* Delete Modal */}
@@ -152,7 +152,7 @@ class UploadedPhoto extends Component {
         <div
           className="managePhoto text-center"
           style={{
-            backgroundImage: 'url("' + imgLink + '")'
+            backgroundImage: 'url("' + url + '")'
           }}
         >
           <div className="manageOverlay w-100 h-100 d-flex align-items-center justify-content-center">
