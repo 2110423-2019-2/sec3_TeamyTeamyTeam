@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 
 // //////////////// refactor ใหม่หมด ////////////////// //
 class JobHistory extends Component {
@@ -7,7 +9,14 @@ class JobHistory extends Component {
     super(props);
     this.getResult = this.getResult.bind(this);
     this.state = {
-      historyResult: []
+      historyResult: [],
+      columns: [{ dataField: 'title',  text: 'Title'  },  
+                { dataField: 'style',text: 'Style'}, 
+                { dataField: 'portfolioName', text: 'Portfolio name', },  
+                { dataField: 'meetUpTime', text: 'Meet up time' },  
+                { dataField: 'actDate', text: 'Act date' },  
+                { dataField: 'location', text: 'Location', },  
+                { dataField: 'progress', text: 'Progression'}]
     };
   }
 
@@ -34,17 +43,7 @@ class JobHistory extends Component {
           }
         ]);
         this.setState({
-          historyResult: [
-            {
-              title: "Title1",
-              style: "Graduation",
-              portfolioName: "Otto",
-              meetUpTime: "2/2/2020",
-              actDate: "Full day",
-              location: "123456",
-              progress: "In progress"
-            }
-          ]
+          historyResult: res.data
         });
 
         // {  title: 'Title2', style: 'Wedding', portfolioName: 'Ton', meetUpTime: '1/1/2020', actDate: 'Half day morning', location:'123456', progress:'Cancelled' },
@@ -54,7 +53,7 @@ class JobHistory extends Component {
       .catch(err => console.error(err));
   }
 
-  renderTableData() {
+  /*renderTableData() {
     return this.state.historyResult.map(hist => {
       const {
         title,
@@ -78,15 +77,30 @@ class JobHistory extends Component {
         </tr>
       );
     });
-  }
+  }*/
 
   render() {
+    const options = {  
+          page: 2,   
+          sizePerPageList: [ 
+            { text: '5', value: 5 }, 
+            { text: '10', value: 10},
+            { text: 'All', value: this.state.historyResult.length} ],   
+          sizePerPage: 10,   
+          pageStartIndex: 1,   
+          paginationSize: 3,    
+          prePage: '<',   
+          nextPage: '>',   
+          firstPage: '<<',   
+          lastPage: '>>'
+        };
+
     return (
       <div className="section container">
         <div className="columns is-centered">
           <div class="table-responsive">
-            <table class="table" id="history" responsive="lg">
-              <thead class="thead-dark">
+            <div responsive="lg">
+              <div>
                 <li>
                   {" "}
                   <button
@@ -98,19 +112,15 @@ class JobHistory extends Component {
                     View history{" "}
                   </button>
                 </li>
-                <tr>
-                  <th scope="col">Number</th>
-                  <th scope="col">Job title</th>
-                  <th scope="col">Style</th>
-                  <th scope="col">Employer</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Time</th>
-                  <th scope="col">Location</th>
-                  <th scope="col">Status</th>
-                </tr>
-              </thead>
-              <tbody>{this.renderTableData()}</tbody>
-            </table>
+              </div>
+              <BootstrapTable
+                      striped
+                      hover
+                      keyField='id'
+                      data={this.state.historyResult}
+                      columns={this.state.columns}
+                      pagination={paginationFactory(options)}/>
+            </div>
           </div>
         </div>
       </div>
