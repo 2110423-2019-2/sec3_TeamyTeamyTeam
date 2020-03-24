@@ -8,11 +8,26 @@ class ManagePortfolio extends Component {
     super(props);
     this.state = {
       name: this.props.match.params.name,
-      photoLists: [], //เก็บjsonของรูป
+      photoLists: [
+        // {
+        //   id: 1,
+        //   name: "",
+        //   url: "",
+        //   tag: "",
+        //   ref: ""
+        // },
+        // {
+        //   id: 2,
+        //   name: "",
+        //   url: "",
+        //   tag: "",
+        //   ref: ""
+        // }
+      ], //เก็บjsonของรูป
       isUploading: false,
       progress: 0,
       lastUploadedImg: {
-        id: -1,
+        id: 0,
         name: "",
         url: "",
         tag: "",
@@ -24,7 +39,7 @@ class ManagePortfolio extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
     this.imgInfoChange = this.imgInfoChange.bind(this);
-    // this.discardImage = this.discardImage.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -51,16 +66,19 @@ class ManagePortfolio extends Component {
     });
   }
 
-  // discardImage() {
-  //   let desertRef = storage.ref().child(this.state.lastUploadedImg.ref);
-  //   // Delete the file
-  //   desertRef
-  //     .delete()
-  //     .then(function() {})
-  //     .catch(function(error) {
-  //       console.log(error);
-  //     });
-  // }
+  handleDelete(id, ref) {
+    let desertRef = storage.ref().child(ref);
+    // Delete the file
+    desertRef
+      .delete()
+      .then(() => {
+        const photoLists = this.state.photoLists.filter(img => img.id !== id);
+        this.setState({ photoLists });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  }
 
   uploadImage() {
     let { photoLists, lastUploadedImg } = this.state;
@@ -234,7 +252,11 @@ class ManagePortfolio extends Component {
         </h1>
         <div className="row">
           {this.state.photoLists.map(img => (
-            <UploadedPhoto key={img.id} tag={img.tag} url={img.url} />
+            <UploadedPhoto
+              key={img.id.toString()}
+              img={img}
+              onDelete={this.handleDelete}
+            />
           ))}
           <div className="col-lg-3 col-md-4 col-xs-4 ">
             <button

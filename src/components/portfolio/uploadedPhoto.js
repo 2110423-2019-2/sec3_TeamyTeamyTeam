@@ -3,45 +3,36 @@ class UploadedPhoto extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      photoID: this.props.key,
-      //   date: ""
-      tag: this.props.tag,
-      url: this.props.url
+      img: this.props.img
     };
-    this.handleDelete = this.handleDelete.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    // this.handleEdit = this.handleEdit.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
   }
 
-  handleDelete(e) {
-    e.preventDefault();
-    console.log(this.state.photoID + " has been deleted");
-    //ลบรูปตามid
-    window.location.reload(false); //refreshเพื่อfetchรูปใหม่
+  shouldComponentUpdate(nextProps, nextState) {
+    const { photo } = this.props;
+    if (photo !== nextProps.photo) {
+      return true;
+    }
+    return false;
   }
 
-  handleEdit(e) {
-    console.log(
-      this.state.photoID + "'s tag has been change to " + this.state.tag
-    );
-    //แก้tagของรูป
-  }
+  // handleEdit(e) {}
 
-  handleChange(e) {
-    const { name, value } = e.target;
-    this.setState({
-      [name]: value
-    });
-    console.log(value);
-    e.preventDefault();
-  }
+  // handleChange(e) {
+  //   const { name, value } = e.target;
+  //   this.setState({
+  //     [name]: value
+  //   });
+  //   console.log(value);
+  //   e.preventDefault();
+  // }
 
   render() {
-    const { photoID, tag, url } = this.state;
     return (
       <div className="col-lg-3 col-md-4 col-xs-4 ">
         {/* Delete Modal */}
-        <div
+        {/* <div
           className="modal fade"
           id="deleteModal"
           tabindex="-1"
@@ -78,15 +69,15 @@ class UploadedPhoto extends Component {
                 <button
                   type="button"
                   className="btn btn-danger"
-                  //   data-dismiss="modal"
-                  onClick={this.handleDelete}
+                  data-dismiss="modal"
+                  onClick={() => document.getElementById("deleteIMG").click()}
                 >
                   Delete
                 </button>
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* End Delet Modal, Edit Modal */}
         <div
           className="modal fade"
@@ -152,7 +143,7 @@ class UploadedPhoto extends Component {
         <div
           className="managePhoto text-center"
           style={{
-            backgroundImage: 'url("' + url + '")'
+            backgroundImage: 'url("' + this.props.img.url + '")'
           }}
         >
           <div className="manageOverlay w-100 h-100 d-flex align-items-center justify-content-center">
@@ -165,8 +156,11 @@ class UploadedPhoto extends Component {
             </button>
             <button
               className="btn btn-outline-danger"
-              data-toggle="modal"
-              data-target="#deleteModal"
+              // data-toggle="modal"
+              // data-target="#deleteModal"
+              onClick={() =>
+                this.props.onDelete(this.state.img.id, this.state.img.ref)
+              }
             >
               <ion-icon name="trash-outline"></ion-icon>Delete
             </button>
