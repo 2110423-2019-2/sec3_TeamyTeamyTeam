@@ -7,47 +7,53 @@ class UploadedPhoto extends Component {
       name: this.props.img.name,
       url: this.props.img.url,
       tag: this.props.img.tag,
-      ref: this.props.img.ref
+      ref: this.props.img.ref,
+      tagTemp: this.props.img.tag
     };
-    // this.handleEdit = this.handleEdit.bind(this);
-    // this.handleChange = this.handleChange.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { photo } = this.props;
-    if (photo !== nextProps.photo) {
+    const { id, tag } = this.props.img;
+    if (id !== nextProps.id || tag !== nextState.tag) {
       return true;
     }
     return false;
   }
 
-  // handleEdit(e) {}
+  handleEdit() {
+    console.log(this.state.tagTemp, this.state.id);
+    this.setState({ tag: this.state.tagTemp });
+  }
 
-  // handleChange(e) {
-  //   const { name, value } = e.target;
-  //   this.setState({
-  //     [name]: value
-  //   });
-  //   console.log(value);
-  //   e.preventDefault();
-  // }
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value
+    });
+    e.preventDefault();
+  }
 
   render() {
     return (
       <div className="col-lg-3 col-md-4 col-xs-4 ">
         {/* Delete Modal */}
-        {/* <div
+        <div
           className="modal fade"
-          id="deleteModal"
+          id={"deleteModal_" + this.state.id}
           tabindex="-1"
           role="dialog"
-          aria-labelledby="deleteModalLabel"
+          aria-labelledby={"deleteModalLabel_" + this.state.id}
           aria-hidden="true"
         >
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="deleteModalLabel">
+                <h5
+                  className="modal-title"
+                  id={"deleteModalLabel_" + this.state.id}
+                >
                   Delete Photo
                 </h5>
                 <button
@@ -74,27 +80,32 @@ class UploadedPhoto extends Component {
                   type="button"
                   className="btn btn-danger"
                   data-dismiss="modal"
-                  onClick={() => document.getElementById("deleteIMG").click()}
+                  onClick={() =>
+                    this.props.onDelete(this.state.id, this.state.ref)
+                  }
                 >
                   Delete
                 </button>
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
         {/* End Delet Modal, Edit Modal */}
         <div
           className="modal fade"
-          id="editModal"
+          id={"editModal_" + this.state.id}
           tabindex="-1"
           role="dialog"
-          aria-labelledby="editModalLabel"
+          aria-labelledby={"editModalLabel" + this.state.id}
           aria-hidden="true"
         >
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="editModalLabel">
+                <h5
+                  className="modal-title"
+                  id={"editModalLabel" + this.state.id}
+                >
                   Edit photo's tags
                 </h5>
                 <button
@@ -113,7 +124,7 @@ class UploadedPhoto extends Component {
                     <select
                       class="form-control"
                       id="tagSelection"
-                      name="tag"
+                      name="tagTemp"
                       onChange={this.handleChange}
                     >
                       <option>Graduation</option>
@@ -136,6 +147,7 @@ class UploadedPhoto extends Component {
                   type="button"
                   className="btn btn-success"
                   onClick={this.handleEdit}
+                  data-dismiss="modal"
                 >
                   Save Changes
                 </button>
@@ -164,17 +176,14 @@ class UploadedPhoto extends Component {
               <button
                 className="btn btn-outline-light mr-3"
                 data-toggle="modal"
-                data-target="#editModal"
+                data-target={"#editModal_" + this.state.id}
               >
                 <ion-icon name="color-wand-outline"></ion-icon>Edit
               </button>
               <button
                 className="btn btn-outline-danger"
-                // data-toggle="modal"
-                // data-target="#deleteModal"
-                onClick={() =>
-                  this.props.onDelete(this.state.id, this.state.ref)
-                }
+                data-toggle="modal"
+                data-target={"#deleteModal_" + this.state.id}
               >
                 <ion-icon name="trash-outline"></ion-icon>Delete
               </button>
