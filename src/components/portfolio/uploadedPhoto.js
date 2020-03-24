@@ -3,7 +3,11 @@ class UploadedPhoto extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      img: this.props.img
+      id: this.props.img.id,
+      name: this.props.img.name,
+      url: this.props.img.url,
+      tag: this.props.img.tag,
+      ref: this.props.img.ref
     };
     // this.handleEdit = this.handleEdit.bind(this);
     // this.handleChange = this.handleChange.bind(this);
@@ -146,24 +150,35 @@ class UploadedPhoto extends Component {
             backgroundImage: 'url("' + this.props.img.url + '")'
           }}
         >
-          <div className="manageOverlay w-100 h-100 d-flex align-items-center justify-content-center">
-            <button
-              className="btn btn-outline-light mr-3"
-              data-toggle="modal"
-              data-target="#editModal"
-            >
-              <ion-icon name="color-wand-outline"></ion-icon>Edit
-            </button>
-            <button
-              className="btn btn-outline-danger"
-              // data-toggle="modal"
-              // data-target="#deleteModal"
-              onClick={() =>
-                this.props.onDelete(this.state.img.id, this.state.img.ref)
-              }
-            >
-              <ion-icon name="trash-outline"></ion-icon>Delete
-            </button>
+          <div className="manageOverlay w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+            <div class="p-2">
+              {this.state.name} /{" "}
+              <span
+                className="badge badge-secondary"
+                style={{ backgroundColor: "#ffa135" }}
+              >
+                {this.state.tag}
+              </span>
+            </div>
+            <div class="p-2">
+              <button
+                className="btn btn-outline-light mr-3"
+                data-toggle="modal"
+                data-target="#editModal"
+              >
+                <ion-icon name="color-wand-outline"></ion-icon>Edit
+              </button>
+              <button
+                className="btn btn-outline-danger"
+                // data-toggle="modal"
+                // data-target="#deleteModal"
+                onClick={() =>
+                  this.props.onDelete(this.state.id, this.state.ref)
+                }
+              >
+                <ion-icon name="trash-outline"></ion-icon>Delete
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -261,12 +261,32 @@ class ManagePortfolio extends Component {
           <div className="col-lg-3 col-md-4 col-xs-4 ">
             <button
               type="file"
-              className="w-100 mx-auto my-auto btn btn-lg btn-yellow"
+              className="w-100 mx-auto my-auto btn btn-lg btn-purple"
               style={{ height: "180px", borderRadius: "0px" }}
               onClick={this.handleAddPhoto}
             >
               {this.state.isUploading ? (
-                this.state.progress + "%"
+                <div
+                  className="progress"
+                  style={{
+                    borderRadius: "0"
+                  }}
+                >
+                  <div
+                    className="progress-bar"
+                    role="progressbar"
+                    style={{
+                      width: this.state.progress + "%",
+                      backgroundColor: "#ffa135",
+                      borderRadius: "0"
+                    }}
+                    aria-valuenow={this.state.progress}
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  >
+                    {this.state.progress}%
+                  </div>
+                </div>
               ) : (
                 <div>
                   Add Photo
