@@ -8,7 +8,8 @@ class UploadedPhoto extends Component {
       url: this.props.img.url,
       tag: this.props.img.tag,
       ref: this.props.img.ref,
-      tagTemp: this.props.img.tag
+      tagTemp: this.props.img.tag,
+      albumID: this.props.albumID
     };
     this.handleEdit = this.handleEdit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -41,10 +42,12 @@ class UploadedPhoto extends Component {
         {/* Delete Modal */}
         <div
           className="modal fade"
-          id={"deleteModal_" + this.state.id}
+          id={"deleteModal_" + this.state.id + "_" + this.state.albumID}
           tabindex="-1"
           role="dialog"
-          aria-labelledby={"deleteModalLabel_" + this.state.id}
+          aria-labelledby={
+            "deleteModalLabel_" + this.state.id + "_" + this.state.albumID
+          }
           aria-hidden="true"
         >
           <div className="modal-dialog modal-dialog-centered" role="document">
@@ -52,7 +55,12 @@ class UploadedPhoto extends Component {
               <div className="modal-header">
                 <h5
                   className="modal-title"
-                  id={"deleteModalLabel_" + this.state.id}
+                  id={
+                    "deleteModalLabel_" +
+                    this.state.id +
+                    "_" +
+                    this.state.albumID
+                  }
                 >
                   Delete Photo
                 </h5>
@@ -93,10 +101,12 @@ class UploadedPhoto extends Component {
         {/* End Delet Modal, Edit Modal */}
         <div
           className="modal fade"
-          id={"editModal_" + this.state.id}
+          id={"editModal_" + this.state.id + "_" + this.state.albumID}
           tabindex="-1"
           role="dialog"
-          aria-labelledby={"editModalLabel" + this.state.id}
+          aria-labelledby={
+            "editModalLabel" + this.state.id + "_" + this.state.albumID
+          }
           aria-hidden="true"
         >
           <div className="modal-dialog modal-dialog-centered" role="document">
@@ -104,7 +114,9 @@ class UploadedPhoto extends Component {
               <div className="modal-header">
                 <h5
                   className="modal-title"
-                  id={"editModalLabel" + this.state.id}
+                  id={
+                    "editModalLabel" + this.state.id + "_" + this.state.albumID
+                  }
                 >
                   Edit photo's tags
                 </h5>
@@ -123,7 +135,13 @@ class UploadedPhoto extends Component {
                     <label for="exampleFormControlSelect1">Tags</label>
                     <select
                       class="form-control"
-                      id="tagSelection"
+                      id={
+                        "tagSelection" +
+                        this.state.id +
+                        "_" +
+                        this.state.albumID
+                      }
+                      value={this.state.tagTemp}
                       name="tagTemp"
                       onChange={this.handleChange}
                     >
@@ -159,7 +177,7 @@ class UploadedPhoto extends Component {
         <div
           className="managePhoto text-center"
           style={{
-            backgroundImage: 'url("' + this.props.img.url + '")'
+            backgroundImage: 'url("' + this.state.url + '")'
           }}
         >
           <div className="manageOverlay w-100 h-100 d-flex flex-column align-items-center justify-content-center">
@@ -176,14 +194,18 @@ class UploadedPhoto extends Component {
               <button
                 className="btn btn-outline-light mr-3"
                 data-toggle="modal"
-                data-target={"#editModal_" + this.state.id}
+                data-target={
+                  "#editModal_" + this.state.id + "_" + this.state.albumID
+                }
               >
                 <ion-icon name="color-wand-outline"></ion-icon>Edit
               </button>
               <button
                 className="btn btn-outline-danger"
                 data-toggle="modal"
-                data-target={"#deleteModal_" + this.state.id}
+                data-target={
+                  "#deleteModal_" + this.state.id + "_" + this.state.albumID
+                }
               >
                 <ion-icon name="trash-outline"></ion-icon>Delete
               </button>
