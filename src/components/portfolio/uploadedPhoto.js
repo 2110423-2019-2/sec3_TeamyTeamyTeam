@@ -17,14 +17,18 @@ class UploadedPhoto extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     const { id, tag } = this.props.img;
-    if (id !== nextProps.id || tag !== nextState.tag) {
+    const { isDeleting } = this.props;
+    if (
+      id !== nextState.id ||
+      tag !== nextState.tag ||
+      isDeleting !== nextProps.isDeleting
+    ) {
       return true;
     }
     return false;
   }
 
   handleEdit() {
-    console.log(this.state.tagTemp, this.state.id);
     this.setState({ tag: this.state.tagTemp });
   }
 
@@ -177,10 +181,14 @@ class UploadedPhoto extends Component {
         <div
           className="managePhoto text-center"
           style={{
-            backgroundImage: 'url("' + this.state.url + '")'
+            backgroundImage: 'url("' + this.state.url + '")',
+            opacity: this.props.isDeleting ? "0.3" : "1"
           }}
         >
-          <div className="manageOverlay w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+          <div
+            className="manageOverlay w-100 h-100 d-flex flex-column align-items-center justify-content-center"
+            style={{ visibility: this.props.isDeleting ? "hidden" : "visible" }}
+          >
             <div class="p-2">
               {this.state.name} /{" "}
               <span

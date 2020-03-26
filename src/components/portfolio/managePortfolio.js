@@ -45,8 +45,9 @@ class ManagePortfolio extends Component {
     let albums = this.state.albums;
     albums.push(album);
     this.setState({ albums });
-    console.log(albums);
   }
+
+  changeAlbumName(id, newName) {}
 
   render() {
     return (

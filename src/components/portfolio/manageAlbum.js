@@ -16,13 +16,18 @@ class manageAlbum extends Component {
         tag: "",
         ref: ""
       },
+      newName: "",
       uploadProgress: 0,
-      isUploading: false
+      isUploading: false,
+      isDeleting: false,
+      isChangingName: false
     };
     this.imgToBeUpload = this.imgToBeUpload.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
     this.imgInfoChange = this.imgInfoChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.changeAlbumName = this.changeAlbumName.bind(this);
   }
 
   imgInfoChange(e) {
@@ -108,6 +113,7 @@ class manageAlbum extends Component {
   }
 
   handleDelete(id, ref) {
+    this.setState({ isDeleting: true });
     let desertRef = storage.ref().child(ref);
     // Delete the file
     desertRef
@@ -115,10 +121,26 @@ class manageAlbum extends Component {
       .then(() => {
         const photoLists = this.state.photoLists.filter(img => img.id !== id);
         this.setState({ photoLists });
+        this.setState({ isDeleting: false });
       })
       .catch(function(error) {
         console.log(error);
+        this.setState({ isDeleting: false });
       });
+  }
+
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value
+    });
+    e.preventDefault();
+  }
+
+  changeAlbumName() {
+    this.setState({ name: this.state.newName });
+    this.setState({ isChangingName: false });
+    //แก้ชื่อalbumในserver/database
   }
 
   render() {
@@ -126,7 +148,30 @@ class manageAlbum extends Component {
       <div className="mb-3">
         <div class="d-flex align-items-center">
           <div class="bd-highlight">
-            <h3>{this.state.name}</h3>
+            <h3>
+              {this.state.isChangingName ? (
+                <input
+                  autoFocus
+                  type="text"
+                  name="newName"
+                  maxLength="20"
+                  className="form-control"
+                  value={this.state.newName}
+                  onChange={this.handleChange}
+                  onBlur={this.changeAlbumName}
+                />
+              ) : (
+                <span
+                  style={{ cursor: "text" }}
+                  onDoubleClick={() => {
+                    this.setState({ newName: this.state.name });
+                    this.setState({ isChangingName: true });
+                  }}
+                >
+                  {this.state.name}
+                </span>
+              )}
+            </h3>
           </div>
           <div class="bd-highlight">
             <a
@@ -250,6 +295,7 @@ class manageAlbum extends Component {
               img={img}
               albumID={this.state.id}
               onDelete={this.handleDelete}
+              isDeleting={this.state.isDeleting}
             />
           ))}
           <div className="col-lg-3 col-md-4 col-xs-4 ">
