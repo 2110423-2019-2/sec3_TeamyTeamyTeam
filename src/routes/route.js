@@ -13,6 +13,7 @@ import ManagePortfolio from "../components/Portfolio/managePortfolio";
 import Employer from "../components/UserManagement/Employer/employer";
 import EditEmployerProfile from "../components/UserManagement/Employer/editEmployerProfile";
 import PaymentOmise from "../components/Payment/paymentOmise";
+import Review from "../components/UserManagement/Employer/review";
 
 export default class Routing extends React.Component {
   constructor(props) {
@@ -79,6 +80,11 @@ export default class Routing extends React.Component {
           exact
           path="/payment"
           render={props => <PaymentOmise {...this.props} {...props} />}
+        />
+        <Route
+          exact
+          path="/review"
+          render={props => <Review {...this.props} {...props} />}
         />
       </Switch>
     );

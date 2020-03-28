@@ -100,7 +100,7 @@ class JobHistory extends Component {
         <div className="columns is-centered">
           <div class="table-responsive">
             <div responsive="lg">
-              <div>
+              <div style={{marginTop:'10vh'}}>
                 <li>
                   {" "}
                   <button
@@ -116,7 +116,7 @@ class JobHistory extends Component {
               <BootstrapTable
                       striped
                       hover
-                      keyField='id'
+                      keyField='portfolioName'
                       data={this.state.historyResult}
                       columns={this.state.columns}
                       pagination={paginationFactory(options)}/>
