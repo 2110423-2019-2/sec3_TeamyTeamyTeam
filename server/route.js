@@ -7,12 +7,7 @@ const offer = require("./schema/offer");
 const notify = require("./schema/notify");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
-const {
-  checkoutCreditCard,
-  checkoutInternetBanking,
-  omiseWebHooks,
-  getInternetBankingCharge
-} = require("../controlller/checkoutControl");
+
 
 // define http status
 const status_ok = 200;
@@ -127,16 +122,26 @@ router.post("/offer", (req, res, next) => {
     portfolio
       .find({ portfolioName: offer_post.portfolioName })
       .then(documents => {
-        const notify_post = new notify({
+        // create notify for photographer
+        const notify_post_photographer = new notify({
           email: documents[0].email,
           content: offer_post.title + ": " + offer_post.progress,
           redirectLink: offer_post._id, // redirect to the  accept/decline section
           isRead: false,
-          isReply: req.body.isReply
+          isReply: false
         });
-        notify_post.save();
+        notify_post_photographer.save();
+        // create notify for employer
+        const notify_post_employer = new notify({
+          email: req.body.employerEmail,
+          content: offer_post.title + ": " + offer_post.progress,
+          redirectLink: offer_post._id, // redirect to the  accept/decline section
+          isRead: false,
+          isReply: true
+        });
+        notify_post_employer.save();
         console.log(offer_post);
-        console.log(notify_post);
+        console.log(notify_post_photographer);
       });
   });
 
@@ -179,20 +184,31 @@ router.put("/readNotify/:email", (req, res, next) => {
     .exec();
 });
 
-router.get("/replyNotify/:id.:progress.:isAccept", (req, res, next) => {
-  if (req.params.isAccept == "true") {
-    if (req.params.progress == "wait_photographer_reply") {
-      var nf;
-      notify
-        .find({ redirectLink: req.params.id, isReply: true })
-        .then(documents => {
-          nf = documents[0];
+router.get("/replyNotify/:id.:isAccept", (req, res, next) => {
+  var of;
+    offer
+      .find({ _id: req.params.id })
+      .then(documents => {
+          of = documents[0];
         });
+  if (req.params.isAccept == "true") {
+    if (of.progress == "wait_photographer_reply") {
+      const new_content = of.title + ": " + "wait_employer_reply" 
       notify
         .update(
           { redirectLink: req.params.id, isReply: true },
           {
+            content: new_content,
             isReply: false
+          }
+        )
+        .exec();
+      notify
+        .update(
+          { redirectLink: req.params.id, isReply: false },
+          {
+            content: new_content,
+            isReply: true
           }
         )
         .exec();
@@ -204,10 +220,45 @@ router.get("/replyNotify/:id.:progress.:isAccept", (req, res, next) => {
           }
         )
         .exec();
-    } else if (req.params.progress == "wait_employer_reply") {
+    } else if (of.progress == "wait_employer_reply") {
+      const new_content = of.title + ": " + "offer complete" 
+      notify
+        .update(
+          { redirectLink: req.params.id },
+          {
+            content: new_content,
+            isReply: false
+          }
+        )
+        .exec();
+      offer
+        .update(
+          { _id: req.params.id },
+          {
+            progress: "offer complete"
+          }
+        )
+        .exec();
     }
-    notify.update({ redirectLink: req.params.id }, {}).exec();
   } else {
+    const new_content = of.title + ": " + "offer fail"
+    notify
+        .update(
+          { redirectLink: req.params.id },
+          {
+            content: new_content,
+            isReply: false
+          }
+        )
+        .exec();
+      offer
+        .update(
+          { _id: req.params.id },
+          {
+            progress: "offer fail"
+          }
+        )
+        .exec();
   }
 });
 
