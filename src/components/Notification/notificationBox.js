@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import axios from "axios";
 
 class NotificationBox extends Component {
   constructor(props) {
@@ -10,16 +11,33 @@ class NotificationBox extends Component {
       sender: this.props.res.email, //userID
       message: this.props.res.content,
       date: "Dec 12, 2019",
-      isRead: false
+      isRead: false,
+      redirectLink: this.props.res.redirectLink
     };
   }
 
   handleAcceptJob(){
-
+    axios
+      .get("http://localhost:9000/api/replyNotify/" +
+      this.state.redirectLink +
+      "." +
+      "true")
+      .then(res => {
+        
+      })
+      .catch(err => console.error(err));
   }
 
   handleDeclineJob(){
-
+    axios
+    .get("http://localhost:9000/api/replyNotify/" +
+    this.state.redirectLink +
+    "." +
+    "false")
+    .then(res => {
+      
+    })
+    .catch(err => console.error(err));
   }
 
   handleRead() {
