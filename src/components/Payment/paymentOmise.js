@@ -1,171 +1,115 @@
-import React from "react";
-// const fs = require('fs')
-// const path = require('path')
-// const util = require('util')
-
-// const omise = require("omise")({
-//     publicKey: "pkey_test_5j5a3k4r5juffx27dzv",
-//     secretKey: "skey_test_5j5a3k4rg8n5vinn88i"
-// });
-
-// const readFile = util.promisify(fs.readFile)
-// const writeFile = util.promisify(fs.writeFile)
-
-// const rootDir = path.dirname(process.mainModule.filename)
-
-// const filePath = path.join(rootDir, 'data', 'internetBankingCharge.json')
-
-// const checkoutCreditCard = async(req, res, next) => {
-//     const { email, name, amount, token } = req.body;
-//     try {
-//         const customer = await omise.customers.create({
-//             email,
-//             description: name,
-//             card: token
-//         });
-
-//         const charge = await omise.charges.create({
-//             amount,
-//             currency: "thb",
-//             customer: customer.id
-//         });
-
-//         res.send({
-//             amount: charge.amount,
-//             status: charge.status
-//         });
-//     } catch (error) {
-//         console.log(error);
-//     }
-
-//     next();
-// };
-
-// const checkoutInternetBanking = async(req, res, next) => {
-//     const { email, name, amount, token } = req.body;
-
-//     try {
-//         const charge = await omise.charges.create({
-//             amount,
-//             source: token,
-//             currency: "thb",
-//             return_uri: "http://localhost:3000/message"
-//         });
-
-//         res.send({
-//             authorizeUri: charge.authorize_uri
-//         });
-//     } catch (error) {
-//         console.log(error);
-//     }
-
-//     next();
-// };
-
-// const omiseWebHooks = async(req, res, next) => {
-//     try {
-//         const { data, key } = req.body;
-
-//         if (key === 'charge.complete') {
-//             if (data.status === "successful" || data.status === "failed") {
-//                 const charge = {
-//                     id: data.id,
-//                     status: data.status,
-//                     amount: data.funding_amount
-//                 }
-
-//                 await writeFile(filePath, JSON.stringify(charge))
-//             }
-//         }
-//     } catch (err) {
-//         console.log(err)
-//     }
-//     next()
-// };
-
-// const readFileData = async() => {
-//     try {
-//         const chargeData = await readFile(filePath, 'utf8')
-
-//         if (!chargeData) {
-//             return {}
-//         }
-
-//         return JSON.parse(chargeData)
-//     } catch (err) {
-//         console.log(err)
-//     }
-// }
-
-// const getInternetBankingCharge = async(req, res, next) => {
-//     try {
-//         const charge = await readFileData()
-
-//         res.send({...charge })
-//         await writeFile(filePath, JSON.stringify({}))
-//     } catch (err) {
-//         console.log(err)
-//     }
-//     next()
-// };
-
-
-
-class paymentOmise extends React.Component {
+import React, { Component } from "react";
+import Script from "react-load-script";
+import axios from "axios";
+let OmiseCard;
+class payment extends Component {
     constructor(props) {
         super(props);
+        this.omiseCardHandler = this.omiseCardHandler.bind(this);
+        // eslint-disable-next-line react/no-direct-mutation-state
+        // state ของตัว ค่าที่รับจาก Firebase uid เป็น unique id ที่ ใช้ในการทำงานร่วมกับ Firebase และเป็น state ที่เราจะเกิดไว้
         this.state = {
-
+            name: 'JOHN DOE',
+            email: 'john.doe@example.com',
+            amount: 10000
         };
     }
-
-    componentDidMount() {
-                       
-        const {OmiseCard} = window ;
+    handleScriptLoad = () => {
+        console.log("Call handleScriptLoad");
+        OmiseCard = window.OmiseCard;
         OmiseCard.configure({
-        publicKey: 'pkey_test_5j5a3k4r5juffx27dzv',
-        image: 'https://cdn.omise.co/assets/dashboard/images/omise-logo.png',
-        amount: 99500
+            publicKey: "pkey_test_5jbivi6naa2udixoo7y",
+            amount: 10000,
+            currency: 'thb',
+            frameLabel: 'ProMo',
+            sumitlabel: 'Pay Now',
+            buttonlabel: 'Pay with Omise'
         });
-
-        OmiseCard.configureButton('#checkout-button-1', {
-        frameLabel: 'Merchant name',
-        submitLabel: 'PAY RIGHT NOW !'
-        });
-
-        OmiseCard.attach();
+        console.log(window.OmiseCard);
+        console.log("6666");
     }
 
+    creditCardConfigure = () => {
+            console.log("Call creditCardConfigure");
+            OmiseCard.configure({
+                defaultPaymentMethod: 'credit_card',
+                otherPaymentMethod: []
+            });
+            OmiseCard.configureButton('#credit-card');
+            OmiseCard.attach();
+        }
+        // 4242-4242-4242-4242
+        // John Doe
+        // Expiration date
+        // 02/2021
+    creditCardCharge = async(email, name, amount, token) => {
+        console.log("Call creditCardCharge");
+        try {
+            const res = await axios({
+                method: 'post',
+                url: 'http://localhost:9000/checkout-credit-card',
+                data: {
+                    email,
+                    name,
+                    amount,
+                    token
+                },
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(console.log("Push data to server"));
+            const resData = res.data
+            console.log("resData".res.data);
+            this.setState({ charge: resData })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    omiseCardHandler = () => {
+        console.log("Call creditCardCharge");
+        OmiseCard.open({
+            amount: this.state.amount,
+            submitFormTarget: '#checkout-form',
+            onCreateTokenSuccess: (token) => {
+                /* Handler on token or source creation.  Use this to submit form or send ajax request to server */
+                console.log(token)
+                this.creditCardCharge(this.state.email, this.state.name, this.state.amount, token)
+            },
+
+
+            onFormClosed: () => {
+                /* Handler on form closure. */
+            },
+        })
+    }
+
+    handleClick = e => {
+        e.preventDefault()
+        this.creditCardConfigure()
+        this.omiseCardHandler()
+    }
 
     render() {
-        return (
-            <body>
+        return ( <
+            div className = "own-form" >
+            <
+            Script url = "https://cdn.omise.co/omise.js"
+            onLoad = { this.handleScriptLoad }
+            />
 
-                <div class="form">
-
-                    <h1>Example 3: Custom integration</h1>
-                    <p>Create a checkout button by uses custom integration way to integrate.</p>
-
-                    <form name="checkoutForm" method="POST" action="checkout.php">
-                    <button type="submit" id="checkout-button-1">My Checkout Button !</button>
-                    </form>
-
-                </div>
-
-                
-                
-          
-          </body>
+            <
+            form >
+            <
+            button id = "credit-card"
+            className = "btn"
+            type = "button"
+            onClick = { this.handleClick } >
+            Pay with Credit Card <
+            /button>  < /
+            form > <
+            /div>
         );
     }
-
 }
-
-export default paymentOmise;
-
-// module.exports = {
-//     checkoutCreditCard,
-//     checkoutInternetBanking,
-//     omiseWebHooks,
-//     getInternetBankingCharge
-// };
+export default payment;

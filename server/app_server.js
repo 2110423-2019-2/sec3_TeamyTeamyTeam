@@ -1,67 +1,63 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const web_route = require("./route")
+const express = require('express')
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
 const cors = require('cors')
-const portfolio = require('./schema/portfolio')
-const routes = require("./route");
-
-
+const routes = require('./route')
 const app = express();
-//Top
+
+var omise = require('omise')({
+    'publicKey': 'pkey_test_5jbivi6naa2udixoo7y',
+    'secretKey': 'skey_test_5j5a3k4rg8n5vinn88i'
+});
+
 mongoose
     .connect(
-        //"mongodb+srv://max:w2e3lrYEIuHewmb9@cluster0-r60mt.mongodb.net/test?retryWrites=true&w=majority"
-        "mongodb+srv://admin01:FwIS4yY0IL2gBBlN@cluster0-vkvxw.mongodb.net/test?retryWrites=true&w=majority"
-        //"mongodb+srv://max:Top@cluster0-r60mt.mongodb.net/test?retryWrites=true&w=majority"
-        //choose one here
+        'mongodb+srv://admin01:FwIS4yY0IL2gBBlN@cluster0-vkvxw.mongodb.net/test?retryWrites=true&w=majority'
     )
     .then(() => {
-        console.log("Connected to database!");
+        console.log('Connected to database!')
     })
     .catch(() => {
-        console.log("Connection failed!");
-    });
-
-/*const photographer1 = new portfolio({
-    portfolioName: "photographer1",
-    email: "photographer1@example.com",
-    tags: ["portrait", "wedding"],
-    minBath: 10,
-    maxBath: 100
-});
-photographer1.save();
-
-const photographer2 = new portfolio({
-    portfolioName: "photographer2",
-    email: "photographer2@example.com",
-    tags: ["graduate"],
-    minBath: 20,
-    maxBath: 200
-});
-photographer2.save();
-
-const photographer3 = new portfolio({
-    portfolioName: "photographer3",
-    email: "photographer3@example.com",
-    tags: ["graduate","wedding"],
-    minBath: 30,
-    maxBath: 300
-});
-photographer3.save()
-
-const real = new portfolio({
-    portfolioName: "Nictrak",
-    email: "ntrakarnvanich@yahoo.com",
-    tags: ["portrait", "graduate", "wedding"],
-    minBath: 50,
-    maxBath: 500
-});
-real.save();*/
-
-app.use(bodyParser.json());
+        console.log('Connection failed!')
+    })
+app.use(cors)
+app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/api", routes);
+app.post('/checkout-credit-card', async(req, res, next) => {
+    console.log("Get req");
+    console.log(req.params);
+    try {
+        omise.tokens.retrieve(req.params.token, function(error, token) {
+            return omise.customers.create({
+                email: 'john.doe@example.com',
+                description: 'John Doe (id: 30)',
+                card: token.id
+            });
+        }).then(function(customer) {
+            // And we make a charge to actually charge the customer for something.
+            console.log(customer.id);
+            return omise.charges.create({
+                amount: 10000,
+                currency: 'thb',
+                customer: customer.id
+            });
 
-module.exports = app;
+        }).then(function(charge) {
+
+            // This function will be called after a charge is created.
+
+        }).error(function(err) {
+
+            // Put error handling code here.
+
+        }).done();
+    } catch (error) {
+        console.log(error);
+    }
+
+});
+
+app.use("/api", routes)
+
+module.exports = app

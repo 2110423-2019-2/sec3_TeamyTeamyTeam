@@ -78,7 +78,7 @@ export default class Routing extends React.Component {
         />
         <Route
           exact
-          path="/paymentOmise"
+          path="/payment"
           render={props => <PaymentOmise {...this.props} {...props} />}
         />
         <Route
