@@ -3,28 +3,33 @@ class UploadedPhoto extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      photoID: this.props.key,
-      //   date: ""
-      tag: this.props.tag,
-      url: this.props.url
+      id: this.props.img.id,
+      name: this.props.img.name,
+      url: this.props.img.url,
+      tag: this.props.img.tag,
+      ref: this.props.img.ref,
+      tagTemp: this.props.img.tag,
+      albumID: this.props.albumID
     };
-    this.handleDelete = this.handleDelete.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleDelete(e) {
-    e.preventDefault();
-    console.log(this.state.photoID + " has been deleted");
-    //ลบรูปตามid
-    window.location.reload(false); //refreshเพื่อfetchรูปใหม่
+  shouldComponentUpdate(nextProps, nextState) {
+    const { id, tag } = this.props.img;
+    const { isDeleting } = this.props;
+    if (
+      id !== nextState.id ||
+      tag !== nextState.tag ||
+      isDeleting !== nextProps.isDeleting
+    ) {
+      return true;
+    }
+    return false;
   }
 
-  handleEdit(e) {
-    console.log(
-      this.state.photoID + "'s tag has been change to " + this.state.tag
-    );
-    //แก้tagของรูป
+  handleEdit() {
+    this.setState({ tag: this.state.tagTemp });
   }
 
   handleChange(e) {
@@ -32,27 +37,35 @@ class UploadedPhoto extends Component {
     this.setState({
       [name]: value
     });
-    console.log(value);
     e.preventDefault();
   }
 
   render() {
-    const { photoID, tag, url } = this.state;
     return (
       <div className="col-lg-3 col-md-4 col-xs-4 ">
         {/* Delete Modal */}
         <div
           className="modal fade"
-          id="deleteModal"
+          id={"deleteModal_" + this.state.id + "_" + this.state.albumID}
           tabindex="-1"
           role="dialog"
-          aria-labelledby="deleteModalLabel"
+          aria-labelledby={
+            "deleteModalLabel_" + this.state.id + "_" + this.state.albumID
+          }
           aria-hidden="true"
         >
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="deleteModalLabel">
+                <h5
+                  className="modal-title"
+                  id={
+                    "deleteModalLabel_" +
+                    this.state.id +
+                    "_" +
+                    this.state.albumID
+                  }
+                >
                   Delete Photo
                 </h5>
                 <button
@@ -78,8 +91,10 @@ class UploadedPhoto extends Component {
                 <button
                   type="button"
                   className="btn btn-danger"
-                  //   data-dismiss="modal"
-                  onClick={this.handleDelete}
+                  data-dismiss="modal"
+                  onClick={() =>
+                    this.props.onDelete(this.state.id, this.state.ref)
+                  }
                 >
                   Delete
                 </button>
@@ -90,16 +105,23 @@ class UploadedPhoto extends Component {
         {/* End Delet Modal, Edit Modal */}
         <div
           className="modal fade"
-          id="editModal"
+          id={"editModal_" + this.state.id + "_" + this.state.albumID}
           tabindex="-1"
           role="dialog"
-          aria-labelledby="editModalLabel"
+          aria-labelledby={
+            "editModalLabel" + this.state.id + "_" + this.state.albumID
+          }
           aria-hidden="true"
         >
           <div className="modal-dialog modal-dialog-centered" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title" id="editModalLabel">
+                <h5
+                  className="modal-title"
+                  id={
+                    "editModalLabel" + this.state.id + "_" + this.state.albumID
+                  }
+                >
                   Edit photo's tags
                 </h5>
                 <button
@@ -117,8 +139,14 @@ class UploadedPhoto extends Component {
                     <label for="exampleFormControlSelect1">Tags</label>
                     <select
                       class="form-control"
-                      id="tagSelection"
-                      name="tag"
+                      id={
+                        "tagSelection" +
+                        this.state.id +
+                        "_" +
+                        this.state.albumID
+                      }
+                      value={this.state.tagTemp}
+                      name="tagTemp"
                       onChange={this.handleChange}
                     >
                       <option>Graduation</option>
@@ -141,6 +169,7 @@ class UploadedPhoto extends Component {
                   type="button"
                   className="btn btn-success"
                   onClick={this.handleEdit}
+                  data-dismiss="modal"
                 >
                   Save Changes
                 </button>
@@ -152,24 +181,43 @@ class UploadedPhoto extends Component {
         <div
           className="managePhoto text-center"
           style={{
-            backgroundImage: 'url("' + url + '")'
+            backgroundImage: 'url("' + this.state.url + '")',
+            opacity: this.props.isDeleting ? "0.3" : "1"
           }}
         >
-          <div className="manageOverlay w-100 h-100 d-flex align-items-center justify-content-center">
-            <button
-              className="btn btn-outline-light mr-3"
-              data-toggle="modal"
-              data-target="#editModal"
-            >
-              <ion-icon name="color-wand-outline"></ion-icon>Edit
-            </button>
-            <button
-              className="btn btn-outline-danger"
-              data-toggle="modal"
-              data-target="#deleteModal"
-            >
-              <ion-icon name="trash-outline"></ion-icon>Delete
-            </button>
+          <div
+            className="manageOverlay w-100 h-100 d-flex flex-column align-items-center justify-content-center"
+            style={{ visibility: this.props.isDeleting ? "hidden" : "visible" }}
+          >
+            <div class="p-2">
+              {this.state.name} /{" "}
+              <span
+                className="badge badge-secondary"
+                style={{ backgroundColor: "#ffa135" }}
+              >
+                {this.state.tag}
+              </span>
+            </div>
+            <div class="p-2">
+              <button
+                className="btn btn-outline-light mr-3"
+                data-toggle="modal"
+                data-target={
+                  "#editModal_" + this.state.id + "_" + this.state.albumID
+                }
+              >
+                <ion-icon name="color-wand-outline"></ion-icon>Edit
+              </button>
+              <button
+                className="btn btn-outline-danger"
+                data-toggle="modal"
+                data-target={
+                  "#deleteModal_" + this.state.id + "_" + this.state.albumID
+                }
+              >
+                <ion-icon name="trash-outline"></ion-icon>Delete
+              </button>
+            </div>
           </div>
         </div>
       </div>

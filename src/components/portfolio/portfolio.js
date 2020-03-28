@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PortfolioHeader from "./portfolio-header";
-import PhotoCategory from "./photo-category";
+import PhotoAlbum from "./photoAlbum";
 import { Link } from "react-router-dom";
 import "../../stylesheets/portfolio.css";
 
@@ -64,7 +64,7 @@ class Portfolio extends Component {
         <div className="container-fluid my-4">
           <div className="row">
             {/* If there is more than 1 category we have to map this */}
-            <PhotoCategory category="Photo" photoList={this.state.photoList} />
+            <PhotoAlbum category="Photo" photoList={this.state.photoList} />
           </div>
         </div>
       </div>
