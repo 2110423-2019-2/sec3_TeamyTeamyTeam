@@ -8,9 +8,6 @@ import { Redirect } from "react-router";
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
-
-    // eslint-disable-next-line react/no-direct-mutation-state
-    // state ของตัว ค่าที่รับจาก Firebase uid เป็น unique id ที่ ใช้ในการทำงานร่วมกับ Firebase และเป็น state ที่เราจะเกิดไว้
     this.state = {
       displayErrors: false,
       email: "",

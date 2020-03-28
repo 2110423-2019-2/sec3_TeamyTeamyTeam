@@ -4,15 +4,15 @@ import { Switch, Route } from "react-router-dom";
 import Home from "../components/home";
 import Login from "../components/UserManagement/signin";
 import SignUp from "../components/UserManagement/signup";
-import Search from "../components/Search/search";
-import Portfolio from "../components/Portfolio/portfolio";
+import Search from "../components/search/search";
+import Portfolio from "../components/portfolio/portfolio";
 import JobOffer from "../components/JobManagement/createOffer";
 import OfferProgress from "../components/JobManagement/offerProgress";
 import PhotoHis from "../components/JobManagement/jobHistory";
-import ManagePortfolio from "../components/Portfolio/managePortfolio";
+import ManagePortfolio from "../components/portfolio/managePortfolio";
 import Employer from "../components/UserManagement/Employer/employer";
 import EditEmployerProfile from "../components/UserManagement/Employer/editEmployerProfile";
-import PaymentOmise from "../components/Payment/paymentOmise";
+import Payment from "../components/Payment/payment";
 import NotificationPage from "../components/Notification/notificationPage";
 
 export default class Routing extends React.Component {
@@ -79,7 +79,7 @@ export default class Routing extends React.Component {
         <Route
           exact
           path="/payment"
-          render={props => <PaymentOmise {...this.props} {...props} />}
+          render={props => <Payment {...this.props} {...props} />}
         />
         <Route
           exact

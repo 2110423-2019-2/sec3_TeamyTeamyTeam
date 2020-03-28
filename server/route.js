@@ -105,45 +105,45 @@ router.get("/offer/:email", (req, res, next) => {
 });
 
 router.post("/offer", (req, res, next) => {
-  const offer_post = new offer({
-    title: req.body.title,
-    photographerID: req.body.photographerID,
-    portfolioName: req.body.portfolioName, // portfolioName == portfolioID
-    employerID: req.body.employerID,
-    employerEmail: req.body.employerEmail,
-    style: req.body.style,
-    actDate: req.body.actDate, // data_tag in server !!!
-    meetUpTime: req.body.meetUpTime, // meetUpTime เวลาที่มาเจอกัน
-    location: req.body.location,
-    progress: req.body.progress,
-    optionalRequest: req.body.optionalRequest // Text_block สำหรับการคุยคร่าวๆ
-  });
-  offer_post.save().then(() => {
-    portfolio
-      .find({ portfolioName: offer_post.portfolioName })
-      .then(documents => {
-        // create notify for photographer
-        const notify_post_photographer = new notify({
-          email: documents[0].email,
-          content: offer_post.title + ": " + offer_post.progress,
-          redirectLink: offer_post._id, // redirect to the  accept/decline section
-          isRead: false,
-          isReply: false
-        });
-        notify_post_photographer.save();
-        // create notify for employer
-        const notify_post_employer = new notify({
-          email: req.body.employerEmail,
-          content: offer_post.title + ": " + offer_post.progress,
-          redirectLink: offer_post._id, // redirect to the  accept/decline section
-          isRead: false,
-          isReply: true
-        });
-        notify_post_employer.save();
-        console.log(offer_post);
-        console.log(notify_post_photographer);
-      });
-  });
+    const offer_post = new offer({
+        title: req.body.title,
+        photographerID: req.body.photographerID,
+        portfolioName: req.body.portfolioName, // portfolioName == portfolioID
+        employerID: req.body.employerID,
+        employerEmail: req.body.employerEmail,
+        style: req.body.style,
+        actDate: req.body.actDate, // data_tag in server !!!
+        meetUpTime: req.body.meetUpTime, // meetUpTime เวลาที่มาเจอกัน
+        location: req.body.location,
+        progress: req.body.progress,
+        optionalRequest: req.body.optionalRequest // Text_block สำหรับการคุยคร่าวๆ
+    });
+    offer_post.save().then(() => {
+        portfolio
+            .find({ portfolioName: offer_post.portfolioName })
+            .then(documents => {
+                // create notify for photographer
+                const notify_post_photographer = new notify({
+                    email: documents[0].email,
+                    content: offer_post.title + ": " + offer_post.progress,
+                    redirectLink: offer_post._id, // redirect to the  accept/decline section
+                    isRead: false,
+                    isReply: false
+                });
+                notify_post_photographer.save();
+                // create notify for employer
+                const notify_post_employer = new notify({
+                    email: req.body.employerEmail,
+                    content: offer_post.title + ": " + offer_post.progress,
+                    redirectLink: offer_post._id, // redirect to the  accept/decline section
+                    isRead: false,
+                    isReply: true
+                });
+                notify_post_employer.save();
+                console.log(offer_post);
+                console.log(notify_post_photographer);
+            });
+    });
 
     res.status(status_created).json({
         message: "Post added successful"
@@ -183,81 +183,60 @@ router.put("/readNotify/:email", (req, res, next) => {
 
 
 router.get("/replyNotify/:id.:isAccept", (req, res, next) => {
-  var of;
+    var of;
     offer
-      .find({ _id: req.params.id })
-      .then(documents => {
-          of = documents[0];
+        .find({ _id: req.params.id })
+        .then(documents => {
+            of = documents[0];
         });
-  if (req.params.isAccept == "true") {
-    if (of.progress == "wait_photographer_reply") {
-      const new_content = of.title + ": " + "wait_employer_reply" 
-      notify
-        .update(
-          { redirectLink: req.params.id, isReply: true },
-          {
-            content: new_content,
-            isReply: false
-          }
-        )
-        .exec();
-      notify
-        .update(
-          { redirectLink: req.params.id, isReply: false },
-          {
-            content: new_content,
-            isReply: true
-          }
-        )
-        .exec();
-      offer
-        .update(
-          { _id: req.params.id },
-          {
-            progress: "wait_employer_reply"
-          }
-        )
-        .exec();
-    } else if (of.progress == "wait_employer_reply") {
-      const new_content = of.title + ": " + "offer complete" 
-      notify
-        .update(
-          { redirectLink: req.params.id },
-          {
-            content: new_content,
-            isReply: false
-          }
-        )
-        .exec();
-      offer
-        .update(
-          { _id: req.params.id },
-          {
-            progress: "offer complete"
-          }
-        )
-        .exec();
+    if (req.params.isAccept == "true") {
+        if (of.progress == "wait_photographer_reply") {
+            const new_content = of.title + ": " + "wait_employer_reply"
+            notify
+                .update({ redirectLink: req.params.id, isReply: true }, {
+                    content: new_content,
+                    isReply: false
+                })
+                .exec();
+            notify
+                .update({ redirectLink: req.params.id, isReply: false }, {
+                    content: new_content,
+                    isReply: true
+                })
+                .exec();
+            offer
+                .update({ _id: req.params.id }, {
+                    progress: "wait_employer_reply"
+                })
+                .exec();
+        } else if (of.progress == "wait_employer_reply") {
+            const new_content = of.title + ": " + "offer complete"
+            notify
+                .update({ redirectLink: req.params.id }, {
+                    content: new_content,
+                    isReply: false
+                })
+                .exec();
+            offer
+                .update({ _id: req.params.id }, {
+                    progress: "offer complete"
+                })
+                .exec();
+        }
+    } else {
+        const new_content = of.title + ": " + "offer fail"
+        notify
+            .update({ redirectLink: req.params.id }, {
+                content: new_content,
+                isReply: false
+            })
+            .exec();
+        offer
+            .update({ _id: req.params.id }, {
+                progress: "offer fail"
+            })
+            .exec();
     }
-  } else {
-    const new_content = of.title + ": " + "offer fail"
-    notify
-        .update(
-          { redirectLink: req.params.id },
-          {
-            content: new_content,
-            isReply: false
-          }
-        )
-        .exec();
-      offer
-        .update(
-          { _id: req.params.id },
-          {
-            progress: "offer fail"
-          }
-        )
-        .exec();
-  }
 
 });
 
