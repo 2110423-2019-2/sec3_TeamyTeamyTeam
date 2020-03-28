@@ -13,11 +13,6 @@ class ManagePortfolio extends Component {
           name: "Cafe",
           photoLists: []
         }
-        // {
-        //   id: 2,
-        //   name: "Chula",
-        //   photoLists: []
-        // }
       ] //เก็บjsonของalbum ในalbumก็เก็บรูปอีกที
     };
     this.deleteAlbum = this.deleteAlbum.bind(this);
@@ -31,7 +26,7 @@ class ManagePortfolio extends Component {
   deleteAlbum(id) {
     let albums = this.state.albums.filter(album => album.id !== id);
     this.setState({ albums });
-    //แก้databaseส่วนalbum
+    //แก้databaseส่วนalbumพร้อมทั้งลบรูปทั้งหมด
   }
 
   addAlbum() {
@@ -46,8 +41,6 @@ class ManagePortfolio extends Component {
     albums.push(album);
     this.setState({ albums });
   }
-
-  changeAlbumName(id, newName) {}
 
   render() {
     return (

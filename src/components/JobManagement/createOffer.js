@@ -16,7 +16,7 @@ class JobOffer extends Component {
       isChecked: false
     };
   }
- 
+
   handleChange = e => {
     //ตรวจค่าของ name ใน Onchange และ set ค่าตามไปเรื่อยๆ
     const { name, value } = e.target;
@@ -68,7 +68,7 @@ class JobOffer extends Component {
 
   render() {
     return (
-      <div className="section container">
+      <div className="container">
         <div className="columns is-centered">
           <div className="column is-half">
             <form

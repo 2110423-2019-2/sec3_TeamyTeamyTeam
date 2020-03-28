@@ -163,7 +163,8 @@ class manageAlbum extends Component {
               ) : (
                 <span
                   style={{ cursor: "text" }}
-                  onDoubleClick={() => {
+                  onDoubleClick={e => {
+                    e.stopPropagation();
                     this.setState({ newName: this.state.name });
                     this.setState({ isChangingName: true });
                   }}

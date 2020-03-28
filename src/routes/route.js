@@ -6,13 +6,14 @@ import Login from "../components/UserManagement/signin";
 import SignUp from "../components/UserManagement/signup";
 import Search from "../components/Search/search";
 import Portfolio from "../components/Portfolio/portfolio";
-import JobOffer from "../components/JobManagement/offer";
+import JobOffer from "../components/JobManagement/createOffer";
 import OfferProgress from "../components/JobManagement/offerProgress";
 import PhotoHis from "../components/JobManagement/jobHistory";
 import ManagePortfolio from "../components/Portfolio/managePortfolio";
 import Employer from "../components/UserManagement/Employer/employer";
 import EditEmployerProfile from "../components/UserManagement/Employer/editEmployerProfile";
 import PaymentOmise from "../components/Payment/paymentOmise";
+import NotificationPage from "../components/Notification/notificationPage";
 
 export default class Routing extends React.Component {
   constructor(props) {
@@ -79,6 +80,11 @@ export default class Routing extends React.Component {
           exact
           path="/paymentOmise"
           render={props => <PaymentOmise {...this.props} {...props} />}
+        />
+        <Route
+          exact
+          path="/notifications"
+          render={props => <NotificationPage {...this.props} {...props} />}
         />
       </Switch>
     );
