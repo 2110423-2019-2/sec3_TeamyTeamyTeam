@@ -44,8 +44,30 @@ class NotificationBox extends Component {
     this.setState({ isRead: true });
   }
 
+  render_reply = () => {
+    if (this.state.isReply == true) {
+      return (
+        <div>
+          <button
+            className="btn btn-sm btn-success mr-2"
+            onClick={this.handleAcceptJob}
+          >
+            Accept Offer
+          </button>
+          <button
+            className="btn btn-sm btn-danger"
+            onClick={this.handleDeclineJob}
+          >
+            Decline Offer
+          </button>
+        </div>
+      );
+    } else return <div></div>;
+  };
+
   render() {
     const { sender, message, date, isRead, isReply } = this.state;
+
     return (
       <div className="bd-highlight mb-3">
         <li
