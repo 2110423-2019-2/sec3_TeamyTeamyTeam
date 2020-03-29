@@ -4,15 +4,14 @@ import { Switch, Route } from "react-router-dom";
 import Home from "../components/home";
 import Login from "../components/UserManagement/signin";
 import SignUp from "../components/UserManagement/signup";
-import Search from "../components/Search/search";
-import Portfolio from "../components/Portfolio/portfolio";
+import Search from "../components/search/search";
+import Portfolio from "../components/portfolio/portfolio";
 import JobOffer from "../components/JobManagement/createOffer";
-import OfferProgress from "../components/JobManagement/offerProgress";
 import PhotoHis from "../components/JobManagement/jobHistory";
-import ManagePortfolio from "../components/Portfolio/managePortfolio";
+import ManagePortfolio from "../components/portfolio/managePortfolio";
 import Employer from "../components/UserManagement/Employer/employer";
 import EditEmployerProfile from "../components/UserManagement/Employer/editEmployerProfile";
-import Payment from "../components/Payment/payment";
+import Payment from "../components/payment/payment";
 import NotificationPage from "../components/Notification/notificationPage";
 import Review from "../components/UserManagement/Employer/review";
 
@@ -52,11 +51,6 @@ export default class Routing extends React.Component {
           exact
           path="/offer/:name"
           component={props => <JobOffer {...this.props} {...props} />}
-        />
-        <Route
-          exact
-          path="/offerProgress/:id.:type.:isAccept"
-          component={props => <OfferProgress {...this.props} {...props} />}
         />
         <Route
           exact

@@ -23,13 +23,15 @@ const {
     getInternetBankingCharge
 } = require('./controller/paymentControl');
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+
 app.post('/checkout-creditCard', omiseCheckoutCreditCard)
 app.post('/checkout-internetBanking', omiseCheckoutInternetBanking)
 app.post('/webhooks', omiseWebHooks)
 app.get('/bank-charge', getInternetBankingCharge)
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+
 app.use("/api", routes)
 
 app.use(cors)

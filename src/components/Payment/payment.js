@@ -4,6 +4,11 @@ import axios from "axios";
 import ChekoutCreditCard from "./CheckoutCreditCard";
 import CheckoutInternetBanking from "./CheckoutInternetBanking";
 
+// Card 4242-4242-4242-4242
+//name test 
+// 02/21  
+// Security code 333
+
 export class CheckoutPage extends Component {
   constructor(props) {
     super(props);

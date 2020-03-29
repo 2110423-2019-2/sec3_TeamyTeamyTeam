@@ -178,8 +178,8 @@ class JobOffer extends Component {
               </div>
 
               <div className="field is-grouped">
-                <input type="submit" className="btn btn-outline-primary" />
-                <input
+                <input type="submit" className="btn btn-outline-primary" href = "/home" />
+                <input 
                   type="reset"
                   className="btn btn-outline-secondary mx-3"
                 />

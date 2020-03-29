@@ -15,8 +15,6 @@ const rootDir = require('./path')
 const filePath = path.join(rootDir, 'data', 'internetBankingCharge.json')
 
 const omiseCheckoutCreditCard = async(req, res, next) => {
-    console.log("post to omiseCheckoutCreditCard")
-    console.log(res.params)
     try {
         const { email, name, amount, token } = req.body;
 

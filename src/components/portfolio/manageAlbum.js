@@ -29,7 +29,8 @@ class manageAlbum extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.changeAlbumName = this.changeAlbumName.bind(this);
   }
-
+  // Function ที่ Get ตัวของ URL ทั้งหมด
+  
   imgInfoChange(e) {
     const { name, value } = e.target;
     this.setState({
