@@ -14,6 +14,7 @@ import Employer from "../components/UserManagement/Employer/employer";
 import EditEmployerProfile from "../components/UserManagement/Employer/editEmployerProfile";
 import Payment from "../components/Payment/payment";
 import NotificationPage from "../components/Notification/notificationPage";
+import Review from "../components/UserManagement/Employer/review";
 
 export default class Routing extends React.Component {
   constructor(props) {
@@ -58,6 +59,7 @@ export default class Routing extends React.Component {
           component={props => <OfferProgress {...this.props} {...props} />}
         />
         <Route
+          exact
           path="/history"
           render={props => <PhotoHis {...this.props} {...props} />}
         />
@@ -85,6 +87,11 @@ export default class Routing extends React.Component {
           exact
           path="/notifications"
           render={props => <NotificationPage {...this.props} {...props} />}
+        />
+        <Route
+          exact
+          path="/review"
+          render={props => <Review {...this.props} {...props} />}
         />
       </Switch>
     );
