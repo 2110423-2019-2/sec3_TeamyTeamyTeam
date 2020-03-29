@@ -16,11 +16,13 @@ class UploadedPhoto extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { id, tag } = this.props.img;
+    const { id } = this.props.img;
+    const { tag, tagTemp } = this.state;
     const { isDeleting } = this.props;
     if (
       id !== nextState.id ||
       tag !== nextState.tag ||
+      tagTemp !== nextState.tagTemp ||
       isDeleting !== nextProps.isDeleting
     ) {
       return true;

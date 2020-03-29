@@ -311,27 +311,32 @@ class manageAlbum extends Component {
               }}
             >
               {this.state.isUploading ? (
+                // <div
+                //   className="progress"
+                //   style={{
+                //     borderRadius: "0"
+                //   }}
+                // >
+                //   <div
+                //     className="progress-bar"
+                //     role="progressbar"
+                //     style={{
+                //       width: this.state.uploadProgress + "%",
+                //       backgroundColor: "#ffa135",
+                //       borderRadius: "0"
+                //     }}
+                //     aria-valuenow={this.state.uploadProgress}
+                //     aria-valuemin="0"
+                //     aria-valuemax="100"
+                //   >
+                //     {this.state.uploadProgress}%
+                //   </div>
+                // </div>
                 <div
-                  className="progress"
-                  style={{
-                    borderRadius: "0"
-                  }}
-                >
-                  <div
-                    className="progress-bar"
-                    role="progressbar"
-                    style={{
-                      width: this.state.uploadProgress + "%",
-                      backgroundColor: "#ffa135",
-                      borderRadius: "0"
-                    }}
-                    aria-valuenow={this.state.uploadProgress}
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                  >
-                    {this.state.uploadProgress}%
-                  </div>
-                </div>
+                  class="spinner-border"
+                  style={{ color: "#ffffff" }}
+                  role="status"
+                ></div>
               ) : (
                 <div>
                   Add Photo
