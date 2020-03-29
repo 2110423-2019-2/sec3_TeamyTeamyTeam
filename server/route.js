@@ -128,7 +128,7 @@ router.post("/offer", (req, res, next) => {
                     content: offer_post.title + ": " + offer_post.progress,
                     redirectLink: offer_post._id, // redirect to the  accept/decline section
                     isRead: false,
-                    isReply: false
+                    isReply: true
                 });
                 notify_post_photographer.save();
                 // create notify for employer
@@ -137,7 +137,7 @@ router.post("/offer", (req, res, next) => {
                     content: offer_post.title + ": " + offer_post.progress,
                     redirectLink: offer_post._id, // redirect to the  accept/decline section
                     isRead: false,
-                    isReply: true
+                    isReply: false
                 });
                 notify_post_employer.save();
                 console.log(offer_post);
@@ -169,7 +169,6 @@ router.get("/notify/:email", (req, res, next) => {
             message: "Registor fetched successfully!",
             data: documents
         });
-        console.log(documents);
     });
 });
 
@@ -188,55 +187,56 @@ router.get("/replyNotify/:id.:isAccept", (req, res, next) => {
         .find({ _id: req.params.id })
         .then(documents => {
             of = documents[0];
+            if (req.params.isAccept == true) {
+                if (of.progress == "wait_photographer_reply") {
+                    const new_content = of.title + ": " + "wait_employer_reply"
+                    notify
+                        .update({ redirectLink: req.params.id, isReply: true }, {
+                            content: new_content,
+                            isReply: false
+                        })
+                        .exec();
+                    notify
+                        .update({ redirectLink: req.params.id, isReply: false }, {
+                            content: new_content,
+                            isReply: true
+                        })
+                        .exec();
+                    offer
+                        .update({ _id: req.params.id }, {
+                            progress: "wait_employer_reply"
+                        })
+                        .exec();
+                } else if (of.progress == "wait_employer_reply") {
+                    const new_content = of.title + ": " + "offer complete"
+                    notify
+                        .update({ redirectLink: req.params.id }, {
+                            content: new_content,
+                            isReply: false
+                        })
+                        .exec();
+                    offer
+                        .update({ _id: req.params.id }, {
+                            progress: "offer complete"
+                        })
+                        .exec();
+                }
+            } else {
+                const new_content = of.title + ": " + "offer fail"
+                notify
+                    .update({ redirectLink: req.params.id }, {
+                        content: new_content,
+                        isReply: false
+                    })
+                    .exec();
+                offer
+                    .update({ _id: req.params.id }, {
+                        progress: "offer fail"
+                    })
+                    .exec();
+            }
+            console.log("reply success")
         });
-    if (req.params.isAccept == "true") {
-        if (of.progress == "wait_photographer_reply") {
-            const new_content = of.title + ": " + "wait_employer_reply"
-            notify
-                .update({ redirectLink: req.params.id, isReply: true }, {
-                    content: new_content,
-                    isReply: false
-                })
-                .exec();
-            notify
-                .update({ redirectLink: req.params.id, isReply: false }, {
-                    content: new_content,
-                    isReply: true
-                })
-                .exec();
-            offer
-                .update({ _id: req.params.id }, {
-                    progress: "wait_employer_reply"
-                })
-                .exec();
-        } else if (of.progress == "wait_employer_reply") {
-            const new_content = of.title + ": " + "offer complete"
-            notify
-                .update({ redirectLink: req.params.id }, {
-                    content: new_content,
-                    isReply: false
-                })
-                .exec();
-            offer
-                .update({ _id: req.params.id }, {
-                    progress: "offer complete"
-                })
-                .exec();
-        }
-    } else {
-        const new_content = of.title + ": " + "offer fail"
-        notify
-            .update({ redirectLink: req.params.id }, {
-                content: new_content,
-                isReply: false
-            })
-            .exec();
-        offer
-            .update({ _id: req.params.id }, {
-                progress: "offer fail"
-            })
-            .exec();
-    }
 
 });
 

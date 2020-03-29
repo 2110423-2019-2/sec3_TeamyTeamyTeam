@@ -16,7 +16,7 @@ class NotificationBox extends Component {
     };
   }
 
-  handleAcceptJob(){
+  handleAcceptJob = () => {
     axios
       .get("http://localhost:9000/api/replyNotify/" +
       this.state.redirectLink +
@@ -28,7 +28,7 @@ class NotificationBox extends Component {
       .catch(err => console.error(err));
   }
 
-  handleDeclineJob(){
+  handleDeclineJob = () => {
     axios
     .get("http://localhost:9000/api/replyNotify/" +
     this.state.redirectLink +
@@ -44,8 +44,31 @@ class NotificationBox extends Component {
     this.setState({ isRead: true });
   }
 
+  render_reply = () =>{
+    if(this.state.isReply == true){
+      return(
+        <div>
+          <button
+            className="btn btn-sm btn-success mr-2"
+            onClick={this.handleAcceptJob}
+          >
+            Accept Offer
+          </button>
+          <button
+            className="btn btn-sm btn-danger"
+           onClick={this.handleDeclineJob}
+          >
+            Decline Offer
+          </button>
+        </div>
+      )
+    }
+    else return (<div></div>)
+  }
+
   render() {
     const { sender, message, date, isRead, isReply } = this.state;
+
     return (
       <li
         className={isRead ? "notification-box" : "notification-box bg-gray"}
@@ -62,20 +85,7 @@ class NotificationBox extends Component {
             <div className="col-lg-8 col-sm-8 col-8">
               <strong className="text-primary">{sender}</strong>
               <div className="text-dark">
-                  <div>
-                    <button
-                      className="btn btn-sm btn-success mr-2"
-                      onClick={this.handleAcceptJob}
-                    >
-                      Accept Offer
-                    </button>
-                    <button
-                      className="btn btn-sm btn-danger"
-                      onClick={this.handleDeclineJob}
-                    >
-                      Decline Offer
-                    </button>
-                  </div>
+                  {this.render_reply()}
                   {message}
               </div>
               <small className="text-dark">{date}</small>
