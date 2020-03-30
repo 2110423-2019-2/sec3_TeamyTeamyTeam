@@ -246,14 +246,12 @@ router.get("/replyNotify/:id.:isAccept", (req, res, next) => {
 //         res.status(404).send('The profile with the given ID was not found ')
 //     } else {
 
-//         if (user_profile.firstName === '') {
+//         if (req.params.firstName} !== '') {
 //             user_profile.firstName = req.params.firstName
-//         }
 
 //         res.send(user_profile);
 //     }
-//     user_post.save();
-
+//Schema
 //     // firstName: req.body.firstName,
 //     // lastName: req.body.lastName,
 //     // email: req.body.email,
