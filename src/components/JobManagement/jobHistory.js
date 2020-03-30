@@ -9,10 +9,29 @@ class JobHistory extends Component {
     super(props);
     this.getResult = this.getResult.bind(this);
     this.state = {
-      historyResult: [],
+      historyResult: [
+        {  title: 'Title2', style: 'Wedding', portfolioName: 'Ton', meetUpTime: '1/1/2020', actDate: 'Half day morning', location:'123456', progress:'Cancelled' },
+        { title: 'Title3', style: 'Portrait', portfolioName: 'Jane', meetUpTime: '17/10/2019', actDate: 'Half day evening', location:'123456', progress:'Finished' },
+        {  title: 'Title4', style: 'Graduation', portfolioName: 'Otto', meetUpTime: '16/9/2019', actDate: 'Full day', location:'123456', progress:'Finished' },
+        {  title: 'Title2', style: 'Wedding', portfolioName: 'Ton', meetUpTime: '1/1/2020', actDate: 'Half day morning', location:'123456', progress:'Cancelled' },
+        { title: 'Title3', style: 'Portrait', portfolioName: 'Jane', meetUpTime: '17/10/2019', actDate: 'Half day evening', location:'123456', progress:'Finished' },
+        {  title: 'Title4', style: 'Graduation', portfolioName: 'Otto', meetUpTime: '16/9/2019', actDate: 'Full day', location:'123456', progress:'Finished' },
+        {  title: 'Title2', style: 'Wedding', portfolioName: 'Ton', meetUpTime: '1/1/2020', actDate: 'Half day morning', location:'123456', progress:'Cancelled' },
+        { title: 'Title3', style: 'Portrait', portfolioName: 'Jane', meetUpTime: '17/10/2019', actDate: 'Half day evening', location:'123456', progress:'Finished' },
+        {  title: 'Title4', style: 'Graduation', portfolioName: 'Otto', meetUpTime: '16/9/2019', actDate: 'Full day', location:'123456', progress:'Finished' },
+        {  title: 'Title2', style: 'Wedding', portfolioName: 'Ton', meetUpTime: '1/1/2020', actDate: 'Half day morning', location:'123456', progress:'Cancelled' },
+        { title: 'Title3', style: 'Portrait', portfolioName: 'Jane', meetUpTime: '17/10/2019', actDate: 'Half day evening', location:'123456', progress:'Finished' },
+        {  title: 'Title4', style: 'Graduation', portfolioName: 'Otto', meetUpTime: '16/9/2019', actDate: 'Full day', location:'123456', progress:'Finished' },
+        {  title: 'Title2', style: 'Wedding', portfolioName: 'Ton', meetUpTime: '1/1/2020', actDate: 'Half day morning', location:'123456', progress:'Cancelled' },
+        { title: 'Title3', style: 'Portrait', portfolioName: 'Jane', meetUpTime: '17/10/2019', actDate: 'Half day evening', location:'123456', progress:'Finished' },
+        {  title: 'Title4', style: 'Graduation', portfolioName: 'Otto', meetUpTime: '16/9/2019', actDate: 'Full day', location:'123456', progress:'Finished' },
+        {  title: 'Title2', style: 'Wedding', portfolioName: 'Ton', meetUpTime: '1/1/2020', actDate: 'Half day morning', location:'123456', progress:'Cancelled' },
+        { title: 'Title3', style: 'Portrait', portfolioName: 'Jane', meetUpTime: '17/10/2019', actDate: 'Half day evening', location:'123456', progress:'Finished' },
+        {  title: 'Title4', style: 'Graduation', portfolioName: 'Otto', meetUpTime: '16/9/2019', actDate: 'Full day', location:'123456', progress:'Finished' }
+      ],
       columns: [{ dataField: 'title',  text: 'Title'  },  
                 { dataField: 'style',text: 'Style'}, 
-                { dataField: 'portfolioName', text: 'Portfolio name', },  
+                { dataField: 'id', text: 'Portfolio name', },  
                 { dataField: 'meetUpTime', text: 'Meet up time' },  
                 { dataField: 'actDate', text: 'Act date' },  
                 { dataField: 'location', text: 'Location', },  
@@ -81,18 +100,18 @@ class JobHistory extends Component {
 
   render() {
     const options = {  
-          page: 2,   
+          page: 1,   
           sizePerPageList: [ 
             { text: '5', value: 5 }, 
             { text: '10', value: 10},
             { text: 'All', value: this.state.historyResult.length} ],   
-          sizePerPage: 10,   
+          sizePerPage: 5,   
           pageStartIndex: 1,   
           paginationSize: 3,    
-          prePage: '<',   
-          nextPage: '>',   
-          firstPage: '<<',   
-          lastPage: '>>'
+          prePageText: '<',   
+          nextPageText: '>',   
+          firstPageText: '<<',   
+          lastPageText: '>>'
         };
 
     return (
@@ -114,9 +133,7 @@ class JobHistory extends Component {
                 </li>
               </div>
               <BootstrapTable
-                      striped
-                      hover
-                      keyField='portfolioName'
+                      keyField='id'
                       data={this.state.historyResult}
                       columns={this.state.columns}
                       pagination={paginationFactory(options)}/>
