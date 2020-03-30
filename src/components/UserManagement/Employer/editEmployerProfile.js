@@ -6,11 +6,21 @@ class EditEmployerProfile extends Component {
     super(props);
     this.state = {
       name: "",
+      interest: "",
+      email: "",
+      phoneNo: ""
     };
   }
  
   // getResult {
-  //   axios.put()
+  //   axios.put("http://localhost:9000/user/", {
+  //      name: ,
+  //      interest: ,
+  //      email: ,
+  //      phoneNo:
+  // }).then(res =>{
+  //      
+  // })
   // }
   render() {
     return (
