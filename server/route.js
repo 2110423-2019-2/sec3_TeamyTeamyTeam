@@ -78,7 +78,15 @@ router.get("/portfolio", (req, res, next) => {
     console.log(documents);
   });
 });
-
+router.get("/portfolio/:email", (req, res, next) => {
+    portfolio.find().then(documents => {
+        res.status(status_ok).json({
+            message: "Registor fetched successfully!",
+            data: documents
+        });
+        console.log(documents);
+    });
+});
 router.get("/portfolioTags/:key", (req, res, next) => {
   portfolio.find({ tags: req.params.key }).then(documents => {
     res.status(status_ok).json({
@@ -184,18 +192,81 @@ router.put("/readNotify/:email", (req, res, next) => {
 });
 
 router.get("/replyNotify/:id.:isAccept", (req, res, next) => {
-  var of;
-  offer.find({ _id: req.params.id }).then(documents => {
-    of = documents[0];
-    if (req.params.isAccept == true) {
-      if (of.progress == "wait_photographer_reply") {
-        const new_content = of.title + ": " + "wait_employer_reply";
-        notify
-          .update(
-            { redirectLink: req.params.id, isReply: true },
-            {
-              content: new_content,
-              isReply: false
+    var of;
+    var false_notify;
+    offer
+        .find({ _id: req.params.id })
+        .then(documents => {
+            of = documents[0];
+            console.log("find " + of.progress)
+            if (req.params.isAccept == "true") {
+                if (of.progress == "wait photographer reply") {
+                    console.log("wait photographer reply:" + req.params.id)
+                    const new_content = of.title + ": " + "wait employer reply"
+                    console.log("update to " + new_content)
+                    notify
+                        .find({ redirectLink: req.params.id, isReply: false })
+                        .then(documents2 =>{
+                            var false_notify = documents2[0];
+                            notify
+                            .update({ _id: false_notify._id }, {
+                                content: new_content,
+                                isReply: true
+                            })
+                            .exec(() => {
+                                console.log("wait employer reply notify update step2")
+                            });
+                        })
+                    notify
+                        .update({ redirectLink: req.params.id, isReply: true }, {
+                            content: new_content,
+                            isReply: false
+                        })
+                        .exec(() => {
+                            console.log("wait employer reply notify update step1")
+                        });
+                    offer
+                        .update({ _id: req.params.id }, {
+                            progress: "wait employer reply"
+                        })
+                        .exec(() => {
+                            console.log("wait employer reply offer update")
+                        });
+                } else if (of.progress == "wait employer reply") {
+                    const new_content = of.title + ": " + "offer complete"
+                    notify
+                        .updateMany({ redirectLink: req.params.id }, {
+                            content: new_content,
+                            isReply: false
+                        })
+                        .exec(() => {
+                            console.log("offer complete notify update")
+                        });
+                    offer
+                        .update({ _id: req.params.id }, {
+                            progress: "offer complete"
+                        })
+                        .exec(() => {
+                            console.log("offer complete offer update")
+                        });
+                }
+            } else {
+                const new_content = of.title + ": " + "offer fail"
+                notify
+                    .update({ redirectLink: req.params.id }, {
+                        content: new_content,
+                        isReply: false
+                    })
+                    .exec(() => {
+                        console.log("offer fail notify update")
+                    });
+                offer
+                    .update({ _id: req.params.id }, {
+                        progress: "offer fail"
+                    })
+                    .exec(() => {
+                        console.log("offer fail offer update")
+                    });
             }
           )
           .exec();

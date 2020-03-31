@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import axios from "axios";
+import { Redirect } from "react-router";
 
 class JobOffer extends Component {
   constructor(props) {
@@ -13,7 +14,8 @@ class JobOffer extends Component {
       location: "",
       photographer: this.props.match.params.name,
       displayErrors: false,
-      isChecked: false
+      isChecked: false,
+      redirect: false
     };
   }
 
@@ -62,11 +64,15 @@ class JobOffer extends Component {
       })
       .then(res => {
         console.log(res);
+        this.setState({redirect: true})
       })
       .catch(err => console.error(err));
   };
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect push to="/" />;
+    }
     return (
       <div className="container my-5 w-50">
         <form
