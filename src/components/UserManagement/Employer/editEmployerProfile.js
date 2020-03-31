@@ -6,7 +6,7 @@ class EditEmployerProfile extends Component {
     super(props);
     this.state = {
       name: this.props.appState.name,
-      interest: this.props.appStateg.interest,
+      interest: this.props.appState.interest,
       email: this.props.appState.email,
       phoneNo: this.props.appState.phoneNo
     };
@@ -14,15 +14,20 @@ class EditEmployerProfile extends Component {
  
   // getResult {
   //   axios.put("http://localhost:9000/user/", {
-  //      name: ,
-  //      interest: ,
-  //      email: ,
-  //      phoneNo:
-  // }).then(res =>{
-  //      if (this.state.name != "") {
-  //         param.name = this.state.name;
+  //      if (this.state.name[0] != "") {
+  //        firstName = this.state.name[0];
+  //      } if (this.state.name[1] != "") {
+  //        lastName = this.state.name[1];
+  //      } if (this.state.interest != "") {
+  //        interest? = this.state.interest;
+  //      } if (this.state.email != "") {
+  //        email = this.state.email;
+  //      } if (this.state.phoneNo != "") {
+  //        phoneNo = this.state.phoneNo;
   //      }
-  // })
+  //   }).then(res =>{
+  //      
+  //   })
   // }
   render() {
     return (
