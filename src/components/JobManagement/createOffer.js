@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import axios from "axios";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 
 class JobOffer extends Component {
   constructor(props) {
@@ -150,7 +151,16 @@ class JobOffer extends Component {
             <label>Location</label>
             <input
               className="form-control"
-              type="Telephone number"
+              name="location"
+              onChange={this.handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Wages</label>
+            <input
+              className="form-control"
               name="location"
               onChange={this.handleChange}
               required
@@ -179,12 +189,16 @@ class JobOffer extends Component {
           </div>
 
           <div className="field is-grouped">
-            <input
-              type="submit"
-              className="btn btn-outline-primary"
-              href="/home"
-            />
-            <input type="reset" className="btn btn-outline-secondary mx-3" />
+            <Link to="/">
+              <button
+                type="submit"
+                className="btn btn-outline-primary"
+                onSubmit = {this.onSubmit}
+              >Submit</button>
+            </Link>
+            <Link to="/portfolio/:name">
+              <button className="btn btn-outline-secondary mx-3">Cancel</button>
+            </Link>
           </div>
         </form>
       </div>
