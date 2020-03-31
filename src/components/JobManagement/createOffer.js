@@ -74,125 +74,119 @@ class JobOffer extends Component {
       return <Redirect push to="/" />;
     }
     return (
-      <div className="container">
-        <div className="columns is-centered">
-          <div className="column is-half">
-            <form
-              onSubmit={this.onSubmit}
-              noValidate
-              className={this.state.displayErrors ? "displayErrors" : ""}
-            >
-              <div className="form-group">
-                <label>Job title</label>
+      <div className="container my-5 w-50">
+        <form
+          onSubmit={this.onSubmit}
+          noValidate
+          className={this.state.displayErrors ? "displayErrors" : ""}
+        >
+          <div className="form-group">
+            <label>Job title</label>
 
-                <input
-                  className="form-control"
-                  type="Fullname"
-                  name="title"
-                  onChange={this.handleChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Style</label>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <select
-                      id="inputState"
-                      class="form-control"
-                      name="style"
-                      onChange={this.handleChange}
-                      required
-                    >
-                      <option selected value="Graduation">
-                        Graduation
-                      </option>
-                      <option value="Wedding">Wedding</option>
-                      <option value="Potrait">Potrait</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <div>
-                      <label>Date</label>
-                    </div>
-                    <DatePicker
-                      className="form-control"
-                      selected={this.state.date}
-                      name="date"
-                      onChange={this.handleDateChange}
-                      required
-                    />
-                  </div>
-                  <div class="form-group col-md-6">
-                    <div>
-                      <label>Time</label>
-                    </div>
-                    <select
-                      id="inputState"
-                      class="form-control"
-                      name="time"
-                      onChange={this.handleChange}
-                      required
-                    >
-                      <option selected value="Half Day Morning">
-                        Half Day Morning
-                      </option>
-                      <option value="Half Day Evening">Half Day Evening</option>
-                      <option value="Full Day">Full Day</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label>Location</label>
-
-                <input
-                  className="form-control"
-                  type="Telephone number"
-                  name="location"
-                  onChange={this.handleChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group form-check">
-                <input
-                  className="form-check-input"
-                  checked={this.state.isChecked}
-                  onChange={this.handleCheck}
-                  type="checkbox"
-                  name="isChecked"
-                  required
-                />
-                <lable
-                  className={
-                    this.state.isChecked
-                      ? "form-check-label"
-                      : "form-check-label notChecked"
-                  }
-                >
-                  I have read and agree to {}
-                  <a href="/">Term of Service</a>
-                </lable>
-              </div>
-
-              <div className="field is-grouped">
-                <input type="submit" className="btn btn-outline-primary" />
-                <input
-                  type="reset"
-                  className="btn btn-outline-secondary mx-3"
-                />
-              </div>
-            </form>
+            <input
+              className="form-control"
+              type="Fullname"
+              name="title"
+              onChange={this.handleChange}
+              required
+            />
           </div>
-        </div>
+
+          <div className="form-group">
+            <label>Style</label>
+            <div class="form-group">
+              <select
+                id="inputState"
+                class="form-control"
+                name="style"
+                onChange={this.handleChange}
+                required
+              >
+                <option selected value="Graduation">
+                  Graduation
+                </option>
+                <option value="Wedding">Wedding</option>
+                <option value="Potrait">Potrait</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-auto">
+              <div>
+                <label>Date</label>
+              </div>
+              <DatePicker
+                className="form-control"
+                selected={this.state.date}
+                name="date"
+                minDate={new Date()}
+                shouldCloseOnSelect={false}
+                onChange={this.handleDateChange}
+                required
+              />
+            </div>
+            <div class="form-group col">
+              <div>
+                <label>Time</label>
+              </div>
+              <select
+                id="inputState"
+                class="form-control"
+                name="time"
+                onChange={this.handleChange}
+                required
+              >
+                <option selected value="Half Day Morning">
+                  Half Day Morning
+                </option>
+                <option value="Half Day Evening">Half Day Evening</option>
+                <option value="Full Day">Full Day</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Location</label>
+            <input
+              className="form-control"
+              type="Telephone number"
+              name="location"
+              onChange={this.handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-group form-check">
+            <input
+              className="form-check-input"
+              checked={this.state.isChecked}
+              onChange={this.handleCheck}
+              type="checkbox"
+              name="isChecked"
+              required
+            />
+            <lable
+              className={
+                this.state.isChecked
+                  ? "form-check-label"
+                  : "form-check-label notChecked"
+              }
+            >
+              I have read and agree to {}
+              <a href="/">Term of Service</a>
+            </lable>
+          </div>
+
+          <div className="field is-grouped">
+            <input
+              type="submit"
+              className="btn btn-outline-primary"
+              href="/home"
+            />
+            <input type="reset" className="btn btn-outline-secondary mx-3" />
+          </div>
+        </form>
       </div>
     );
   }

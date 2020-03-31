@@ -93,7 +93,10 @@ class Notification extends Component {
               </div>
             </div>
           </li>
-          <div className="overflow-auto" style={{ maxHeight: "400px" }}>
+          <div
+            className="d-flex flex-column-reverse overflow-auto"
+            style={{ maxHeight: "400px" }}
+          >
             {this.state.notifications.length > 0 ? (
               this.state.notifications.map(res => <NotificationBox res={res} />)
             ) : (
@@ -109,7 +112,7 @@ class Notification extends Component {
           </div>
 
           <li className="footer bg-dark text-center">
-            <a href="" className="text-light">
+            <a href="/notifications" className="text-light">
               View All
             </a>
           </li>
