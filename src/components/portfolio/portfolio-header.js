@@ -3,10 +3,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 class PortfolioHeader extends Component {
-
-  getOfferLink = () =>{
+  getOfferLink = () => {
     return "../offer/" + this.props.name;
-  }
+  };
 
   render() {
     const { name, profilePic, headerCoverImage } = this.props;
@@ -26,16 +25,13 @@ class PortfolioHeader extends Component {
         <div className="container h-100">
           <div className="row h-100 align-items-center">
             <div className="col-10 mx-auto">
-              <div className="row" style={{ marginTop: "-54px" }}>
-                <div className="col-md">
-                  <img
-                    className="img-fluid"
-                    width="400px"
-                    src={profilePic}
-                    alt={name}
-                  />
+              <div className="row " style={{ marginTop: "-54px" }}>
+                <div className="col-md-4">
+                  <div className="img-round">
+                    <img className="img-fluid" src={profilePic} alt={name} />
+                  </div>
                 </div>
-                <div className="col-md">
+                <div className="col-md-8 my-auto">
                   <h1 className="font-weight-light">{name}</h1>
                   <span className="">
                     Some quick example text to build on the card title and make

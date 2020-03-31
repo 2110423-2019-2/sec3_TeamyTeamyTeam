@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import DatePicker from "react-datepicker";
 import { Redirect } from "react-router";
 
 class SignUp extends Component {
@@ -15,7 +16,9 @@ class SignUp extends Component {
       password: "",
       confirmedPassword: "",
       userType: "Employer",
+      portlioName: "",
       telNo: "",
+      birthDate: new Date(),
       displayErrors: false,
       redirect: false
     };
@@ -31,7 +34,7 @@ class SignUp extends Component {
     this.setState({
       [name]: value
     });
-    // console.log(this.state);
+    console.log(this.state);
   };
 
   onSubmit = e => {
@@ -53,9 +56,13 @@ class SignUp extends Component {
         username: this.state.email,
         password: this.state.password,
         nationalID: "-",
-        gender: "-",
-        birthDate: "2000-01-01",
-        isPhotographer: false,
+        gender: this.state.gender,
+        birthDate: this.state.birthDate,
+        isPhotographer: this.state.userType === "Photographer",
+        portlioName:
+          this.state.userType === "Photographer"
+            ? this.state.portlioName
+            : null,
         phoneNo: this.state.telNo,
         introduction: "-",
         profileImage: "-",
@@ -76,142 +83,192 @@ class SignUp extends Component {
       return <Redirect push to="/" />;
     }
     return (
-      <section className="section container">
-        <div className="columns is-centered">
-          <div className="column is-half">
-            <form
-              onSubmit={this.onSubmit}
-              noValidate
-              className={this.state.displayErrors ? "displayErrors" : ""}
-            >
-              <div className="form-group">
-                <label>First name</label>
+      <div className="container my-5 w-50">
+        <form
+          onSubmit={this.onSubmit}
+          noValidate
+          className={this.state.displayErrors ? "displayErrors" : ""}
+        >
+          <div className="form-group">
+            <label>First name</label>
 
-                <input
-                  className="form-control"
-                  type="text"
-                  name="firstName"
-                  onChange={this.onChange}
-                  pattern="[a-zA-Z]+"
-                  maxlength="20"
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Last name</label>
-
-                <input
-                  className="form-control"
-                  type="text"
-                  name="lastName"
-                  onChange={this.onChange}
-                  pattern="[a-zA-Z]+"
-                  maxlength="20"
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Email</label>
-
-                <input
-                  className="form-control"
-                  type="email"
-                  name="email"
-                  onChange={this.onChange}
-                  pattern=".+[@].+[.][a-zA-z]+"
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Password</label>
-
-                <input
-                  className="form-control"
-                  type="password"
-                  name="password"
-                  onChange={this.onChange}
-                  pattern="\S+"
-                  minlength="8"
-                  maxlength="20"
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Comfimed Password</label>
-
-                <input
-                  className="form-control"
-                  type="password"
-                  name="confirmedPassword"
-                  onChange={this.onChange}
-                  pattern="\S+"
-                  minlength="8"
-                  maxlength="20"
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label for="userTypeSelect">User Type</label>
-                <select
-                  class="form-control"
-                  name="userType"
-                  id="userTypeSelect"
-                  onChange={this.onChange}
-                >
-                  <option>Employer</option>
-                  <option>Photographer</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label>Telephone number.</label>
-
-                <input
-                  className="form-control"
-                  type="Telephone number"
-                  name="telNo"
-                  onChange={this.onChange}
-                  required
-                  pattern="\d+"
-                  minlength="10"
-                  maxlength="10"
-                />
-              </div>
-
-              <div className="form-group form-check">
-                <input
-                  className="form-check-input"
-                  checked={this.state.isChecked}
-                  onChange={this.onCheck}
-                  type="checkbox"
-                  name="isChecked"
-                  required
-                />
-                <lable
-                  className={
-                    this.state.isChecked
-                      ? "form-check-label"
-                      : "form-check-label notChecked"
-                  }
-                >
-                  I have read and agree to {}
-                  <a href="/">Term of Service</a>
-                </lable>
-              </div>
-              <input type="submit" className="btn btn-outline-primary" />
-              <input type="reset" className="btn btn-outline-secondary mx-3" />
-              <p>
-                Already registered? <a href="/login">Sign in</a>
-              </p>
-            </form>
+            <input
+              className="form-control"
+              type="text"
+              name="firstName"
+              onChange={this.onChange}
+              pattern="[a-zA-Z]+"
+              maxlength="20"
+              required
+            />
           </div>
-        </div>
-      </section>
+
+          <div className="form-group">
+            <label>Last name</label>
+
+            <input
+              className="form-control"
+              type="text"
+              name="lastName"
+              onChange={this.onChange}
+              pattern="[a-zA-Z]+"
+              maxlength="20"
+              required
+            />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-auto">
+              <div>
+                <label>Birth Date</label>
+              </div>
+              <DatePicker
+                className="form-control"
+                selected={this.state.birthDate}
+                name="birthDate"
+                showYearDropdown
+                dropdownMode="select"
+                maxDate={new Date()}
+                onChange={this.handleChange}
+                required
+              />
+            </div>
+            <div class="form-group col">
+              <div>
+                <label>Gender</label>
+              </div>
+              <select
+                id="gender"
+                class="form-control"
+                name="gender"
+                onChange={this.handleChange}
+                required
+              >
+                <option selected value="Not specified">
+                  Willingly not to specified
+                </option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label>Email</label>
+
+            <input
+              className="form-control"
+              type="email"
+              name="email"
+              onChange={this.onChange}
+              pattern=".+[@].+[.][a-zA-z]+"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Password</label>
+
+            <input
+              className="form-control"
+              type="password"
+              name="password"
+              onChange={this.onChange}
+              pattern="\S+"
+              minlength="8"
+              maxlength="20"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Comfimed Password</label>
+
+            <input
+              className="form-control"
+              type="password"
+              name="confirmedPassword"
+              onChange={this.onChange}
+              pattern="\S+"
+              minlength="8"
+              maxlength="20"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label for="userTypeSelect">User Type</label>
+            <select
+              class="form-control"
+              name="userType"
+              id="userTypeSelect"
+              onChange={this.onChange}
+            >
+              <option>Employer</option>
+              <option>Photographer</option>
+            </select>
+          </div>
+
+          {this.state.userType == "Photographer" ? (
+            <div className="form-group">
+              <label>Portfolio's name</label>
+
+              <input
+                className="form-control"
+                type="text"
+                name="portfolioName"
+                onChange={this.onChange}
+                pattern="[a-zA-Z0-9]+"
+                maxlength="20"
+                required
+              />
+            </div>
+          ) : (
+            ""
+          )}
+
+          <div className="form-group">
+            <label>Telephone number.</label>
+
+            <input
+              className="form-control"
+              type="Telephone number"
+              name="telNo"
+              onChange={this.onChange}
+              required
+              pattern="\d+"
+              minlength="10"
+              maxlength="10"
+            />
+          </div>
+
+          <div className="form-group form-check">
+            <input
+              className="form-check-input"
+              checked={this.state.isChecked}
+              onChange={this.onCheck}
+              type="checkbox"
+              name="isChecked"
+              required
+            />
+            <lable
+              className={
+                this.state.isChecked
+                  ? "form-check-label"
+                  : "form-check-label notChecked"
+              }
+            >
+              I have read and agree to {}
+              <a href="/">Term of Service</a>
+            </lable>
+          </div>
+          <input type="submit" className="btn btn-outline-primary" />
+          <input type="reset" className="btn btn-outline-secondary mx-3" />
+          <p>
+            Already registered? <a href="/login">Sign in</a>
+          </p>
+        </form>
+      </div>
     );
   }
 }
