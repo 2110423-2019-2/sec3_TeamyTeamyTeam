@@ -16,7 +16,7 @@ class SignUp extends Component {
       password: "",
       confirmedPassword: "",
       userType: "Employer",
-      portfolioName: "",
+      displayName: "",
       telNo: "",
       birthDate: new Date().toString().substr(4, 11),
       gender: "Not specify",
@@ -71,10 +71,7 @@ class SignUp extends Component {
         gender: this.state.gender,
         birthDate: this.state.birthDate,
         isPhotographer: this.state.userType === "Photographer",
-        portlioName:
-          this.state.userType === "Photographer"
-            ? this.state.portfolioName
-            : null,
+        displayName: this.state.displayName,
         phoneNo: this.state.telNo,
         introduction: "-",
         profileImage: "../../../public/images/newUser.png",
@@ -223,23 +220,23 @@ class SignUp extends Component {
             </select>
           </div>
 
-          {this.state.userType == "Photographer" ? (
-            <div className="form-group">
-              <label>Portfolio's name</label>
+          <div className="form-group">
+            <label>
+              {this.state.userType == "Photographer"
+                ? "Portfolio's Name"
+                : "Display Name"}
+            </label>
 
-              <input
-                className="form-control"
-                type="text"
-                name="portfolioName"
-                onChange={this.onChange}
-                pattern="[a-zA-Z0-9]+"
-                maxlength="20"
-                required
-              />
-            </div>
-          ) : (
-            ""
-          )}
+            <input
+              className="form-control"
+              type="text"
+              name="displayName"
+              onChange={this.onChange}
+              pattern="[a-zA-Z0-9]+"
+              maxlength="20"
+              required
+            />
+          </div>
 
           <div className="form-group">
             <label>Telephone number.</label>

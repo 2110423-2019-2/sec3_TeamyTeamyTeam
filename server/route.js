@@ -41,7 +41,7 @@ router.post("/user", (req, res, next) => {
     gender: req.body.gender,
     birthDate: req.body.birthDate,
     isPhotographer: req.body.isPhotographer,
-    portfolioName: req.body.portfolioName,
+    displayName: req.body.displayName,
     phoneNo: req.body.phoneNo,
     introduction: req.body.introduction,
     profileImage: req.body.profileImage,
