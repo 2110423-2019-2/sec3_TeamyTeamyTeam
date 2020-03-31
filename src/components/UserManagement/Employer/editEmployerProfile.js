@@ -5,10 +5,10 @@ class EditEmployerProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
-      interest: "",
-      email: "",
-      phoneNo: ""
+      name: this.props.appState.name,
+      interest: this.props.appStateg.interest,
+      email: this.props.appState.email,
+      phoneNo: this.props.appState.phoneNo
     };
   }
  
@@ -19,7 +19,9 @@ class EditEmployerProfile extends Component {
   //      email: ,
   //      phoneNo:
   // }).then(res =>{
-  //      
+  //      if (this.state.name != "") {
+  //         param.name = this.state.name;
+  //      }
   // })
   // }
   render() {
