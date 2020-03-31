@@ -268,66 +268,6 @@ router.get("/replyNotify/:id.:isAccept", (req, res, next) => {
                         console.log("offer fail offer update")
                     });
             }
-          )
-          .exec();
-        notify
-          .update(
-            { redirectLink: req.params.id, isReply: false },
-            {
-              content: new_content,
-              isReply: true
-            }
-          )
-          .exec();
-        offer
-          .update(
-            { _id: req.params.id },
-            {
-              progress: "wait_employer_reply"
-            }
-          )
-          .exec();
-      } else if (of.progress == "wait_employer_reply") {
-        const new_content = of.title + ": " + "offer complete";
-        notify
-          .update(
-            { redirectLink: req.params.id },
-            {
-              content: new_content,
-              isReply: false
-            }
-          )
-          .exec();
-        offer
-          .update(
-            { _id: req.params.id },
-            {
-              progress: "offer complete"
-            }
-          )
-          .exec();
-      }
-    } else {
-      const new_content = of.title + ": " + "offer fail";
-      notify
-        .update(
-          { redirectLink: req.params.id },
-          {
-            content: new_content,
-            isReply: false
-          }
-        )
-        .exec();
-      offer
-        .update(
-          { _id: req.params.id },
-          {
-            progress: "offer fail"
-          }
-        )
-        .exec();
-    }
-    console.log("reply success");
   });
 });
 
