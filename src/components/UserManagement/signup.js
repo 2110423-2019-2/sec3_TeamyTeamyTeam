@@ -73,7 +73,7 @@ class SignUp extends Component {
         isPhotographer: this.state.userType === "Photographer",
         portlioName:
           this.state.userType === "Photographer"
-            ? this.state.portlioName
+            ? this.state.portfolioName
             : null,
         phoneNo: this.state.telNo,
         introduction: "-",
