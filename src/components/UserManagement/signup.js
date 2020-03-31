@@ -16,9 +16,11 @@ class SignUp extends Component {
       password: "",
       confirmedPassword: "",
       userType: "Employer",
-      portlioName: "",
+      portfolioName: "",
       telNo: "",
-      birthDate: new Date(),
+      birthDate: new Date().toString().substr(4, 11),
+      gender: "Not specify",
+      selectedDate: new Date(),
       displayErrors: false,
       redirect: false
     };
@@ -35,6 +37,16 @@ class SignUp extends Component {
       [name]: value
     });
     console.log(this.state);
+  };
+
+  handleDateChange = selectedDate => {
+    this.setState({
+      selectedDate
+    });
+    const birthDate = selectedDate.toString().substr(4, 11);
+    this.setState({
+      birthDate
+    });
   };
 
   onSubmit = e => {
@@ -124,12 +136,14 @@ class SignUp extends Component {
               </div>
               <DatePicker
                 className="form-control"
-                selected={this.state.birthDate}
-                name="birthDate"
+                selected={this.state.selectedDate}
+                name="selectedDate"
+                dateFormat="dd/MM/yyyy"
+                shouldCloseOnSelect={false}
                 showYearDropdown
                 dropdownMode="select"
                 maxDate={new Date()}
-                onChange={this.handleChange}
+                onChange={this.handleDateChange}
                 required
               />
             </div>
@@ -141,7 +155,7 @@ class SignUp extends Component {
                 id="gender"
                 class="form-control"
                 name="gender"
-                onChange={this.handleChange}
+                onChange={this.onChange}
                 required
               >
                 <option selected value="Not specify">

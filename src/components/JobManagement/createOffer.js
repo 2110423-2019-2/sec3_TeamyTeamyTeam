@@ -115,6 +115,7 @@ class JobOffer extends Component {
                 selected={this.state.date}
                 name="date"
                 minDate={new Date()}
+                shouldCloseOnSelect={false}
                 onChange={this.handleDateChange}
                 required
               />
