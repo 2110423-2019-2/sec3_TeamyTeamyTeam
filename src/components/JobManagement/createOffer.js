@@ -114,6 +114,7 @@ class JobOffer extends Component {
                 className="form-control"
                 selected={this.state.date}
                 name="date"
+                minDate={new Date()}
                 onChange={this.handleDateChange}
                 required
               />

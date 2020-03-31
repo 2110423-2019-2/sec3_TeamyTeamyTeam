@@ -59,48 +59,44 @@ class LoginForm extends React.Component {
       return <Redirect push to="/" />;
     }
     return (
-      <section className="section container">
-        <div className="columns is-centered">
-          <div className="column is-half">
-            <form
-              onSubmit={this.onSubmit}
-              noValidate
-              className={this.state.displayErrors ? "displayErrors" : ""}
-            >
-              <div className="form-group">
-                <label>Email</label>
-                <div className="control">
-                  <input
-                    className="form-control"
-                    type="email"
-                    name="email"
-                    onChange={this.onChange}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="form-group">
-                <label>Password</label>
-                <div className="control">
-                  <input
-                    className="form-control"
-                    type="password"
-                    name="password"
-                    onChange={this.onChange}
-                    required
-                  />
-                </div>
-              </div>
-              {message ? <p className="help is-danger">{message}</p> : null}
-              <input type="submit" className="btn btn-outline-primary" />
-              <input type="reset" className="btn btn-outline-secondary mx-3" />
-              <p>
-                Have any account yet? <a href="/signup">Sign up</a>
-              </p>
-            </form>
+      <div className="container mt-5 w-50">
+        <form
+          onSubmit={this.onSubmit}
+          noValidate
+          className={this.state.displayErrors ? "displayErrors" : ""}
+        >
+          <div className="form-group">
+            <label>Email</label>
+            <div className="control">
+              <input
+                className="form-control"
+                type="email"
+                name="email"
+                onChange={this.onChange}
+                required
+              />
+            </div>
           </div>
-        </div>
-      </section>
+          <div className="form-group">
+            <label>Password</label>
+            <div className="control">
+              <input
+                className="form-control"
+                type="password"
+                name="password"
+                onChange={this.onChange}
+                required
+              />
+            </div>
+          </div>
+          {message ? <p className="help is-danger">{message}</p> : null}
+          <input type="submit" className="btn btn-outline-primary" />
+          <input type="reset" className="btn btn-outline-secondary mx-3" />
+          <p>
+            Have any account yet? <a href="/signup">Sign up</a>
+          </p>
+        </form>
+      </div>
     );
   }
 }

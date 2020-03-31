@@ -65,7 +65,7 @@ class SignUp extends Component {
             : null,
         phoneNo: this.state.telNo,
         introduction: "-",
-        profileImage: "-",
+        profileImage: "../../../public/images/newUser.png",
         portfolioID: "-",
         avgRating: -1
       })
@@ -144,8 +144,8 @@ class SignUp extends Component {
                 onChange={this.handleChange}
                 required
               >
-                <option selected value="Not specified">
-                  Willingly not to specified
+                <option selected value="Not specify">
+                  Willingly not to specify
                 </option>
                 <option value="Female">Female</option>
                 <option value="Male">Male</option>
