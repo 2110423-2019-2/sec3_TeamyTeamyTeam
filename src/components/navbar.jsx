@@ -40,6 +40,9 @@ export default class Navbar extends Component {
               <a class="dropdown-item" href="/history">
                 <ion-icon name="file-tray-full-outline"></ion-icon> History
               </a>
+              <a class="dropdown-item" href="/report">
+              <ion-icon name="help-outline"></ion-icon> Help
+              </a>
               <a class="dropdown-item" href="/login" onClick={this.onSingout}>
                 <ion-icon name="log-out-outline"></ion-icon> Sign out
               </a>
