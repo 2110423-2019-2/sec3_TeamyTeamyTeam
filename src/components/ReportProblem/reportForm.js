@@ -67,10 +67,10 @@ class ReportProblem extends Component {
 
           <div className="form-group">
             <label>Your message</label>
-            <input
+            <textarea
               className="form-control"
               name="message"
-              onChange={this.handleChange}
+              
               required
             />
           </div>
