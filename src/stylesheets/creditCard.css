@@ -1,0 +1,31 @@
+.button-image:before {
+    content: "";
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
+    background-color: transparent;
+    background-position : center center;
+    background-repeat:no-repeat;
+}
+
+.button2-image:before {
+    content: "";
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle;
+    background-color: transparent;
+    background-position : center center;
+    background-repeat:no-repeat;
+}
+
+.bgButton:before{
+     background-image : url('https://image.flaticon.com/icons/svg/776/776510.svg');
+}
+
+.bg2Button:before{
+    background-image : url('https://image.flaticon.com/icons/svg/2067/2067825.svg');
+}

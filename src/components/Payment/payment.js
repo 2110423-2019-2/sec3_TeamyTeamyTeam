@@ -63,35 +63,43 @@ export class CheckoutPage extends Component {
   render() {
     const charge = this.charge ;
     return (
-      <div className="own-form">
-        <ChekoutCreditCard
-          createCreditCardCharge={this.createCreditCardCharge}
-        />
-        <CheckoutInternetBanking
-          createInternetBankingCharge={this.createInternetBankingCharge}
-        />
-        <div className="message">
-          {charge && (
-            <div>
-              <h4>Thank you for your payment with credit card.</h4>
-              <p>
-                Your payment amount is{" "}
-                <span
-                  className={
-                    charge.status === "successful"
-                      ? "success"
-                      : charge.status === "failed"
-                      ? "failed"
-                      : "pending"
-                  }
-                >
-                  {charge.status}
-                </span>
-              </p>e
+      <div className="has-text-centered">
+        <div className="container h-100">
+          <div className="row h-100 align-items-center">
+            <div className="col-12 text-center ">
+              <h1 style={{margin:"5vh"}}>Please select your payment method</h1>
+                <ChekoutCreditCard
+                    createCreditCardCharge={this.createCreditCardCharge}
+                  />
+                <div>
+                  <CheckoutInternetBanking
+                    createInternetBankingCharge={this.createInternetBankingCharge}
+                  /></div>
+                <div className="message">
+                  {charge && (
+                  <div>
+                    <h4>Thank you for your payment with credit card.</h4>
+                    <p>
+                      Your payment amount is{" "}
+                        <span
+                          className={
+                          charge.status === "successful"
+                          ? "success"
+                          : charge.status === "failed"
+                          ? "failed"
+                          : "pending"
+                          }
+                        >
+                          {charge.status}
+                        </span>
+                    </p>e
+                  </div>
+                  )}
+                </div>
+              </div>
             </div>
-          )}
+          </div>
         </div>
-      </div>
     );
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Script from "react-load-script";
-
+import "../../stylesheets/creditCard.css";
 
 import { publicKey } from "./keys";
 
@@ -64,7 +64,7 @@ export class CheckoutInternetBanking extends Component {
         <form>
           <button
             id="internet-banking"
-            className="btn internet-banking"
+            className="btn btn-outline-dark button2-image bgButton"
             type="button"
             onClick={this.handleClick}
           >

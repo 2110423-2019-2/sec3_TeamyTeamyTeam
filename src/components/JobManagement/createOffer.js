@@ -20,6 +20,10 @@ class JobOffer extends Component {
     };
   }
 
+  getOfferLink = () => {
+    return "../portfolio/" + this.props.photographer;
+  };
+
   handleChange = e => {
     //ตรวจค่าของ name ใน Onchange และ set ค่าตามไปเรื่อยๆ
     const { name, value } = e.target;
@@ -189,14 +193,14 @@ class JobOffer extends Component {
           </div>
 
           <div className="field is-grouped">
-            <Link to="/">
+            <Link to= {this.getOfferLink()}>
               <button
                 type="submit"
                 className="btn btn-outline-primary"
                 onSubmit = {this.onSubmit}
               >Submit</button>
             </Link>
-            <Link to="/portfolio/:name">
+            <Link to={this.getOfferLink()}>
               <button className="btn btn-outline-secondary mx-3">Cancel</button>
             </Link>
           </div>
