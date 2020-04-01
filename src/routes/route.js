@@ -64,7 +64,7 @@ export default class Routing extends React.Component {
         />
         <Route
           exact
-          path="/:displayname"
+          path="/profile/:displayname"
           render={props => <Employer {...this.props} {...props} />}
         />
         <Route

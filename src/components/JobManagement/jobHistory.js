@@ -10,178 +10,28 @@ class JobHistory extends Component {
     super(props);
     this.getResult = this.getResult.bind(this);
     this.state = {
+      currentJob: [], //ให้fetch job มาแสดงผล
       historyResult: [
         {
           title: "Title2",
           style: "Wedding",
-          portfolioName: "Ton",
-          meetUpTime: "1/1/2020",
-          actDate: "Half day morning",
+          user: "Ton",
+          meetUpTime: "Half day morning",
+          actDate: new Date().toString().substr(4, 11),
           location: "123456",
-          progress: "Cancelled"
-        },
-        {
-          title: "Title3",
-          style: "Portrait",
-          portfolioName: "Jane",
-          meetUpTime: "17/10/2019",
-          actDate: "Half day evening",
-          location: "123456",
-          progress: "Finished"
-        },
-        {
-          title: "Title4",
-          style: "Graduation",
-          portfolioName: "Otto",
-          meetUpTime: "16/9/2019",
-          actDate: "Full day",
-          location: "123456",
-          progress: "Finished"
-        },
-        {
-          title: "Title2",
-          style: "Wedding",
-          portfolioName: "Ton",
-          meetUpTime: "1/1/2020",
-          actDate: "Half day morning",
-          location: "123456",
-          progress: "Cancelled"
-        },
-        {
-          title: "Title3",
-          style: "Portrait",
-          portfolioName: "Jane",
-          meetUpTime: "17/10/2019",
-          actDate: "Half day evening",
-          location: "123456",
-          progress: "Finished"
-        },
-        {
-          title: "Title4",
-          style: "Graduation",
-          portfolioName: "Otto",
-          meetUpTime: "16/9/2019",
-          actDate: "Full day",
-          location: "123456",
-          progress: "Finished"
-        },
-        {
-          title: "Title2",
-          style: "Wedding",
-          portfolioName: "Ton",
-          meetUpTime: "1/1/2020",
-          actDate: "Half day morning",
-          location: "123456",
-          progress: "Cancelled"
-        },
-        {
-          title: "Title3",
-          style: "Portrait",
-          portfolioName: "Jane",
-          meetUpTime: "17/10/2019",
-          actDate: "Half day evening",
-          location: "123456",
-          progress: "Finished"
-        },
-        {
-          title: "Title4",
-          style: "Graduation",
-          portfolioName: "Otto",
-          meetUpTime: "16/9/2019",
-          actDate: "Full day",
-          location: "123456",
-          progress: "Finished"
-        },
-        {
-          title: "Title2",
-          style: "Wedding",
-          portfolioName: "Ton",
-          meetUpTime: "1/1/2020",
-          actDate: "Half day morning",
-          location: "123456",
-          progress: "Cancelled"
-        },
-        {
-          title: "Title3",
-          style: "Portrait",
-          portfolioName: "Jane",
-          meetUpTime: "17/10/2019",
-          actDate: "Half day evening",
-          location: "123456",
-          progress: "Finished"
-        },
-        {
-          title: "Title4",
-          style: "Graduation",
-          portfolioName: "Otto",
-          meetUpTime: "16/9/2019",
-          actDate: "Full day",
-          location: "123456",
-          progress: "Finished"
-        },
-        {
-          title: "Title2",
-          style: "Wedding",
-          portfolioName: "Ton",
-          meetUpTime: "1/1/2020",
-          actDate: "Half day morning",
-          location: "123456",
-          progress: "Cancelled"
-        },
-        {
-          title: "Title3",
-          style: "Portrait",
-          portfolioName: "Jane",
-          meetUpTime: "17/10/2019",
-          actDate: "Half day evening",
-          location: "123456",
-          progress: "Finished"
-        },
-        {
-          title: "Title4",
-          style: "Graduation",
-          portfolioName: "Otto",
-          meetUpTime: "16/9/2019",
-          actDate: "Full day",
-          location: "123456",
-          progress: "Finished"
-        },
-        {
-          title: "Title2",
-          style: "Wedding",
-          portfolioName: "Ton",
-          meetUpTime: "1/1/2020",
-          actDate: "Half day morning",
-          location: "123456",
-          progress: "Cancelled"
-        },
-        {
-          title: "Title3",
-          style: "Portrait",
-          portfolioName: "Jane",
-          meetUpTime: "17/10/2019",
-          actDate: "Half day evening",
-          location: "123456",
-          progress: "Finished"
-        },
-        {
-          title: "Title4",
-          style: "Graduation",
-          portfolioName: "Otto",
-          meetUpTime: "16/9/2019",
-          actDate: "Full day",
-          location: "123456",
-          progress: "Finished"
+          status: "Cancelled",
+          download: "url"
         }
       ],
       columns: [
         { dataField: "title", text: "Title" },
         { dataField: "style", text: "Style" },
-        { dataField: "id", text: "Portfolio name" },
-        { dataField: "meetUpTime", text: "Meet up time" },
-        { dataField: "actDate", text: "Act date" },
+        { dataField: "user", text: "Employer/Photographer" }, //เดี๋ยวแก้ตามuser type
+        { dataField: "meetUpTime", text: "Time" },
+        { dataField: "actDate", text: "Appointed Date" },
         { dataField: "location", text: "Location" },
-        { dataField: "progress", text: "Progression" }
+        { dataField: "status", text: "Status" },
+        { dataField: "download", text: "Download" }
       ]
     };
   }

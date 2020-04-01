@@ -393,6 +393,10 @@ class JobStatus extends Component {
             <div className="row">
               <div className="col-md p-3">
                 <p>
+                  <strong>Employer: </strong>
+                  {this.state.employer}
+                </p>
+                <p>
                   <strong>Job's title: </strong>
                   {this.state.title}
                 </p>
@@ -424,6 +428,7 @@ class JobStatus extends Component {
               ></div>
               <div className="col-md p-3 text-center my-auto">
                 {this.getStatusMessagePhotographer()}
+                {/* ตรงนี้จะให้เช็กว่าเป็นemployerหรือphotographerเพื่อแสดงผลjob status ตาม user type */}
               </div>
             </div>
           </div>
