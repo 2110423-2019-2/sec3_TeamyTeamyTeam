@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Script from "react-load-script";
-import "../../stylesheets/creditCard.css";
 
 import { publicKey } from "./keys";
 
@@ -62,9 +61,10 @@ export class CheckoutInternetBanking extends Component {
           onLoad={this.handleScriptLoad}
         />
         <form>
+          <ion-icon name="wifi-outline"></ion-icon>
           <button
             id="internet-banking"
-            className="btn btn-outline-dark button2-image bgButton"
+            className="btn btn-outline-dark"
             type="button"
             onClick={this.handleClick}
           >

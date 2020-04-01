@@ -169,9 +169,11 @@ class JobStatus extends Component {
         return (
           <div>
             <h2>
-              <span class="badge badge-yellow">You get all the money!</span>
+              <span class="badge badge-yellow">
+                Send photos to {this.state.employer}
+              </span>
             </h2>
-            <small>Upload your photos</small>
+            <small>Upload .zip or .rar</small>
             <p>
               {this.state.isUploading ? (
                 <div
@@ -191,15 +193,23 @@ class JobStatus extends Component {
                 </button>
               )}
             </p>
-            <button
-              onClick={this.uploadImage}
-              className="btn btn-outline-light"
-            >
-              Submit file
-            </button>
+            {this.state.file ? (
+              <button
+                onClick={() => {
+                  if (!this.state.isUploading) this.uploadImage();
+                }}
+                className="btn btn-outline-light"
+              >
+                Submit {this.state.file.name}
+              </button>
+            ) : (
+              ""
+            )}
+
             <input
               type="file"
               id="uploader"
+              accept=".zip,.rar"
               style={{ display: "none" }}
               onChange={this.imgToBeUpload}
             />
