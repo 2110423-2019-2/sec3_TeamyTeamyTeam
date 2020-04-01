@@ -98,18 +98,26 @@ router.get("/portfolioTags/:key", (req, res, next) => {
 });
 
 router.get("/offer/:email", (req, res, next) => {
-  user
-    .find({ email: req.params.email })
-    .then(user_mail => {
-      offer.find({ employerEmail: req.params.user_mail });
-    })
-    .then(documents => {
+  portfolio.find({email: req.params.email}).then(documents => {
+    if(documents.length >= 1){
+      offer.find({$or:[{ employerEmail: req.params.email}, {portfolioName: documents[0].portfolioName}]}).then(documents2 => {
       res.status(status_ok).json({
-        message: "offer get fetched successfully!",
-        data: documents
+        message: "Registor fetched successfully!",
+        data: documents2
       });
-      console.log(documents);
-    });
+      console.log(documents2);
+      });
+    }else{
+      offer.find({ employerEmail: req.params.email}).then(documents2 => {
+        res.status(status_ok).json({
+          message: "Registor fetched successfully!",
+          data: documents2
+        });
+        console.log(documents2);
+      });
+    }
+  });
+  
 });
 
 router.post("/offer", (req, res, next) => {

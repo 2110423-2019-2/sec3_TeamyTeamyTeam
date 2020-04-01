@@ -26,11 +26,12 @@ class JobHistory extends Component {
       columns: [
         { dataField: "title", text: "Title" },
         { dataField: "style", text: "Style" },
-        { dataField: "user", text: "Employer/Photographer" }, //เดี๋ยวแก้ตามuser type
+        { dataField: "employerEmail", text: "Employer" },
+        { dataField: "portfolioName", text: "Photographer" },
         { dataField: "meetUpTime", text: "Time" },
         { dataField: "actDate", text: "Appointed Date" },
         { dataField: "location", text: "Location" },
-        { dataField: "status", text: "Status" },
+        { dataField: "progress", text: "Status" },
         { dataField: "download", text: "Download" }
       ]
     };
@@ -47,19 +48,8 @@ class JobHistory extends Component {
         console.log(res.data.data);
         //historyResult = res.data.data;
         //console.log(historyResult)
-        console.log([
-          {
-            title: "Title1",
-            style: "Graduation",
-            portfolioName: "Otto",
-            meetUpTime: "2/2/2020",
-            actDate: "Full day",
-            location: "123456",
-            progress: "In progress"
-          }
-        ]);
         this.setState({
-          historyResult: res.data
+          historyResult: res.data.data
         });
 
         // {  title: 'Title2', style: 'Wedding', portfolioName: 'Ton', meetUpTime: '1/1/2020', actDate: 'Half day morning', location:'123456', progress:'Cancelled' },
@@ -94,7 +84,9 @@ class JobHistory extends Component {
       );
     });
   }*/
-
+  componentDidMount(){
+    this.getResult()
+  }
   render() {
     const options = {
       page: 1,
