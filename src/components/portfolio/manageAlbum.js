@@ -332,6 +332,7 @@ class manageAlbum extends Component {
               type="file"
               id={"uploader" + this.state.id}
               style={{ display: "none" }}
+              accept="image/*"
               onChange={this.imgToBeUpload}
             />
           </div>

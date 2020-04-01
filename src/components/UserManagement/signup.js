@@ -36,7 +36,6 @@ class SignUp extends Component {
     this.setState({
       [name]: value
     });
-    console.log(this.state);
   };
 
   handleDateChange = selectedDate => {
