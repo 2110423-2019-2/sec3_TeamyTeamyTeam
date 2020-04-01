@@ -279,6 +279,23 @@ router.get("/replyNotify/:id.:isAccept", (req, res, next) => {
   });
 });
 
+router.post("/report", (req, res, next) => {
+  let mailOptions = {
+    from: 'phomooffermanager@gmail.com',                // sender
+    to: 'phomooffermanager@gmail.com',                // list of receivers
+    subject: 'Problem Report',              // Mail subject
+    html: '<p>From: '+ req.body.firstname + ' ' + req.body.lastname +'</p>'
+    +'<p>Email: '+ req.body.email+'</p>'
+    +'<p>Title: '+ req.body.title+'</p>'
+    +'<p>Message: '+ req.body.message+'</p>'
+  };
+  transporter.sendMail(mailOptions, function (err, info) {
+    if(err)
+      console.log(err)
+    else
+      console.log(info);
+ });
+})
 // router.put("/user", (req, res, next) => {
 //     const user_profile = user.find(m => user.email === parseInt(req.params.email));
 //     if (!user_profile) {
