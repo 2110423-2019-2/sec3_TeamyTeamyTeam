@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
-import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory from 'react-bootstrap-table2-paginator';
+import JobStatus from "./jobStatus";
+import BootstrapTable from "react-bootstrap-table-next";
+import paginationFactory from "react-bootstrap-table2-paginator";
 
 // //////////////// refactor ใหม่หมด ////////////////// //
 class JobHistory extends Component {
@@ -10,32 +11,178 @@ class JobHistory extends Component {
     this.getResult = this.getResult.bind(this);
     this.state = {
       historyResult: [
-        {  title: 'Title2', style: 'Wedding', portfolioName: 'Ton', meetUpTime: '1/1/2020', actDate: 'Half day morning', location:'123456', progress:'Cancelled' },
-        { title: 'Title3', style: 'Portrait', portfolioName: 'Jane', meetUpTime: '17/10/2019', actDate: 'Half day evening', location:'123456', progress:'Finished' },
-        {  title: 'Title4', style: 'Graduation', portfolioName: 'Otto', meetUpTime: '16/9/2019', actDate: 'Full day', location:'123456', progress:'Finished' },
-        {  title: 'Title2', style: 'Wedding', portfolioName: 'Ton', meetUpTime: '1/1/2020', actDate: 'Half day morning', location:'123456', progress:'Cancelled' },
-        { title: 'Title3', style: 'Portrait', portfolioName: 'Jane', meetUpTime: '17/10/2019', actDate: 'Half day evening', location:'123456', progress:'Finished' },
-        {  title: 'Title4', style: 'Graduation', portfolioName: 'Otto', meetUpTime: '16/9/2019', actDate: 'Full day', location:'123456', progress:'Finished' },
-        {  title: 'Title2', style: 'Wedding', portfolioName: 'Ton', meetUpTime: '1/1/2020', actDate: 'Half day morning', location:'123456', progress:'Cancelled' },
-        { title: 'Title3', style: 'Portrait', portfolioName: 'Jane', meetUpTime: '17/10/2019', actDate: 'Half day evening', location:'123456', progress:'Finished' },
-        {  title: 'Title4', style: 'Graduation', portfolioName: 'Otto', meetUpTime: '16/9/2019', actDate: 'Full day', location:'123456', progress:'Finished' },
-        {  title: 'Title2', style: 'Wedding', portfolioName: 'Ton', meetUpTime: '1/1/2020', actDate: 'Half day morning', location:'123456', progress:'Cancelled' },
-        { title: 'Title3', style: 'Portrait', portfolioName: 'Jane', meetUpTime: '17/10/2019', actDate: 'Half day evening', location:'123456', progress:'Finished' },
-        {  title: 'Title4', style: 'Graduation', portfolioName: 'Otto', meetUpTime: '16/9/2019', actDate: 'Full day', location:'123456', progress:'Finished' },
-        {  title: 'Title2', style: 'Wedding', portfolioName: 'Ton', meetUpTime: '1/1/2020', actDate: 'Half day morning', location:'123456', progress:'Cancelled' },
-        { title: 'Title3', style: 'Portrait', portfolioName: 'Jane', meetUpTime: '17/10/2019', actDate: 'Half day evening', location:'123456', progress:'Finished' },
-        {  title: 'Title4', style: 'Graduation', portfolioName: 'Otto', meetUpTime: '16/9/2019', actDate: 'Full day', location:'123456', progress:'Finished' },
-        {  title: 'Title2', style: 'Wedding', portfolioName: 'Ton', meetUpTime: '1/1/2020', actDate: 'Half day morning', location:'123456', progress:'Cancelled' },
-        { title: 'Title3', style: 'Portrait', portfolioName: 'Jane', meetUpTime: '17/10/2019', actDate: 'Half day evening', location:'123456', progress:'Finished' },
-        {  title: 'Title4', style: 'Graduation', portfolioName: 'Otto', meetUpTime: '16/9/2019', actDate: 'Full day', location:'123456', progress:'Finished' }
+        {
+          title: "Title2",
+          style: "Wedding",
+          portfolioName: "Ton",
+          meetUpTime: "1/1/2020",
+          actDate: "Half day morning",
+          location: "123456",
+          progress: "Cancelled"
+        },
+        {
+          title: "Title3",
+          style: "Portrait",
+          portfolioName: "Jane",
+          meetUpTime: "17/10/2019",
+          actDate: "Half day evening",
+          location: "123456",
+          progress: "Finished"
+        },
+        {
+          title: "Title4",
+          style: "Graduation",
+          portfolioName: "Otto",
+          meetUpTime: "16/9/2019",
+          actDate: "Full day",
+          location: "123456",
+          progress: "Finished"
+        },
+        {
+          title: "Title2",
+          style: "Wedding",
+          portfolioName: "Ton",
+          meetUpTime: "1/1/2020",
+          actDate: "Half day morning",
+          location: "123456",
+          progress: "Cancelled"
+        },
+        {
+          title: "Title3",
+          style: "Portrait",
+          portfolioName: "Jane",
+          meetUpTime: "17/10/2019",
+          actDate: "Half day evening",
+          location: "123456",
+          progress: "Finished"
+        },
+        {
+          title: "Title4",
+          style: "Graduation",
+          portfolioName: "Otto",
+          meetUpTime: "16/9/2019",
+          actDate: "Full day",
+          location: "123456",
+          progress: "Finished"
+        },
+        {
+          title: "Title2",
+          style: "Wedding",
+          portfolioName: "Ton",
+          meetUpTime: "1/1/2020",
+          actDate: "Half day morning",
+          location: "123456",
+          progress: "Cancelled"
+        },
+        {
+          title: "Title3",
+          style: "Portrait",
+          portfolioName: "Jane",
+          meetUpTime: "17/10/2019",
+          actDate: "Half day evening",
+          location: "123456",
+          progress: "Finished"
+        },
+        {
+          title: "Title4",
+          style: "Graduation",
+          portfolioName: "Otto",
+          meetUpTime: "16/9/2019",
+          actDate: "Full day",
+          location: "123456",
+          progress: "Finished"
+        },
+        {
+          title: "Title2",
+          style: "Wedding",
+          portfolioName: "Ton",
+          meetUpTime: "1/1/2020",
+          actDate: "Half day morning",
+          location: "123456",
+          progress: "Cancelled"
+        },
+        {
+          title: "Title3",
+          style: "Portrait",
+          portfolioName: "Jane",
+          meetUpTime: "17/10/2019",
+          actDate: "Half day evening",
+          location: "123456",
+          progress: "Finished"
+        },
+        {
+          title: "Title4",
+          style: "Graduation",
+          portfolioName: "Otto",
+          meetUpTime: "16/9/2019",
+          actDate: "Full day",
+          location: "123456",
+          progress: "Finished"
+        },
+        {
+          title: "Title2",
+          style: "Wedding",
+          portfolioName: "Ton",
+          meetUpTime: "1/1/2020",
+          actDate: "Half day morning",
+          location: "123456",
+          progress: "Cancelled"
+        },
+        {
+          title: "Title3",
+          style: "Portrait",
+          portfolioName: "Jane",
+          meetUpTime: "17/10/2019",
+          actDate: "Half day evening",
+          location: "123456",
+          progress: "Finished"
+        },
+        {
+          title: "Title4",
+          style: "Graduation",
+          portfolioName: "Otto",
+          meetUpTime: "16/9/2019",
+          actDate: "Full day",
+          location: "123456",
+          progress: "Finished"
+        },
+        {
+          title: "Title2",
+          style: "Wedding",
+          portfolioName: "Ton",
+          meetUpTime: "1/1/2020",
+          actDate: "Half day morning",
+          location: "123456",
+          progress: "Cancelled"
+        },
+        {
+          title: "Title3",
+          style: "Portrait",
+          portfolioName: "Jane",
+          meetUpTime: "17/10/2019",
+          actDate: "Half day evening",
+          location: "123456",
+          progress: "Finished"
+        },
+        {
+          title: "Title4",
+          style: "Graduation",
+          portfolioName: "Otto",
+          meetUpTime: "16/9/2019",
+          actDate: "Full day",
+          location: "123456",
+          progress: "Finished"
+        }
       ],
-      columns: [{ dataField: 'title',  text: 'Title'  },  
-                { dataField: 'style',text: 'Style'}, 
-                { dataField: 'id', text: 'Portfolio name', },  
-                { dataField: 'meetUpTime', text: 'Meet up time' },  
-                { dataField: 'actDate', text: 'Act date' },  
-                { dataField: 'location', text: 'Location', },  
-                { dataField: 'progress', text: 'Progression'}]
+      columns: [
+        { dataField: "title", text: "Title" },
+        { dataField: "style", text: "Style" },
+        { dataField: "id", text: "Portfolio name" },
+        { dataField: "meetUpTime", text: "Meet up time" },
+        { dataField: "actDate", text: "Act date" },
+        { dataField: "location", text: "Location" },
+        { dataField: "progress", text: "Progression" }
+      ]
     };
   }
 
@@ -99,46 +246,35 @@ class JobHistory extends Component {
   }*/
 
   render() {
-    const options = {  
-          page: 1,   
-          sizePerPageList: [ 
-            { text: '5', value: 5 }, 
-            { text: '10', value: 10},
-            { text: 'All', value: this.state.historyResult.length} ],   
-          sizePerPage: 5,   
-          pageStartIndex: 1,   
-          paginationSize: 3,    
-          prePageText: '<',   
-          nextPageText: '>',   
-          firstPageText: '<<',   
-          lastPageText: '>>'
-        };
+    const options = {
+      page: 1,
+      sizePerPageList: [
+        { text: "5", value: 5 },
+        { text: "10", value: 10 },
+        { text: "All", value: this.state.historyResult.length }
+      ],
+      sizePerPage: 5,
+      pageStartIndex: 1,
+      paginationSize: 3,
+      prePageText: "<",
+      nextPageText: ">",
+      firstPageText: "<<",
+      lastPageText: ">>"
+    };
 
     return (
-      <div className="section container">
-        <div className="columns is-centered">
-          <div class="table-responsive">
-            <div responsive="lg">
-              <div style={{marginTop:'10vh'}}>
-                <li>
-                  {" "}
-                  <button
-                    className="btn btn-outline-dark"
-                    type="submit"
-                    onClick={this.getResult}
-                  >
-                    {" "}
-                    View history{" "}
-                  </button>
-                </li>
-              </div>
-              <BootstrapTable
-                      keyField='id'
-                      data={this.state.historyResult}
-                      columns={this.state.columns}
-                      pagination={paginationFactory(options)}/>
-            </div>
-          </div>
+      <div className="container">
+        <JobStatus />
+        <h1 className="text-purple">
+          <ion-icon name="file-tray-full-outline"></ion-icon> History
+        </h1>
+        <div class="table-responsive">
+          <BootstrapTable
+            keyField="id"
+            data={this.state.historyResult}
+            columns={this.state.columns}
+            pagination={paginationFactory(options)}
+          />
         </div>
       </div>
     );

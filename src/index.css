@@ -102,4 +102,21 @@ body {
   box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
 }
 
+.bg-purple {
+  background-color: #613bea;
+}
+
+.text-purple {
+  color: #613bea;
+}
+
+.text-yellow {
+  color: #ffa135;
+}
+
+.badge-yellow {
+  color: #212529;
+  background-color: #ffa135;
+}
+
 /* end custom bootstrap-based css */

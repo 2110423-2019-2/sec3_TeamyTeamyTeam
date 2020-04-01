@@ -74,7 +74,8 @@ class SignUp extends Component {
         displayName: this.state.displayName,
         phoneNo: this.state.telNo,
         introduction: "-",
-        profileImage: "../../../public/images/newUser.png",
+        profileImage:
+          "https://firebasestorage.googleapis.com/v0/b/phomo-image.appspot.com/o/newUser.png?alt=media&token=331b27aa-d46b-464e-a10f-8f0af4e40792",
         portfolioID: "-",
         avgRating: -1
       })
