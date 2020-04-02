@@ -104,7 +104,6 @@ export class CheckoutPage extends Component {
           )}
         </div>
       
-        <button onClick = {this.change}></button>
       </div>
     );
   }
