@@ -134,6 +134,7 @@ router.post("/offer", (req, res, next) => {
     progress: req.body.progress,
     optionalRequest: req.body.optionalRequest // Text_block สำหรับการคุยคร่าวๆ
   });
+  console.log(offer_post)
   offer_post.save().then(() => {
     portfolio
       .find({ portfolioName: offer_post.portfolioName })
