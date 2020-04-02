@@ -9,14 +9,13 @@ let OmiseCard;
 export class Checkout extends Component {
   constructor(props) {
     super(props);
+
   }
-  
-  
   handleScriptLoad = () => {
     OmiseCard = window.OmiseCard;
     OmiseCard.configure({
       publicKey,
-      frameLabel: "Promo Payment",
+      frameLabel: "Promo Shop",
       submitLabel: "PAY NOW",
       currency: "thb"
     });
@@ -32,12 +31,13 @@ export class Checkout extends Component {
   };
 
   omiseCardHandler = () => {
-    const {amount, name, email ,createCreditCardCharge } = this.props;
+    console.log("Credit Card --> ",this.props.cart)
+    const { cart, createCreditCardCharge } = this.props;
     OmiseCard.open({
       frameDescription: "Invoice #3847",
-      amount: amount,
+      amount: cart.amount,
       onCreateTokenSuccess: token => {
-        createCreditCardCharge(email, name, amount, token);
+        createCreditCardCharge(cart.email, cart.name, cart.amount, token);
       },
       onFormClosed: () => {}
     });
@@ -50,6 +50,7 @@ export class Checkout extends Component {
   };
 
   render() {
+    const { cart } = this.props;
 
     return (
       <div className="own-form">
@@ -59,7 +60,7 @@ export class Checkout extends Component {
         />
 
         <form>
-          <ion-icon name="card-outline"></ion-icon>
+          <ion-icon name="card-outline" size="large" style={{marginRight:"2vh"}}></ion-icon>
           <button
             id="credit-card"
             className="btn btn-outline-dark"
@@ -73,6 +74,5 @@ export class Checkout extends Component {
     );
   }
 }
-
 
 export default Checkout;

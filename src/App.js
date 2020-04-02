@@ -14,8 +14,11 @@ class App extends Component {
     this.state = {
       isLogin: false,
       email: "-",
-      uid: "-",
+      uid: "-"
+
     };
+
+    
   }
 
   
