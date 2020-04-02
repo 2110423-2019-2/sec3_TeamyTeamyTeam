@@ -6,7 +6,7 @@ class JobStatus extends Component {
     super(props);
     this.state = {
       jobID: "0",
-      statusCode: 6,
+      statusCode: 7,
       photographer: "phomo",
       employer: "Nick",
       title: "Chill out at Chula",
@@ -369,24 +369,29 @@ class JobStatus extends Component {
             </h1>
           </div>
         );
-      //   case 7:
-      // //เคส7เขียนเผื่อไว้ แต่ไม่น่าจะใช้ จะให้ photographer ส่งลิงก์ไฟล์มาให้ โดยจะไปปรากฎที่ history แทนแล้ว ไม่ใช่ job
-      //     return (
-      //       <div>
-      //         <h2>
-      //           <span class="badge badge-info">Here's your photo!</span>
-      //         </h2>
-      //         <small>Download them</small>
-      //         <p>
-      //           <button className="btn btn-light">
-      //             <ion-icon
-      //               name="download"
-      //               style={{ fontSize: "42px" }}
-      //             ></ion-icon>
-      //           </button>
-      //         </p>
-      //       </div>
-      //     );
+      case 7:
+        //เคส7เขียนเผื่อไว้ แต่ไม่น่าจะใช้ จะให้ photographer ส่งลิงก์ไฟล์มาให้ โดยจะไปปรากฎที่ history แทนแล้ว ไม่ใช่ job
+        return (
+          <div>
+            <h2>
+              <span class="badge badge-info">Here's your photo!</span>
+            </h2>
+            <small>Download them</small>
+            <p>
+              <button className="btn btn-light">
+                <ion-icon
+                  name="download"
+                  style={{ fontSize: "42px" }}
+                ></ion-icon>
+              </button>
+            </p>
+            <a href="/review">
+              <button className="btn btn-light">
+                Review your photographer
+              </button>
+            </a>
+          </div>
+        );
     }
   }
 
@@ -437,7 +442,7 @@ class JobStatus extends Component {
                 style={{ borderLeft: "2px solid white" }}
               ></div>
               <div className="col-md p-3 text-center my-auto">
-                {this.getStatusMessagePhotographer()}
+                {this.getStatusMessageEmployer()}
                 {/* ตรงนี้จะให้เช็กว่าเป็นemployerหรือphotographerเพื่อแสดงผลjob status ตาม user type */}
               </div>
             </div>

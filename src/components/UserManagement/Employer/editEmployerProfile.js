@@ -13,20 +13,22 @@ class EditEmployerProfile extends Component {
   }
  
   // getResult {
-  //   axios.put("http://localhost:9000/user/", {
+  //   axios.put("http://localhost:9000/user/" + localStorage.getItem("email"))
+  //   .then(res =>{
+  //      tEmployer = res.data.data;
+  //      const {name,  interest, email, phoneNo} = tEmployer;
   //      if (this.state.name[0] != "") {
   //        firstName = this.state.name[0];
   //      } if (this.state.name[1] != "") {
   //        lastName = this.state.name[1];
   //      } if (this.state.interest != "") {
-  //        interest? = this.state.interest;
+  //        interest = this.state.interest;
   //      } if (this.state.email != "") {
   //        email = this.state.email;
   //      } if (this.state.phoneNo != "") {
   //        phoneNo = this.state.phoneNo;
   //      }
-  //   }).then(res =>{
-  //      
+  //      this.setState({name: name, interest: interest, email: email, phone: phone});
   //   })
   // }
   render() {
