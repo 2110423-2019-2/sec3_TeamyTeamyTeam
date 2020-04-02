@@ -1,32 +1,57 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { Redirect } from "react-router";
 
 class ReportProblem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      title: "",
+      email: "",
+      firstname: "",
+      lastname: "",
+      message: "",
+      redirect: false
     };
   }
 
-  handleChange(event) {
+  onChange = e => {
+    //ตรวจค่าของ name ใน username และ set ค่าตามไปเรื่อยๆ
+    const { name, value } = e.target;
     this.setState({
-      
+      [name]: value
     });
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:9000/api/report",this.state)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+    this.setState({ redirect: true });
   }
 
 
   render() {
-
+    if (this.state.redirect) {
+      return <Redirect push to="/" />;
+    }
     return (
         <div className="container my-5 w-50">
-        <form>
+        <form onSubmit = {this.onSubmit}>
           <div className="form-group">
             <label>Problem title</label>
 
             <input
               className="form-control"
               name="title"
+              onChange={this.onChange}
               required
             />
           </div>
@@ -37,6 +62,7 @@ class ReportProblem extends Component {
               <input
                 className="form-control"
                 name="email"
+                onChange={this.onChange}
                 required
               /> 
             </div>
@@ -45,11 +71,12 @@ class ReportProblem extends Component {
           <div class="form-row">
             <div class="form-group col-6">
               <div>
-                <label>Full name</label>
+                <label>First name</label>
               </div>
               <input
                 className="form-control"
-                name="fullname"
+                name="firstname"
+                onChange={this.onChange}
                 required
               /> 
             </div>
@@ -60,6 +87,7 @@ class ReportProblem extends Component {
               <input
                 className="form-control"
                 name="lastname"
+                onChange={this.onChange}
                 required
               /> 
             </div>
@@ -70,7 +98,7 @@ class ReportProblem extends Component {
             <textarea
               className="form-control"
               name="message"
-              
+              onChange={this.onChange}
               required
             />
           </div>
@@ -97,16 +125,11 @@ class ReportProblem extends Component {
           </div>
 
           <div className="field is-grouped">
-            <Link to= "/">
               <button
                 type="submit"
                 className="btn btn-outline-primary"
-                onSubmit = {this.onSubmit}
               >Submit</button>
-            </Link>
-            <Link to="/">
               <button className="btn btn-outline-secondary mx-3">Cancel</button>
-            </Link>
           </div>
         </form>
       </div>

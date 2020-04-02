@@ -193,7 +193,6 @@ class JobOffer extends Component {
           </div>
 
           <div className="field is-grouped">
-            <Link to={this.getOfferLink()}>
               <button
                 type="submit"
                 className="btn btn-outline-primary"
@@ -201,10 +200,7 @@ class JobOffer extends Component {
               >
                 Submit
               </button>
-            </Link>
-            <Link to={this.getOfferLink()}>
               <button className="btn btn-outline-secondary mx-3">Cancel</button>
-            </Link>
           </div>
         </form>
       </div>

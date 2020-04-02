@@ -107,60 +107,69 @@ router.get("/portfolioTags/:key", (req, res, next) => {
 });
 
 router.get("/offer/:email", (req, res, next) => {
-    user
-        .find({ email: req.params.email })
-        .then(user_mail => {
-            offer.find({ employerEmail: req.params.user_mail });
-        })
-        .then(documents => {
-            res.status(status_ok).json({
-                message: "offer get fetched successfully!",
-                data: documents
-            });
-            console.log(documents);
+  portfolio.find({email: req.params.email}).then(documents => {
+    if(documents.length >= 1){
+      offer.find({$or:[{ employerEmail: req.params.email}, {portfolioName: documents[0].portfolioName}]}).then(documents2 => {
+      res.status(status_ok).json({
+        message: "Registor fetched successfully!",
+        data: documents2
+      });
+      console.log(documents2);
+      });
+    }else{
+      offer.find({ employerEmail: req.params.email}).then(documents2 => {
+        res.status(status_ok).json({
+          message: "Registor fetched successfully!",
+          data: documents2
         });
+        console.log(documents2);
+      });
+    }
+  });
+  
 });
 
 router.post("/offer", (req, res, next) => {
-    const offer_post = new offer({
-        title: req.body.title,
-        photographerID: req.body.photographerID,
-        portfolioName: req.body.portfolioName, // portfolioName == portfolioID
-        employerID: req.body.employerID,
-        employerEmail: req.body.employerEmail,
-        style: req.body.style,
-        actDate: req.body.actDate, // data_tag in server !!!
-        meetUpTime: req.body.meetUpTime, // meetUpTime เวลาที่มาเจอกัน
-        location: req.body.location,
-        progress: req.body.progress,
-        optionalRequest: req.body.optionalRequest // Text_block สำหรับการคุยคร่าวๆ
-    });
-    offer_post.save().then(() => {
-        portfolio
-            .find({ portfolioName: offer_post.portfolioName })
-            .then(documents => {
-                // create notify for photographer
-                const notify_post_photographer = new notify({
-                    email: documents[0].email,
-                    content: offer_post.title + ": " + offer_post.progress,
-                    redirectLink: offer_post._id, // redirect to the  accept/decline section
-                    isRead: false,
-                    isReply: true
-                });
-                notify_post_photographer.save();
-                // create notify for employer
-                const notify_post_employer = new notify({
-                    email: req.body.employerEmail,
-                    content: offer_post.title + ": " + offer_post.progress,
-                    redirectLink: offer_post._id, // redirect to the  accept/decline section
-                    isRead: false,
-                    isReply: false
-                });
-                notify_post_employer.save();
-                console.log(offer_post);
-                console.log(notify_post_photographer);
-            });
-    });
+  const offer_post = new offer({
+    title: req.body.title,
+    photographerID: req.body.photographerID,
+    portfolioName: req.body.portfolioName, // portfolioName == portfolioID
+    employerID: req.body.employerID,
+    employerEmail: req.body.employerEmail,
+    style: req.body.style,
+    actDate: req.body.actDate, // data_tag in server !!!
+    meetUpTime: req.body.meetUpTime, // meetUpTime เวลาที่มาเจอกัน
+    location: req.body.location,
+    progress: req.body.progress,
+    optionalRequest: req.body.optionalRequest // Text_block สำหรับการคุยคร่าวๆ
+  });
+  console.log(offer_post)
+  offer_post.save().then(() => {
+    portfolio
+      .find({ portfolioName: offer_post.portfolioName })
+      .then(documents => {
+        // create notify for photographer
+        const notify_post_photographer = new notify({
+          email: documents[0].email,
+          content: offer_post.title + ": " + offer_post.progress,
+          redirectLink: offer_post._id, // redirect to the  accept/decline section
+          isRead: false,
+          isReply: true
+        });
+        notify_post_photographer.save();
+        // create notify for employer
+        const notify_post_employer = new notify({
+          email: req.body.employerEmail,
+          content: offer_post.title + ": " + offer_post.progress,
+          redirectLink: offer_post._id, // redirect to the  accept/decline section
+          isRead: false,
+          isReply: false
+        });
+        notify_post_employer.save();
+        console.log(offer_post);
+        console.log(notify_post_photographer);
+      });
+  });
 
     res.status(status_created).json({
         message: "Post added successful"
@@ -277,6 +286,23 @@ router.get("/replyNotify/:id.:isAccept", (req, res, next) => {
         });
 });
 
+router.post("/report", (req, res, next) => {
+  let mailOptions = {
+    from: 'phomooffermanager@gmail.com',                // sender
+    to: 'phomooffermanager@gmail.com',                // list of receivers
+    subject: 'Problem Report',              // Mail subject
+    html: '<p>From: '+ req.body.firstname + ' ' + req.body.lastname +'</p>'
+    +'<p>Email: '+ req.body.email+'</p>'
+    +'<p>Title: '+ req.body.title+'</p>'
+    +'<p>Message: '+ req.body.message+'</p>'
+  };
+  transporter.sendMail(mailOptions, function (err, info) {
+    if(err)
+      console.log(err)
+    else
+      console.log(info);
+ });
+})
 // router.put("/user", (req, res, next) => {
 //     const user_profile = user.find(m => user.email === parseInt(req.params.email));
 //     if (!user_profile) {
