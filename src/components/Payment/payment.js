@@ -69,9 +69,6 @@ export class CheckoutPage extends Component {
 
   render() {
     const { cart,charge } = this.state;
-=======
-    const { cart, charge } = this.state;
->>>>>>> 964973d3d071bed6a20b453ca119944418f5721f
     return (
       <div className="own-form">
         <div className="cart__summary">
@@ -106,16 +103,8 @@ export class CheckoutPage extends Component {
             </div>
           )}
         </div>
-<<<<<<< HEAD
       
         <button onClick = {this.change}></button>
-<<<<<<< HEAD
-=======
-=======
-
-        <button onClick={this.change}></button>
->>>>>>> 964973d3d071bed6a20b453ca119944418f5721f
->>>>>>> origin/master
       </div>
     );
   }
