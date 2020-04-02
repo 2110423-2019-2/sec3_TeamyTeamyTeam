@@ -16,20 +16,12 @@ mongoose
         console.log('Connection failed!')
     })
 
-const {
-    omiseCheckoutCreditCard,
-    omiseCheckoutInternetBanking,
-    omiseWebHooks,
-    getInternetBankingCharge
-} = require('./controller/paymentControl');
+
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-app.post('/checkout-creditCard', omiseCheckoutCreditCard)
-app.post('/checkout-internetBanking', omiseCheckoutInternetBanking)
-app.post('/webhooks', omiseWebHooks)
-app.get('/bank-charge', getInternetBankingCharge)
+
 
 
 app.use("/api", routes)

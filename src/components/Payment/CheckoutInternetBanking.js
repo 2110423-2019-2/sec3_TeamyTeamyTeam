@@ -9,13 +9,12 @@ let OmiseCard
 export class CheckoutInternetBanking extends Component {
   constructor(props) {
     super(props);
-
   }
   handleScriptLoad = () => {
     OmiseCard = window.OmiseCard
     OmiseCard.configure({
-      publicKey ,
-      frameLabel: "Promo Payment",
+      publicKey,
+      frameLabel: "Promo Shop",
       submitLabel: "PAY NOW",
       currency: "thb"
     });
@@ -37,12 +36,13 @@ export class CheckoutInternetBanking extends Component {
   };
 
   omiseCardHandler = () => {
-    const { amount, name, email,createInternetBankingCharge } = this.props;
+    const { cart, createInternetBankingCharge } = this.props;
+    console.log("Cart" , cart)
     OmiseCard.open({
       frameDescription: "Invoice #3847",
-      amount: amount,
+      amount: cart.amount,
       onCreateTokenSuccess: token => {
-        createInternetBankingCharge(email, name, amount, token);
+        createInternetBankingCharge(cart.email, cart.name, cart.amount, token);
       },
       onFormClosed: () => {}
     });
@@ -55,6 +55,7 @@ export class CheckoutInternetBanking extends Component {
   };
 
   render() {
+    const { cart } = this.props;
     return (
       <div className="own-form">
         <Script
@@ -64,7 +65,7 @@ export class CheckoutInternetBanking extends Component {
         <form>
           <button
             id="internet-banking"
-            className="btn btn-outline-dark button2-image bgButton"
+            className="btn internet-banking"
             type="button"
             onClick={this.handleClick}
           >

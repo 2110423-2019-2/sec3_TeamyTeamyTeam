@@ -13,23 +13,30 @@ export class CheckoutPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: 'guest@test.com',
-      name: 'test',
-      amount: 10000,
+      cart: {
+        email: "guest@test.com",
+        name: "Guest",
+        //items: [],
+        amount: 100000,
+        //totalQty: 0
+      },
       charge: undefined
     };
   }
 
+  change = () =>{
+    console.log(this.state.cart)
+  }
   createCreditCardCharge = async (email, name, amount, token) => {
     try {
       const res = await axios({
         method: "POST",
-        url: "http://localhost:9000/checkout-creditCard",
+        url: "http://localhost:9000/api/checkout-creditCard",
         data: { email, name, amount, token },
         headers: {
           "Content-Type": "application/json"
         }
-      }).then(console.log("active post --> createCreditCardCharge"));
+      });
 
       if (res.data) {
         this.setState({ charge: res.data});
@@ -44,12 +51,12 @@ export class CheckoutPage extends Component {
     try {
       const res = await axios({
         method: "POST",
-        url: "http://localhost:9000/checkout-internetBanking",
+        url: "http://localhost:9000/api/checkout-internetBanking",
         data: { email, name, amount, token },
         headers: {
           "Content-Type": "application/json"
         }
-      }).then(console.log("active post --> createInternetBankingCharge"));
+      });
 
       const { authorizeUri } = res.data;
       if (authorizeUri) {
@@ -61,45 +68,45 @@ export class CheckoutPage extends Component {
   };
 
   render() {
-    const charge = this.charge ;
+    const { cart,charge } = this.state;
     return (
-      <div className="has-text-centered">
-        <div className="container h-100">
-          <div className="row h-100 align-items-center">
-            <div className="col-12 text-center ">
-              <h1 style={{margin:"5vh"}}>Please select your payment method</h1>
-                <ChekoutCreditCard
-                    createCreditCardCharge={this.createCreditCardCharge}
-                  />
-                <div>
-                  <CheckoutInternetBanking
-                    createInternetBankingCharge={this.createInternetBankingCharge}
-                  /></div>
-                <div className="message">
-                  {charge && (
-                  <div>
-                    <h4>Thank you for your payment with credit card.</h4>
-                    <p>
-                      Your payment amount is{" "}
-                        <span
-                          className={
-                          charge.status === "successful"
-                          ? "success"
-                          : charge.status === "failed"
-                          ? "failed"
-                          : "pending"
-                          }
-                        >
-                          {charge.status}
-                        </span>
-                    </p>e
-                  </div>
-                  )}
-                </div>
-              </div>
-            </div>
+      <div className="own-form">
+        <div className="cart__summary">
+          <h2>Cart Summary</h2>
+          <div className="cart-details">
           </div>
         </div>
+        <ChekoutCreditCard
+          cart={cart}
+          createCreditCardCharge={this.createCreditCardCharge}
+        />
+        <CheckoutInternetBanking
+          cart={cart}
+          createInternetBankingCharge={this.createInternetBankingCharge}
+        />
+        <div className="message">
+          {charge && (
+            <div>
+              <h4>Thank you for your payment with credit card.</h4>
+              <p>
+                <span
+                  className={
+                    charge.status === "successful"
+                      ? "success"
+                      : charge.status === "failed"
+                      ? "failed"
+                      : "pending"
+                  }
+                >
+                  {charge.status}
+                </span>
+              </p>
+            </div>
+          )}
+        </div>
+      
+        <button onClick = {this.change}></button>
+      </div>
     );
   }
 }

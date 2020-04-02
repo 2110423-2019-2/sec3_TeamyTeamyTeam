@@ -3,8 +3,8 @@ const path = require('path')
 const util = require('util')
 
 const omise = require("omise")({
-    publicKey: process.env.OMISE_PUBLIC_KEY,
-    secretKey: process.env.OMISE_SECRET_KEY
+    publicKey: 'pkey_test_5jbivi6naa2udixoo7y',
+    secretKey: 'skey_test_5j5a3k4rg8n5vinn88i'
 });
 
 const readFile = util.promisify(fs.readFile)
@@ -12,9 +12,10 @@ const writeFile = util.promisify(fs.writeFile)
 
 const rootDir = require('./path')
 
-const filePath = path.join(rootDir, 'data', 'internetBankingCharge.json')
+const filePath = path.join(rootDir, 'data', 'transactionBuffer.json')
 
 const omiseCheckoutCreditCard = async(req, res, next) => {
+    console.log(req.body)
     try {
         const { email, name, amount, token } = req.body;
 
@@ -42,9 +43,11 @@ const omiseCheckoutCreditCard = async(req, res, next) => {
 };
 
 const omiseCheckoutInternetBanking = async(req, res, next) => {
+    console.log("")
     console.log("omiseCheckoutInternetBanking active")
+    console.log("")
     try {
-        const { email, name, amount, token } = req.params;
+        const { email, name, amount, token } = req.body;
 
         const charge = await omise.charges.create({
             amount,
