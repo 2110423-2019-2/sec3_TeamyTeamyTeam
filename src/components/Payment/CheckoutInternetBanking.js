@@ -62,14 +62,10 @@ export class CheckoutInternetBanking extends Component {
           onLoad={this.handleScriptLoad}
         />
         <form>
-          <ion-icon name="wifi-outline"></ion-icon>
+          <ion-icon name="wifi-outline" size="large" style={{marginRight:"2vh"}}></ion-icon>
           <button
             id="internet-banking"
-<<<<<<< HEAD
-            className="btn internet-banking"
-=======
             className="btn btn-outline-dark"
->>>>>>> 74acb61c6ee1b02f34194f0983fbce94022cd5c1
             type="button"
             onClick={this.handleClick}
           >
