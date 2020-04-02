@@ -31,7 +31,7 @@ export default class Navbar extends Component {
               {this.props.appState.email}
             </a>
             <div class="dropdown-menu" aria-labelledby="userDropdown">
-              <a class="dropdown-item" href="/employer">
+              <a class="dropdown-item" href="/profile/user">
                 <ion-icon name="reader-outline"></ion-icon> Profile
               </a>
               <a class="dropdown-item" href="/portfolio/users">
@@ -40,7 +40,10 @@ export default class Navbar extends Component {
               <a class="dropdown-item" href="/history">
                 <ion-icon name="file-tray-full-outline"></ion-icon> History
               </a>
-              <a class="dropdown-item" href="/login" onClick={this.onSingout}>
+              <a class="dropdown-item" href="/report">
+                <ion-icon name="help-outline"></ion-icon> Help
+              </a>
+              <a class="dropdown-item" href="/signin" onClick={this.onSingout}>
                 <ion-icon name="log-out-outline"></ion-icon> Sign out
               </a>
             </div>

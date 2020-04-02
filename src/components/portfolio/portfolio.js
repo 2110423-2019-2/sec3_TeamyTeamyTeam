@@ -11,7 +11,7 @@ class Portfolio extends Component {
       photographerName: this.props.match.params.name,
       // photographerName: this.props.params,
       profilePic:
-        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80",
+        "https://firebasestorage.googleapis.com/v0/b/phomo-image.appspot.com/o/newUser.png?alt=media&token=331b27aa-d46b-464e-a10f-8f0af4e40792",
       portfolioLink: "/portfolio/" + this.props.name,
       photoList: [],
       headerCoverImage:

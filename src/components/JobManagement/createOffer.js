@@ -20,6 +20,10 @@ class JobOffer extends Component {
     };
   }
 
+  getOfferLink = () => {
+    return "../portfolio/" + this.props.photographer;
+  };
+
   handleChange = e => {
     //ตรวจค่าของ name ใน Onchange และ set ค่าตามไปเรื่อยๆ
     const { name, value } = e.target;
@@ -65,7 +69,7 @@ class JobOffer extends Component {
       })
       .then(res => {
         console.log(res);
-        this.setState({redirect: true})
+        this.setState({ redirect: true });
       })
       .catch(err => console.error(err));
   };
@@ -156,7 +160,7 @@ class JobOffer extends Component {
               required
             />
           </div>
-
+          {/* 
           <div className="form-group">
             <label>Wages</label>
             <input
@@ -165,7 +169,7 @@ class JobOffer extends Component {
               onChange={this.handleChange}
               required
             />
-          </div>
+          </div> */}
 
           <div className="form-group form-check">
             <input
@@ -189,16 +193,14 @@ class JobOffer extends Component {
           </div>
 
           <div className="field is-grouped">
-            <Link to="/">
               <button
                 type="submit"
                 className="btn btn-outline-primary"
-                onSubmit = {this.onSubmit}
-              >Submit</button>
-            </Link>
-            <Link to="/portfolio/:name">
+                onSubmit={this.onSubmit}
+              >
+                Submit
+              </button>
               <button className="btn btn-outline-secondary mx-3">Cancel</button>
-            </Link>
           </div>
         </form>
       </div>

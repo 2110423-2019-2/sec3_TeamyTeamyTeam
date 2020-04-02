@@ -12,71 +12,80 @@ const crypto = require("crypto");
 const status_ok = 200;
 const status_created = 201;
 
+
+const {
+    omiseCheckoutCreditCard,
+    omiseCheckoutInternetBanking,
+    omiseWebHooks,
+    getInternetBankingCharge
+} = require('./controller/payment/paymentControl');
+
+
 const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: "phomooffermanager@gmail.com", // your email
-    pass: "teamyteam" // your email password
-  }
+    service: "gmail",
+    auth: {
+        user: "phomooffermanager@gmail.com", // your email
+        pass: "teamyteam" // your email password
+    }
 });
 
 router.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.header("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS");
-  next();
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    res.header("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, OPTIONS");
+    next();
 });
 
 router.post("/user", (req, res, next) => {
-  const user_post = new user({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    username: req.body.username,
-    password: req.body.password,
-    nationalID: req.body.nationalID,
-    gender: req.body.gender,
-    birthDate: req.body.birthDate,
-    isPhotographer: req.body.isPhotographer,
-    displayName: req.body.displayName,
-    phoneNo: req.body.phoneNo,
-    introduction: req.body.introduction,
-    profileImage: req.body.profileImage,
-    portfolioID: req.body.portfolioID,
-    avgRating: req.body.avgRating,
-    authorize: false
-  });
-  user_post.save();
-  console.log(user_post);
-  res.status(status_created).json({
-    message: "Post added successful"
-  });
+    const user_post = new user({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        username: req.body.username,
+        password: req.body.password,
+        nationalID: req.body.nationalID,
+        gender: req.body.gender,
+        birthDate: req.body.birthDate,
+        isPhotographer: req.body.isPhotographer,
+        displayName: req.body.displayName,
+        phoneNo: req.body.phoneNo,
+        introduction: req.body.introduction,
+        profileImage: req.body.profileImage,
+        portfolioID: req.body.portfolioID,
+        avgRating: req.body.avgRating,
+        authorize: false
+    });
+    user_post.save();
+    console.log(user_post);
+    res.status(status_created).json({
+        message: "Post added successful"
+    });
 });
 
 router.get("/login/:email.:password", (req, res, next) => {
-  user
-    .find({ email: req.params.email, password: req.params.password })
-    .then(documents => {
-      documents[0].password = "*****";
-      var token = crypto.randomBytes(64).toString("hex");
-      res.status(status_ok).json({
-        message: "Registor fetched successfully!",
-        data: documents
-      });
-      console.log(documents);
-    });
+    user
+        .find({ email: req.params.email, password: req.params.password })
+        .then(documents => {
+            documents[0].password = "*****";
+            var token = crypto.randomBytes(64).toString("hex");
+            res.status(status_ok).json({
+                message: "Registor fetched successfully!",
+                data: documents
+            });
+            console.log(documents);
+        });
 });
 router.get("/portfolio", (req, res, next) => {
-  portfolio.find().then(documents => {
-    res.status(status_ok).json({
-      message: "Registor fetched successfully!",
-      data: documents
+    portfolio.find().then(documents => {
+        res.status(status_ok).json({
+            message: "Registor fetched successfully!",
+            data: documents
+        });
+        console.log(documents);
     });
-    console.log(documents);
-  });
 });
 router.get("/portfolio/:email", (req, res, next) => {
     portfolio.find().then(documents => {
@@ -88,28 +97,36 @@ router.get("/portfolio/:email", (req, res, next) => {
     });
 });
 router.get("/portfolioTags/:key", (req, res, next) => {
-  portfolio.find({ tags: req.params.key }).then(documents => {
-    res.status(status_ok).json({
-      message: "Registor fetched successfully!",
-      data: documents
+    portfolio.find({ tags: req.params.key }).then(documents => {
+        res.status(status_ok).json({
+            message: "Registor fetched successfully!",
+            data: documents
+        });
+        console.log(documents);
     });
-    console.log(documents);
-  });
 });
 
 router.get("/offer/:email", (req, res, next) => {
-  user
-    .find({ email: req.params.email })
-    .then(user_mail => {
-      offer.find({ employerEmail: req.params.user_mail });
-    })
-    .then(documents => {
+  portfolio.find({email: req.params.email}).then(documents => {
+    if(documents.length >= 1){
+      offer.find({$or:[{ employerEmail: req.params.email}, {portfolioName: documents[0].portfolioName}]}).then(documents2 => {
       res.status(status_ok).json({
-        message: "offer get fetched successfully!",
-        data: documents
+        message: "Registor fetched successfully!",
+        data: documents2
       });
-      console.log(documents);
-    });
+      console.log(documents2);
+      });
+    }else{
+      offer.find({ employerEmail: req.params.email}).then(documents2 => {
+        res.status(status_ok).json({
+          message: "Registor fetched successfully!",
+          data: documents2
+        });
+        console.log(documents2);
+      });
+    }
+  });
+  
 });
 
 router.post("/offer", (req, res, next) => {
@@ -126,6 +143,7 @@ router.post("/offer", (req, res, next) => {
     progress: req.body.progress,
     optionalRequest: req.body.optionalRequest // Text_block สำหรับการคุยคร่าวๆ
   });
+  console.log(offer_post)
   offer_post.save().then(() => {
     portfolio
       .find({ portfolioName: offer_post.portfolioName })
@@ -153,42 +171,39 @@ router.post("/offer", (req, res, next) => {
       });
   });
 
-  res.status(status_created).json({
-    message: "Post added successful"
-  });
+    res.status(status_created).json({
+        message: "Post added successful"
+    });
 });
 router.post("/portfolio", (req, res, next) => {
-  const port = new portfolio({
-    photographerName: req.body.photographerName, // gather email by ID
-    email: req.body.email,
-    tags: req.body.tags,
-    minBath: req.body.minBath,
-    maxBath: req.body.maxBath
-  });
-  port.save();
-  console.log(offer_post);
-  res.status(status_created).json({
-    message: "Post added successful"
-  });
+    const port = new portfolio({
+        photographerName: req.body.photographerName, // gather email by ID
+        email: req.body.email,
+        tags: req.body.tags,
+        minBath: req.body.minBath,
+        maxBath: req.body.maxBath
+    });
+    port.save();
+    console.log(offer_post);
+    res.status(status_created).json({
+        message: "Post added successful"
+    });
 });
 router.get("/notify/:email", (req, res, next) => {
-  notify.find({ email: req.params.email }).then(documents => {
-    res.status(status_ok).json({
-      message: "Registor fetched successfully!",
-      data: documents
+    notify.find({ email: req.params.email }).then(documents => {
+        res.status(status_ok).json({
+            message: "Registor fetched successfully!",
+            data: documents
+        });
     });
-  });
 });
 
 router.put("/readNotify/:email", (req, res, next) => {
-  notify
-    .update(
-      { email: req.params.email, isRead: false },
-      {
-        isRead: true
-      }
-    )
-    .exec();
+    notify
+        .update({ email: req.params.email, isRead: false }, {
+            isRead: true
+        })
+        .exec();
 });
 
 router.get("/replyNotify/:id.:isAccept", (req, res, next) => {
@@ -206,16 +221,16 @@ router.get("/replyNotify/:id.:isAccept", (req, res, next) => {
                     console.log("update to " + new_content)
                     notify
                         .find({ redirectLink: req.params.id, isReply: false })
-                        .then(documents2 =>{
+                        .then(documents2 => {
                             var false_notify = documents2[0];
                             notify
-                            .update({ _id: false_notify._id }, {
-                                content: new_content,
-                                isReply: true
-                            })
-                            .exec(() => {
-                                console.log("wait employer reply notify update step2")
-                            });
+                                .update({ _id: false_notify._id }, {
+                                    content: new_content,
+                                    isReply: true
+                                })
+                                .exec(() => {
+                                    console.log("wait employer reply notify update step2")
+                                });
                         })
                     notify
                         .update({ redirectLink: req.params.id, isReply: true }, {
@@ -268,9 +283,26 @@ router.get("/replyNotify/:id.:isAccept", (req, res, next) => {
                         console.log("offer fail offer update")
                     });
             }
-  });
+        });
 });
 
+router.post("/report", (req, res, next) => {
+  let mailOptions = {
+    from: 'phomooffermanager@gmail.com',                // sender
+    to: 'phomooffermanager@gmail.com',                // list of receivers
+    subject: 'Problem Report',              // Mail subject
+    html: '<p>From: '+ req.body.firstname + ' ' + req.body.lastname +'</p>'
+    +'<p>Email: '+ req.body.email+'</p>'
+    +'<p>Title: '+ req.body.title+'</p>'
+    +'<p>Message: '+ req.body.message+'</p>'
+  };
+  transporter.sendMail(mailOptions, function (err, info) {
+    if(err)
+      console.log(err)
+    else
+      console.log(info);
+ });
+})
 // router.put("/user", (req, res, next) => {
 //     const user_profile = user.find(m => user.email === parseInt(req.params.email));
 //     if (!user_profile) {
@@ -306,13 +338,17 @@ router.get("/replyNotify/:id.:isAccept", (req, res, next) => {
 // });
 
 router.get("/user/:email", (req, res, next) => {
-  user.find({ email: req.params.email }).then(documents => {
-    res.status(status_ok).json({
-      message: "get employee fetched successfully!",
-      data: documents
+    user.find({ email: req.params.email }).then(documents => {
+        res.status(status_ok).json({
+            message: "get employee fetched successfully!",
+            data: documents
+        });
+        console.log(documents);
     });
-    console.log(documents);
-  });
 });
+router.post('/checkout-creditCard', omiseCheckoutCreditCard)
+router.post('/checkout-internetBanking', omiseCheckoutInternetBanking)
+router.post('/webhooks', omiseWebHooks)
+router.get('/bank-charge', getInternetBankingCharge)
 
 module.exports = router;

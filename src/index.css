@@ -18,6 +18,22 @@ body {
   color: red;
 }
 
+.img-round {
+  position: relative;
+  height: 0;
+  padding-bottom: 100%;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.img-round > img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
 /* custom bootstrap-based css */
 
 .btn-purple {
@@ -100,6 +116,23 @@ body {
 .btn-yellow:not(:disabled):not(.disabled).active:focus,
 .show > .btn-yellow.dropdown-toggle:focus {
   box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+}
+
+.bg-purple {
+  background-color: #613bea;
+}
+
+.text-purple {
+  color: #613bea;
+}
+
+.text-yellow {
+  color: #ffa135;
+}
+
+.badge-yellow {
+  color: #212529;
+  background-color: #ffa135;
 }
 
 /* end custom bootstrap-based css */
