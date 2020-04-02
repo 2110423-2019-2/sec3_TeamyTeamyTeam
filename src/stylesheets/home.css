@@ -2,9 +2,9 @@
   height: 100vh;
   padding-bottom: 54px;
   min-height: 500px;
-  /* background: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url("https://images.pexels.com/photos/260561/pexels-photo-260561.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"); */
-  background-color: #f4f6f9;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
+    url("https://images.pexels.com/photos/305086/pexels-photo-305086.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260");
+  /* background-color: #f4f6f9; */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

@@ -14,6 +14,8 @@ import EditEmployerProfile from "../components/UserManagement/Employer/editEmplo
 import Payment from "../components/payment/payment";
 import NotificationPage from "../components/Notification/notificationPage";
 import Review from "../components/UserManagement/Employer/review";
+import ReportProblem from "../components/ReportProblem/reportForm.js";
+import ProposedOffer from "../components/JobManagement/jobOffer";
 
 export default class Routing extends React.Component {
   constructor(props) {
@@ -86,6 +88,17 @@ export default class Routing extends React.Component {
           exact
           path="/review"
           render={props => <Review {...this.props} {...props} />}
+        />
+        <Route
+          exact
+          path="/report"
+          render={props => <ReportProblem {...this.props} {...props} />}
+        />
+
+        <Route
+          exact
+          path="/offerID=:id"
+          render={props => <ProposedOffer {...this.props} {...props} />}
         />
       </Switch>
     );

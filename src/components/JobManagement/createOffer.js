@@ -69,7 +69,7 @@ class JobOffer extends Component {
       })
       .then(res => {
         console.log(res);
-        this.setState({redirect: true})
+        this.setState({ redirect: true });
       })
       .catch(err => console.error(err));
   };
@@ -160,7 +160,7 @@ class JobOffer extends Component {
               required
             />
           </div>
-
+          {/* 
           <div className="form-group">
             <label>Wages</label>
             <input
@@ -169,7 +169,7 @@ class JobOffer extends Component {
               onChange={this.handleChange}
               required
             />
-          </div>
+          </div> */}
 
           <div className="form-group form-check">
             <input
@@ -193,12 +193,14 @@ class JobOffer extends Component {
           </div>
 
           <div className="field is-grouped">
-            <Link to= {this.getOfferLink()}>
+            <Link to={this.getOfferLink()}>
               <button
                 type="submit"
                 className="btn btn-outline-primary"
-                onSubmit = {this.onSubmit}
-              >Submit</button>
+                onSubmit={this.onSubmit}
+              >
+                Submit
+              </button>
             </Link>
             <Link to={this.getOfferLink()}>
               <button className="btn btn-outline-secondary mx-3">Cancel</button>
