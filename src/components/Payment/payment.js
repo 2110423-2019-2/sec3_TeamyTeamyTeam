@@ -17,16 +17,16 @@ export class CheckoutPage extends Component {
         email: "guest@test.com",
         name: "Guest",
         //items: [],
-        amount: 100000,
+        amount: 100000
         //totalQty: 0
       },
       charge: undefined
     };
   }
 
-  change = () =>{
-    console.log(this.state.cart)
-  }
+  change = () => {
+    console.log(this.state.cart);
+  };
   createCreditCardCharge = async (email, name, amount, token) => {
     try {
       const res = await axios({
@@ -68,13 +68,16 @@ export class CheckoutPage extends Component {
   };
 
   render() {
+<<<<<<< HEAD
     const { cart,charge } = this.state;
+=======
+    const { cart, charge } = this.state;
+>>>>>>> 964973d3d071bed6a20b453ca119944418f5721f
     return (
       <div className="own-form">
         <div className="cart__summary">
           <h2>Cart Summary</h2>
-          <div className="cart-details">
-          </div>
+          <div className="cart-details"></div>
         </div>
         <ChekoutCreditCard
           cart={cart}
@@ -104,8 +107,13 @@ export class CheckoutPage extends Component {
             </div>
           )}
         </div>
+<<<<<<< HEAD
       
         <button onClick = {this.change}></button>
+=======
+
+        <button onClick={this.change}></button>
+>>>>>>> 964973d3d071bed6a20b453ca119944418f5721f
       </div>
     );
   }
