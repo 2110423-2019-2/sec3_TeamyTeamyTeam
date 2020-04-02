@@ -73,7 +73,10 @@ class Notification extends Component {
           aria-expanded="false"
           onClick={this.readNotify}
         >
-          <ion-icon name="notifications-outline"></ion-icon>
+          <ion-icon
+            name="notifications-outline"
+            style={{ marginTop: "3px", fontSize: "18px" }}
+          ></ion-icon>
           {this.state.numberOfUnreadNotification > 0 ? (
             <span data-badge={this.state.numberOfUnreadNotification}></span>
           ) : (
