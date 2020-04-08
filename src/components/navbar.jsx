@@ -43,7 +43,14 @@ export default class Navbar extends Component {
               <a className="dropdown-item" href="/report">
                 <ion-icon name="help-outline"></ion-icon> Help
               </a>
+<<<<<<< HEAD
               <a className="dropdown-item" href="/signin" onClick={this.onSingout}>
+=======
+              <a class="dropdown-item" href="/chat">
+              <ion-icon name="chatbubbles-outline"></ion-icon>Chat
+              </a>
+              <a class="dropdown-item" href="/signin" onClick={this.onSingout}>
+>>>>>>> bbb3a3708530314d568e61f36d6efd8c6fc9807d
                 <ion-icon name="log-out-outline"></ion-icon> Sign out
               </a>
             </div>
