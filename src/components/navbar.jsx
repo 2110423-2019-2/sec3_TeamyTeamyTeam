@@ -15,9 +15,9 @@ export default class Navbar extends Component {
     if (isLogin)
       return (
         <ul className="navbar-nav ml-auto">
-          <li class="nav-item dropdown">
+          <li className="nav-item dropdown">
             <a
-              class="nav-link dropdown-toggle"
+              className="nav-link dropdown-toggle"
               href="#"
               id="userDropdown"
               role="button"
@@ -30,20 +30,20 @@ export default class Navbar extends Component {
               </i>
               {this.props.appState.email}
             </a>
-            <div class="dropdown-menu" aria-labelledby="userDropdown">
-              <a class="dropdown-item" href="/profile/user">
+            <div className="dropdown-menu" aria-labelledby="userDropdown">
+              <a className="dropdown-item" href="/profile/user">
                 <ion-icon name="reader-outline"></ion-icon> Profile
               </a>
-              <a class="dropdown-item" href="/portfolio/users">
+              <a className="dropdown-item" href="/portfolio/users">
                 <ion-icon name="images-outline"></ion-icon> Portfolio
               </a>
-              <a class="dropdown-item" href="/history">
+              <a className="dropdown-item" href="/history">
                 <ion-icon name="file-tray-full-outline"></ion-icon> History
               </a>
-              <a class="dropdown-item" href="/report">
+              <a className="dropdown-item" href="/report">
                 <ion-icon name="help-outline"></ion-icon> Help
               </a>
-              <a class="dropdown-item" href="/signin" onClick={this.onSingout}>
+              <a className="dropdown-item" href="/signin" onClick={this.onSingout}>
                 <ion-icon name="log-out-outline"></ion-icon> Sign out
               </a>
             </div>

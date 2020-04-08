@@ -3,6 +3,10 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import { Redirect } from "react-router";
 
+// For chat service using firebase 
+const firebase = require('firebase');
+
+
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -81,7 +85,26 @@ class SignUp extends Component {
       .then(res => {
         console.log(res);
         this.setState({ redirect: true });
-      })
+      }).then( firebase // Add for Chatservice Firebase 
+        .auth()
+        .createUserWithEmailAndPassword(this.state.email , this.state.password)
+        .then( authRes => {
+          const userObg = {
+            email : authRes.user.email
+          };
+          firebase
+            .firestore()
+            .collection('users')
+            .doc(this.state.emali)
+            .set(userObg)
+            .then(() =>{
+              console.log("Data Fetch To FirebaseDB")
+            }, dbError =>{
+              console.log()
+            })
+        }, authErr => {
+          console.log(authErr)
+        }))
       .catch(err => {
         console.error(err);
       });

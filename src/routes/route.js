@@ -16,6 +16,7 @@ import NotificationPage from "../components/Notification/notificationPage";
 import Review from "../components/UserManagement/Employer/review";
 import ReportProblem from "../components/ReportProblem/reportForm.js";
 import ProposedOffer from "../components/JobManagement/jobOffer";
+import Chat from "../components/Chat/chat";
 
 export default class Routing extends React.Component {
   constructor(props) {
@@ -100,6 +101,13 @@ export default class Routing extends React.Component {
           path="/offerID=:id"
           render={props => <ProposedOffer {...this.props} {...props} />}
         />
+
+        <Route
+          exact
+          path="/chat"
+          render={props => <Chat {...this.props} {...props} />}
+        />
+
       </Switch>
     );
   }
