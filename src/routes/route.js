@@ -16,11 +16,11 @@ import NotificationPage from "../components/Notification/notificationPage";
 import Review from "../components/Review/review";
 import ReportProblem from "../components/ReportProblem/reportForm.js";
 import ProposedOffer from "../components/JobManagement/jobOffer";
-import NewChatComponent from "../components/Chat/NewChat/newChat.js";
+import NewChatComponent from "../components/Chat/chat";
 
 export default class Routing extends React.Component {
   constructor(props) {
-    super(props);
+    super(props); 
   }
 
   render() {

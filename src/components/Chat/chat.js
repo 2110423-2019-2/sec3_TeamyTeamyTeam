@@ -8,8 +8,8 @@ class ChatDashboard extends Component {
         super(props);
         this.state = {
             isLogin : true,
-            email : localStorage.getItem("email") ,
-            password: localStorage.getItem("email")
+            email : localStorage.email,
+            password: localStorage.email
         };
 
     }

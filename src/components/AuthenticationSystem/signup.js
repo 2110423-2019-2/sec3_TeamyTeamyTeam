@@ -4,8 +4,8 @@ import DatePicker from "react-datepicker";
 import { Redirect } from "react-router";
 
 // For chat service using firebase
-const firebase = require("../../firebase/");
-
+import firebase from "../../firebase/index";
+require('firebase/auth')
 class SignUp extends Component {
   constructor(props) {
     super(props);
@@ -80,42 +80,42 @@ class SignUp extends Component {
           "https://firebasestorage.googleapis.com/v0/b/phomo-image.appspot.com/o/newUser.png?alt=media&token=331b27aa-d46b-464e-a10f-8f0af4e40792",
         portfolioID: "-",
         avgRating: -1,
-      })
+      }).then(
+        // Add for Chatservice Firebase
+        firebase .auth()
+        .createUserWithEmailAndPassword(this.state.email, this.state.email)
+        .then(
+          (authRes) => {
+            const userObg = {
+              email: authRes.user.email,
+            };
+            firebase
+              .firestore()
+              .collection("users")
+              .doc(this.state.email)
+              .set(userObg)
+              .then(
+                () => {
+                  console.log("Data Fetch To FirebaseDB");
+                },
+                (dbError) => {
+                  console.log(dbError);
+                }
+              );
+          },
+          (authErr) => {
+            console.log(authErr);
+          }
+        )
+      )
       .then((res) => {
         console.log(res);
         this.setState({ redirect: true });
       })
-      .then(
-        firebase // Add for Chatservice Firebase
-          .auth()
-          .createUserWithEmailAndPassword(this.state.email, this.state.email)
-          .then(
-            (authRes) => {
-              const userObg = {
-                email: authRes.user.email,
-              };
-              firebase
-                .firestore()
-                .collection("users")
-                .doc(this.state.emali)
-                .set(userObg)
-                .then(
-                  () => {
-                    console.log("Data Fetch To FirebaseDB");
-                  },
-                  (dbError) => {
-                    console.log();
-                  }
-                );
-            },
-            (authErr) => {
-              console.log(authErr);
-            }
-          )
-      )
       .catch((err) => {
         console.error(err);
       });
+
   };
 
   render() {

@@ -68,10 +68,13 @@ class JobStatus extends Component {
       }
     );
   }
+  
 
   getStatusMessagePhotographer() {
     //สำหรับphotographer
     const { statusCode } = this.state;
+
+    
     switch (statusCode) {
       case 2: //เคสนี้ให้photographerรอ employer accept proposed fees ถ้าไม่ accept ก็drop job ทิ้ง
         return (

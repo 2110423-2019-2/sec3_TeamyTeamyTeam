@@ -5,10 +5,6 @@ const cors = require('cors')
 const routes = require('./route')
 const app = express();
 
-
-
-
-
 mongoose
     .connect(
         'mongodb+srv://admin01:FwIS4yY0IL2gBBlN@cluster0-vkvxw.mongodb.net/test?retryWrites=true&w=majority'
@@ -20,16 +16,8 @@ mongoose
         console.log('Connection failed!')
     })
 
-
-
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-
-
-
-
-
-
 
 app.use("/api", routes)
 

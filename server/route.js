@@ -5,6 +5,7 @@ const portfolio = require("./schema/portfolio");
 const user = require("./schema/user");
 const offer = require("./schema/offer");
 const notify = require("./schema/notify");
+const penalty = require("./schema/penalty");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 
@@ -72,25 +73,25 @@ router.get("/login/:email.:password", (req, res, next) => {
             documents[0].password = "*****";
             var token = crypto.randomBytes(64).toString("hex");
             res.status(status_ok).json({
-                message: "Registor fetched successfully!",
+                message: "User login successfully",
                 data: documents
             });
             console.log(documents);
         });
 });
-router.get("/portfolio", (req, res, next) => {
+router.get("/portfolio/:email", (req, res, next) => {
     portfolio.find().then(documents => {
         res.status(status_ok).json({
-            message: "Registor fetched successfully!",
+            message: "Get portfolio successfully!",
             data: documents
         });
         console.log(documents);
     });
 });
-router.get("/portfolio/:email", (req, res, next) => {
+router.get("/portfolio", (req, res, next) => {
     portfolio.find().then(documents => {
         res.status(status_ok).json({
-            message: "Registor fetched successfully!",
+            message: "Get portfolio successfully!",
             data: documents
         });
         console.log(documents);
@@ -99,7 +100,7 @@ router.get("/portfolio/:email", (req, res, next) => {
 router.get("/portfolioTags/:key", (req, res, next) => {
     portfolio.find({ tags: req.params.key }).then(documents => {
         res.status(status_ok).json({
-            message: "Registor fetched successfully!",
+            message: "Get portfolio successfully!",
             data: documents
         });
         console.log(documents);
@@ -111,7 +112,7 @@ router.get("/offer/:email", (req, res, next) => {
         if (documents.length >= 1) {
             offer.find({ $or: [{ employerEmail: req.params.email }, { portfolioName: documents[0].portfolioName }] }).then(documents2 => {
                 res.status(status_ok).json({
-                    message: "Registor fetched successfully!",
+                    message: "Get Offer successfully!",
                     data: documents2
                 });
                 console.log(documents2);
@@ -119,7 +120,7 @@ router.get("/offer/:email", (req, res, next) => {
         } else {
             offer.find({ employerEmail: req.params.email }).then(documents2 => {
                 res.status(status_ok).json({
-                    message: "Registor fetched successfully!",
+                    message: "Get Offer successfully!",
                     data: documents2
                 });
                 console.log(documents2);
@@ -192,7 +193,7 @@ router.post("/portfolio", (req, res, next) => {
 router.get("/notify/:email", (req, res, next) => {
     notify.find({ email: req.params.email }).then(documents => {
         res.status(status_ok).json({
-            message: "Registor fetched successfully!",
+            message: "Get notify",
             data: documents
         });
     });
@@ -287,55 +288,22 @@ router.get("/replyNotify/:id.:isAccept", (req, res, next) => {
 });
 
 router.post("/report", (req, res, next) => {
-        let mailOptions = {
-            from: 'phomooffermanager@gmail.com', // sender
-            to: 'phomooffermanager@gmail.com', // list of receivers
-            subject: 'Problem Report', // Mail subject
-            html: '<p>From: ' + req.body.firstname + ' ' + req.body.lastname + '</p>' +
-                '<p>Email: ' + req.body.email + '</p>' +
-                '<p>Title: ' + req.body.title + '</p>' +
-                '<p>Message: ' + req.body.message + '</p>'
-        };
-        transporter.sendMail(mailOptions, function(err, info) {
-            if (err)
-                console.log(err)
-            else
-                console.log(info);
-        });
-    })
-    // router.put("/user", (req, res, next) => {
-    //     const user_profile = user.find(m => user.email === parseInt(req.params.email));
-    //     if (!user_profile) {
-    //         res.status(404).send('The profile with the given ID was not found ')
-    //     } else {
-
-//         if (req.params.firstName} !== '') {
-//             user_profile.firstName = req.params.firstName
-
-//         res.send(user_profile);
-//     }
-//Schema
-//     // firstName: req.body.firstName,
-//     // lastName: req.body.lastName,
-//     // email: req.body.email,
-//     // username: req.body.username,
-//     // password: req.body.password,
-//     // nationalID: req.body.nationalID,
-//     // gender: req.body.gender,
-//     // birthDate: req.body.birthDate,
-//     // isPhotographer: req.body.isPhotographer,
-//     // phoneNo: req.body.phoneNo,
-//     // introduction: req.body.introduction,
-//     // profileImage: req.body.profileImage,
-//     // portfolioID: req.body.portfolioID,
-//     // avgRating: req.body.avgRating,
-//     // authorize: false
-
-//     console.log(user_post);
-//     res.status(status_created).json({
-//         message: "Put update profile successful"
-//     });
-// });
+    let mailOptions = {
+        from: 'phomooffermanager@gmail.com', // sender
+        to: 'phomooffermanager@gmail.com', // list of receivers
+        subject: 'Problem Report', // Mail subject
+        html: '<p>From: ' + req.body.firstname + ' ' + req.body.lastname + '</p>' +
+            '<p>Email: ' + req.body.email + '</p>' +
+            '<p>Title: ' + req.body.title + '</p>' +
+            '<p>Message: ' + req.body.message + '</p>'
+    };
+    transporter.sendMail(mailOptions, function(err, info) {
+        if (err)
+            console.log(err)
+        else
+            console.log(info);
+    });
+});
 
 router.get("/user/:email", (req, res, next) => {
     user.find({ email: req.params.email }).then(documents => {
@@ -351,5 +319,40 @@ router.post('/checkout-creditCard', omiseCheckoutCreditCard)
 router.post('/checkout-internetBanking', omiseCheckoutInternetBanking)
 router.post('/webhooks', omiseWebHooks)
 router.get('/bank-charge', getInternetBankingCharge)
+
+router.get("/penalty/:email", (req, res, next) => {
+    penalty.find({ email: req.params.email }).then(documents => {
+        res.status(status_ok).json({
+            message: "get penalty  successfully!",
+            data: documents
+        });
+        console.log(documents);
+    });
+});
+
+
+router.post("/penalty/:email", (req, res, next) => {
+    const penalty_post = new penalty({
+        email: req.body.email,
+        hibitScore: req.body.hibitScore,
+        cancelJob: req.body.cancelJob,
+        acceptJob: req.body.acceptJob,
+        rejectOffer: req.body.rejectOffer
+    });
+    penalty_post.save();
+    console.log(penalty_post);
+    res.status(status_created).json({
+        message: "penalty_post added successful"
+    });
+});
+
+router.put("/penalty/:email:", (req, res, next) => {
+    penalty
+        .update({ email: req.params.email, isRead: false }, {
+            isRead: true
+        })
+        .exec();
+});
+
 
 module.exports = router;

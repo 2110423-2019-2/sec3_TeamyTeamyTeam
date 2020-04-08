@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import axios from "axios"
 class ProposedOffer extends Component {
   constructor(props) {
     super(props);
@@ -23,6 +23,45 @@ class ProposedOffer extends Component {
     const { name, value } = e.target;
     this.setState({ [name]: value });
     console.log(this.state.totalFees, this.state.currency);
+  }
+  
+  DeclineJob = () => {
+    //rejectOffer get ผ่าน put get ไม่ผ่าน Post
+    var isGet ;
+    axios
+    .get("http://localhost:9000/api/penalty/" + this.state.employerEmail)
+    .then(console.log(this.state.keyword))
+    .then((res) => {
+      console.log(res.data.data);
+      isGet = res.data.data;
+    })
+    .catch((err) => console.error(err));
+
+    if (!isGet){
+      //Post
+      axios
+      .post("http://localhost:9000/api/penalty/" + this.state.employerEmail,{
+        email: this.state.employerEmail,
+        hibitScore: 1000,
+        cancelJob: 0,
+        acceptJob: 0,
+        rejectOffer: 1
+      }).catch((err) => console.error(err));
+
+    }else{
+      // Put
+      axios
+      .put("http://localhost:9000/api/penalty/" + this.state.employerEmail,{
+        email: this.state.employerEmail,
+        hibitScore: isGet.hibitScore,
+        cancelJob: isGet.cancelJob,
+        acceptJob: isGet.acceptJob,
+        rejectOffer: isGet.rejectOffer +1
+      })
+      .catch((err) => console.error(err));
+
+    }
+
   }
 
   render() {
@@ -82,7 +121,8 @@ class ProposedOffer extends Component {
                 </select>
               </div>
               <div className="mx-auto text-center">
-                <button className="btn btn-danger mr-3">Decline</button>
+                {/* <button className="btn btn-danger mr-3" onClick = {this.DeclineJob}  >Decline</button> */}
+                <button className="btn btn-danger mr-3"  >Decline</button>
                 <button className="btn btn-purple">Accept and Propose</button>
               </div>
             </div>
