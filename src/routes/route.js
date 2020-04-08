@@ -13,7 +13,7 @@ import Employer from "../components/UserManagement/EmployerControl/employer";
 import EditEmployerProfile from "../components/UserManagement/EmployerControl/editEmployerProfile";
 import Payment from "../components/Payment/payment";
 import NotificationPage from "../components/Notification/notificationPage";
-import Review from "../components/UserManagement/EmployerControl/review";
+import Review from "../components/Review/review";
 import ReportProblem from "../components/ReportProblem/reportForm.js";
 import ProposedOffer from "../components/JobManagement/jobOffer";
 import NewChatComponent from "../components/Chat/NewChat/newChat.js";
