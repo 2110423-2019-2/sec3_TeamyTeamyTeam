@@ -47,7 +47,7 @@ export class CheckoutInternetBanking extends Component {
     });
   };
 
-  handleClick = e => {
+  checkoutInternetBanking = e => {
     e.preventDefault();
     this.internetBankingConfigure();
     this.omiseCardHandler();
@@ -67,7 +67,7 @@ export class CheckoutInternetBanking extends Component {
             id="internet-banking"
             className="btn btn-outline-dark"
             type="button"
-            onClick={this.handleClick}
+            onClick={this.checkoutInternetBanking}
           >
             Pay with Internet Banking / Others
           </button>
