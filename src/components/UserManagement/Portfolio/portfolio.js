@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PortfolioHeader from "./portfolio-header";
 import PhotoAlbum from "./photoAlbum";
 import { Link } from "react-router-dom";
-import "../../stylesheets/portfolio.css";
+import "../../../stylesheets/portfolio.css";
 
 class Portfolio extends Component {
   constructor(props) {

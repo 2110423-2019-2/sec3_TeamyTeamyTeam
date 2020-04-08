@@ -2,13 +2,13 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import Home from "../components/home";
-import Login from "../components/UserManagement/signin";
-import SignUp from "../components/UserManagement/signup";
+import Login from "../components/AuthenticationSystem/signin";
+import SignUp from "../components/AuthenticationSystem/signup";
 import Search from "../components/Search/search";
-import Portfolio from "../components/Portfolio/portfolio";
+import Portfolio from "../components/UserManagement/Portfolio/portfolio";
 import JobOffer from "../components/JobManagement/createOffer";
 import PhotoHis from "../components/JobManagement/jobHistory";
-import ManagePortfolio from "../components/Portfolio/managePortfolio";
+import ManagePortfolio from "../components/UserManagement/Portfolio/managePortfolio";
 import Employer from "../components/UserManagement/EmployerControl/employer";
 import EditEmployerProfile from "../components/UserManagement/EmployerControl/editEmployerProfile";
 import Payment from "../components/Payment/payment";
@@ -16,7 +16,7 @@ import NotificationPage from "../components/Notification/notificationPage";
 import Review from "../components/UserManagement/EmployerControl/review";
 import ReportProblem from "../components/ReportProblem/reportForm.js";
 import ProposedOffer from "../components/JobManagement/jobOffer";
-import Chat from "../components/Chat/chat";
+import NewChatComponent from "../components/Chat/NewChat/newChat.js";
 
 export default class Routing extends React.Component {
   constructor(props) {
@@ -105,9 +105,8 @@ export default class Routing extends React.Component {
         <Route
           exact
           path="/chat"
-          render={props => <Chat {...this.props} {...props} />}
+          render={props => <NewChatComponent {...this.props} {...props} />}
         />
-
       </Switch>
     );
   }

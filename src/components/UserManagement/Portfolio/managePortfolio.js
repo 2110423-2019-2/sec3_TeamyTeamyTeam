@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ManageAlbum from "./manageAlbum";
-import "../../stylesheets/portfolio.css";
+import "../../../stylesheets/portfolio.css";
 
 class ManagePortfolio extends Component {
   constructor(props) {
