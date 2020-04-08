@@ -17,11 +17,11 @@ class ChatDashboard extends Component {
     componentDidMount() {
         console.log(this.state.email)
         console.log(this.state.password)
-        this.initSocket()
+        this.createChat()
 
     }
     
-    initSocket = ()=>{
+    createChat = ()=>{
         console.log("start Init")
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
         .then(() => {
