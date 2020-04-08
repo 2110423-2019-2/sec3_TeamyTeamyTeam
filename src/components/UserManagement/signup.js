@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import { Redirect } from "react-router";
 
 // For chat service using firebase 
-const firebase = require('firebase');
+const firebase = require('../../firebase/');
 
 
 class SignUp extends Component {
@@ -87,7 +87,7 @@ class SignUp extends Component {
         this.setState({ redirect: true });
       }).then( firebase // Add for Chatservice Firebase 
         .auth()
-        .createUserWithEmailAndPassword(this.state.email , this.state.password)
+        .createUserWithEmailAndPassword(this.state.email , this.state.email)
         .then( authRes => {
           const userObg = {
             email : authRes.user.email
