@@ -16,11 +16,7 @@ import NotificationPage from "../components/Notification/notificationPage";
 import Review from "../components/UserManagement/Employer/review";
 import ReportProblem from "../components/ReportProblem/reportForm.js";
 import ProposedOffer from "../components/JobManagement/jobOffer";
-<<<<<<< HEAD
 import Chat from "../components/Chat/chat";
-=======
-import Layout from "../components/chatservice/Layout";
->>>>>>> bbb3a3708530314d568e61f36d6efd8c6fc9807d
 
 export default class Routing extends React.Component {
   constructor(props) {
@@ -109,14 +105,9 @@ export default class Routing extends React.Component {
         <Route
           exact
           path="/chat"
-<<<<<<< HEAD
           render={props => <Chat {...this.props} {...props} />}
         />
 
-=======
-          render={props => <Layout {...this.props} {...props} />}
-        />
->>>>>>> bbb3a3708530314d568e61f36d6efd8c6fc9807d
       </Switch>
     );
   }
