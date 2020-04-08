@@ -15,20 +15,20 @@ class LoginForm extends React.Component {
       currentUser: null,
       uid: "",
       message: "",
-      redirect: false
+      redirect: false,
     };
   }
 
-  onChange = e => {
+  onChange = (e) => {
     //ตรวจค่าของ name ใน username และ set ค่าตามไปเรื่อยๆ
     const { name, value } = e.target;
 
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
     if (!e.target.checkValidity()) {
       this.setState({ displayErrors: true });
@@ -42,14 +42,14 @@ class LoginForm extends React.Component {
           "." +
           this.state.password
       )
-      .then(res => {
+      .then((res) => {
         console.log(res);
         const email = res.data.data[0].email;
         const uid = res.data.data[0]._id;
         this.props.login(email, uid);
         this.setState({ redirect: true });
       })
-      .catch(err => console.error(err));
+      .catch((err) => console.error(err));
   };
 
   render() {
@@ -60,6 +60,9 @@ class LoginForm extends React.Component {
     }
     return (
       <div className="container mt-5 w-50">
+        <h1 className="text-purple">
+          <ion-icon name="person-outline"></ion-icon> Sign in
+        </h1>
         <form
           onSubmit={this.onSubmit}
           noValidate

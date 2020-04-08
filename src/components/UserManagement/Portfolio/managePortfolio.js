@@ -45,7 +45,7 @@ class ManagePortfolio extends Component {
   render() {
     return (
       <div className="my-5 container">
-        <h1>
+        <h1 className="text-purple">
           <ion-icon name="images-outline"></ion-icon> Manage Portfolio
         </h1>
         <div class="d-flex align-items-center mt-3">

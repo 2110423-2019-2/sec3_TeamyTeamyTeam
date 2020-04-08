@@ -3,9 +3,8 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import { Redirect } from "react-router";
 
-// For chat service using firebase 
-const firebase = require('../../firebase/');
-
+// For chat service using firebase
+const firebase = require("../../firebase/");
 
 class SignUp extends Component {
   constructor(props) {
@@ -26,7 +25,7 @@ class SignUp extends Component {
       gender: "Not specify",
       selectedDate: new Date(),
       displayErrors: false,
-      redirect: false
+      redirect: false,
     };
   }
 
@@ -34,25 +33,25 @@ class SignUp extends Component {
     this.setState({ isChecked: !this.state.isChecked });
   };
 
-  onChange = e => {
+  onChange = (e) => {
     //ตรวจค่าของ name ใน Onchange และ set ค่าตามไปเรื่อยๆ
     const { name, value } = e.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
-  handleDateChange = selectedDate => {
+  handleDateChange = (selectedDate) => {
     this.setState({
-      selectedDate
+      selectedDate,
     });
     const birthDate = selectedDate.toString().substr(4, 11);
     this.setState({
-      birthDate
+      birthDate,
     });
   };
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
     if (!e.target.checkValidity()) {
       this.setState({ displayErrors: true });
@@ -80,32 +79,41 @@ class SignUp extends Component {
         profileImage:
           "https://firebasestorage.googleapis.com/v0/b/phomo-image.appspot.com/o/newUser.png?alt=media&token=331b27aa-d46b-464e-a10f-8f0af4e40792",
         portfolioID: "-",
-        avgRating: -1
+        avgRating: -1,
       })
-      .then(res => {
+      .then((res) => {
         console.log(res);
         this.setState({ redirect: true });
-      }).then( firebase // Add for Chatservice Firebase 
-        .auth()
-        .createUserWithEmailAndPassword(this.state.email , this.state.email)
-        .then( authRes => {
-          const userObg = {
-            email : authRes.user.email
-          };
-          firebase
-            .firestore()
-            .collection('users')
-            .doc(this.state.emali)
-            .set(userObg)
-            .then(() =>{
-              console.log("Data Fetch To FirebaseDB")
-            }, dbError =>{
-              console.log()
-            })
-        }, authErr => {
-          console.log(authErr)
-        }))
-      .catch(err => {
+      })
+      .then(
+        firebase // Add for Chatservice Firebase
+          .auth()
+          .createUserWithEmailAndPassword(this.state.email, this.state.email)
+          .then(
+            (authRes) => {
+              const userObg = {
+                email: authRes.user.email,
+              };
+              firebase
+                .firestore()
+                .collection("users")
+                .doc(this.state.emali)
+                .set(userObg)
+                .then(
+                  () => {
+                    console.log("Data Fetch To FirebaseDB");
+                  },
+                  (dbError) => {
+                    console.log();
+                  }
+                );
+            },
+            (authErr) => {
+              console.log(authErr);
+            }
+          )
+      )
+      .catch((err) => {
         console.error(err);
       });
   };
@@ -116,6 +124,9 @@ class SignUp extends Component {
     }
     return (
       <div className="container my-5 w-50">
+        <h1 className="text-purple">
+          <ion-icon name="person-add-outline"></ion-icon> Sign up
+        </h1>
         <form
           onSubmit={this.onSubmit}
           noValidate
