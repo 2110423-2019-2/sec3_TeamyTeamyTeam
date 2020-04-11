@@ -34,7 +34,7 @@ export class CheckoutInternetBanking extends Component {
     OmiseCard.attach();
   };
 
-  omiseCardHandler = () => {
+  omiseInternetBankingHandler = () => {
     const { cart, createInternetBankingCharge } = this.props;
     console.log("Cart" , cart)
     OmiseCard.open({
@@ -50,7 +50,7 @@ export class CheckoutInternetBanking extends Component {
   checkoutInternetBanking = e => {
     e.preventDefault();
     this.internetBankingConfigure();
-    this.omiseCardHandler();
+    this.omiseInternetBankingHandler();
   };
 
   render() {

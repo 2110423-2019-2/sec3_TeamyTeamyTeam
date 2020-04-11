@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import Script from "react-load-script";
-
-
 import { publicKey } from "./keys";
 
 let OmiseCard;
