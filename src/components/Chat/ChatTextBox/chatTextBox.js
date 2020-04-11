@@ -3,6 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Send from '@material-ui/icons/Send';
 import styles from './styles';
 import { withStyles } from '@material-ui/core/styles';
+import "../../../stylesheets/chat.css";
 
 class ChatTextBoxComponent extends React.Component {
 
@@ -18,15 +19,15 @@ class ChatTextBoxComponent extends React.Component {
     const { classes } = this.props;
 
     return(
-      <div className={classes.chatTextBoxContainer}>
+      <div className="chatTextBoxContainer">
         <TextField
           placeholder='Type your message..' 
           onKeyUp={(e) => this.userTyping(e)}
           id='chattextbox' 
-          className={classes.chatTextBox}
+          className="chatTextBox"
           onFocus={this.userClickedInput}>
         </TextField>
-        <Send onClick={this.submitMessage} className={classes.sendBtn}></Send>
+        <Send onClick={this.submitMessage} className="sendBtn"></Send>
       </div>
     );
   }

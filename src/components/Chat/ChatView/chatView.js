@@ -1,6 +1,7 @@
 import React from 'react';
-import styles from './styles';
-import { withStyles } from '@material-ui/core/styles';
+//import styles from './styles';
+//import { withStyles } from '@material-ui/core/styles';
+import "../../../stylesheets/chat.css";
 
 class ChatViewComponent extends React.Component {
 
@@ -20,14 +21,14 @@ class ChatViewComponent extends React.Component {
     const { classes } = this.props;
 
     if(this.props.chat === undefined) {
-      return(<main className={classes.content}></main>);
+      return(<main className="content"></main>);
     } else if(this.props.chat !== undefined) {
       return(
         <div>
-          <div className={classes.chatHeader}>
+          <div className="chatHeader">
             Your conversation with {this.props.chat.users.filter(_usr => _usr !== this.props.user)[0]}
           </div>
-          <main id='chatview-container' className={classes.content}>
+          <main id='chatview-container' className="content">
             {
               this.props.chat.messages.map((_msg, _index) => {
                 return(
@@ -41,9 +42,9 @@ class ChatViewComponent extends React.Component {
         </div>
       );
     } else {
-      return (<div className='chatview-container'>Loading...</div>);
+      return (<div className="chatview-container">Loading...</div>);
     }
   }
 }
 
-export default withStyles(styles)(ChatViewComponent);
+export default ChatViewComponent;

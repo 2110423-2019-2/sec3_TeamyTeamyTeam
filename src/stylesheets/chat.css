@@ -1,23 +1,109 @@
-root {
+/*ChatList*/
+.root {
     background-color: #424242;
-    height: '100% - 35px';
+    height: 'calc(100% - 35px)';
     position: 'absolute';
     left: '0px';
     width: '300px';
     box-shadow: '0px 0px 2px black';
 }
     
-listItem {
+.listItem {
       cursor: 'pointer'
 }
     
-newChatBtn {
+.newChatBtn {
     border-radius: '0px'
 }
     
-unreadMessage {
+.unreadMessage {
     color: 'red';
     position: 'absolute';
     top: '0';
     right: '5px';
 }
+/*ChatDashboard*/
+.signOutBtn {
+    position: 'absolute';
+    bottom: '0px';
+    left: '0px';
+    width: '300px';
+    border-radius: '0px';
+    background-color: #227092;
+    height: '35px';
+    box-shadow: '0px 0px 2px black';
+    color: 'white';
+}
+/*ChatTextBox*/
+.sendBtn {
+    color: 'blue';
+    cursor: 'pointer';
+  }
+
+.sendBtn:hover {
+      color: 'gray';
+}
+
+.chatTextBoxContainer {
+    position: 'absolute';
+    bottom: '15px';
+    left: '315px';
+    box-sizing: 'border-box';
+    overflow: 'auto';
+    width: 'calc(100% - 300px - 50px)';
+  }
+
+.chatTextBox {
+    width: 'calc(100% - 25px)';
+  }
+/*ChatView*/
+.content {
+    height: 'calc(100vh - 100px)';
+    overflow: 'auto';
+    padding: '25px';
+    margin-left: '300px';
+    box-sizing: 'border-box';
+    overflow-y: 'scroll';
+    top: '50px';
+    width: 'calc(100% - 300px)';
+    position: 'absolute';
+  }
+
+.userSent {
+    float: 'left';
+    clear: 'both';
+    padding: '20px';
+    box-sizing: 'border-box';
+    word-wrap: 'break-word';
+    margin-top: '10px';
+    background-color: #707BC4;
+    color: 'white';
+    width: '300px';
+    border-radius: '10px';
+  }
+
+.friendSent {
+    float: 'right';
+    clear: 'both';
+    padding: '20px';
+    box-sizing: 'border-box';
+    word-wrap: 'break-word';
+    margin-top: '10px';
+    background-color: '#707BC4';
+    color: 'white';
+    width: '300px';
+    border-radius: '10px';
+}
+
+.chatHeader {
+    width: 'calc(100% - 301px)';
+    height: '50px';
+    background-color: #344195;
+    position: 'fixed';
+    margin-left: '301px';
+    font-size: '18px';
+    text-align: 'center';
+    color: 'white';
+    padding-top: '10px';
+    box-sizing: 'border-box';
+  }

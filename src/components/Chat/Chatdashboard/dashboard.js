@@ -3,9 +3,9 @@ import NewChatComponent from '../NewChat/newChat';
 import ChatListComponent from '../ChatList/chatList';
 import ChatViewComponent from '../ChatView/chatView';
 import ChatTextBoxComponent from '../ChatTextBox/chatTextBox';
-import styles from './style';
-import { Button, withStyles } from '@material-ui/core';
+import {Button} from '@material-ui/core';
 import firebase from "../../../firebase/index";
+import "../../../stylesheets/chat.css";
 require('firebase/auth')
     // I need to investigate why sometimes
     // two messages will send instead of just
@@ -73,7 +73,7 @@ class DashboardComponent extends React.Component {
                 {
                   this.state.newChatFormVisible ? <NewChatComponent goToChatFn={this.goToChat} newChatSubmitFn={this.newChatSubmit}></NewChatComponent> : null
                 }
-                <Button onClick={this.signOut} className={classes.signOutBtn}>Sign Out</Button>
+                <Button onClick={this.signOut} className="signOutBtn">Sign Out</Button>
               </div>
             );
           } else {
@@ -159,4 +159,4 @@ class DashboardComponent extends React.Component {
 
 }
 
-export default withStyles(styles)(DashboardComponent);
+export default DashboardComponent;
