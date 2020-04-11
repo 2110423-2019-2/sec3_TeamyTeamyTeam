@@ -1,8 +1,8 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Send from '@material-ui/icons/Send';
-import styles from './styles';
-import { withStyles } from '@material-ui/core/styles';
+//import styles from './styles';
+//import { withStyles } from '@material-ui/core/styles';
 import "../../../stylesheets/chat.css";
 
 class ChatTextBoxComponent extends React.Component {
@@ -42,4 +42,4 @@ class ChatTextBoxComponent extends React.Component {
   }
 }
 
-export default withStyles(styles)(ChatTextBoxComponent);
+export default ChatTextBoxComponent;
