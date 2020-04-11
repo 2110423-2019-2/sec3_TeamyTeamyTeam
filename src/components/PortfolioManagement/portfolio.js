@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PortfolioHeader from "./portfolio-header";
+import PortfolioHeader from "./portfolioHeader";
 import PhotoAlbum from "./photoAlbum";
 import { Link } from "react-router-dom";
 import "../../../stylesheets/portfolio.css";

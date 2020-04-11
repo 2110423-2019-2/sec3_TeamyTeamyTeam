@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import UploadedPhoto from "./uploadedPhoto";
-import { storage } from "../../../firebase";
+import { storage } from "../../firebase";
 
 class manageAlbum extends Component {
   constructor(props) {
