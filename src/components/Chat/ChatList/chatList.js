@@ -1,17 +1,15 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import styles from './styles';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import NotificationImportant from '@material-ui/icons/NotificationsActive';
-
+import "../../../stylesheets/chat.css";
 
 class ChatListComponent extends React.Component {
 
@@ -22,12 +20,12 @@ class ChatListComponent extends React.Component {
     console.log("Chat list *this.props.chats*",this.props.chats)
     if(this.props.chats.length > 0) {
       return(
-        <div className={classes.root}>
+        <div className="root">
             <Button variant="contained" 
               fullWidth 
               color='primary' 
               onClick={this.newChat} 
-              className={classes.newChatBtn}>
+              className="newChatBtn">
                 New Message
             </Button>
             <List>
@@ -39,7 +37,7 @@ class ChatListComponent extends React.Component {
                   return (
                     <div key={_index}>
                       <ListItem onClick={() => this.selectChat(_index)} 
-                        className={classes.listItem} 
+                        className="listItem" 
                         selected={this.props.selectedChatIndex === _index} 
                         alignItems="flex-start">
                         <ListItemAvatar>
@@ -58,7 +56,7 @@ class ChatListComponent extends React.Component {
                           }/>
                           {
                             _chat.receiverHasRead === false && !this.userIsSender(_chat) ? 
-                            <ListItemIcon><NotificationImportant className={classes.unreadMessage}></NotificationImportant></ListItemIcon> :
+                            <ListItemIcon><NotificationImportant className="unreadMessage"></NotificationImportant></ListItemIcon> :
                             null
                           }
                       </ListItem>
@@ -72,12 +70,12 @@ class ChatListComponent extends React.Component {
       );
     } else {
       return(
-        <div className={classes.root}>
+        <div className="root">
           <Button variant="contained" 
             fullWidth 
             color='primary' 
             onClick={this.newChat} 
-            className={classes.newChatBtn}>
+            className="newChatBtn">
               New Message
           </Button>
           <List></List>
@@ -90,7 +88,7 @@ class ChatListComponent extends React.Component {
   selectChat = (index) => this.props.selectChatFn(index);
 }
 
-export default withStyles(styles)(ChatListComponent);
+export default ChatListComponent;
 
 
 
