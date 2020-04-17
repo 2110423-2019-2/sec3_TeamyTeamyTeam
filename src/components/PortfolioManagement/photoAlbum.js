@@ -5,7 +5,7 @@ class PhotoCategory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      maxNumberOfPhoto: 2
+      maxNumberOfPhoto: 2,
     };
     this.increaseNumberOfPhoto = this.increaseNumberOfPhoto.bind(this);
   }
@@ -28,7 +28,7 @@ class PhotoCategory extends Component {
         <div className="card-columns">
           {photoList
             .filter((photo, index) => index < this.state.maxNumberOfPhoto)
-            .map(photo => (
+            .map((photo) => (
               <Photo imgLink={photo} />
             ))}
           {photoList.length > this.state.maxNumberOfPhoto ? (

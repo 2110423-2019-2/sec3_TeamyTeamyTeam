@@ -1,21 +1,23 @@
 import React, { Component } from "react";
 import PortfolioHeader from "./portfolioHeader";
 import PhotoAlbum from "./photoAlbum";
+import ReviewCard from "../Review/ReviewCard";
 import { Link } from "react-router-dom";
-import "../../../stylesheets/portfolio.css";
+import "../../stylesheets/portfolio.css";
 
 class Portfolio extends Component {
   constructor(props) {
     super(props);
     this.state = {
       photographerName: this.props.match.params.name,
-      // photographerName: this.props.params,
       profilePic:
         "https://firebasestorage.googleapis.com/v0/b/phomo-image.appspot.com/o/newUser.png?alt=media&token=331b27aa-d46b-464e-a10f-8f0af4e40792",
       portfolioLink: "/portfolio/" + this.props.name,
       photoList: [],
+      rating: 3.7,
+      reviewList: [1, 2, 3, 4, 5, 6, 7],
       headerCoverImage:
-        "https://images.pexels.com/photos/590029/pexels-photo-590029.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+        "https://images.pexels.com/photos/590029/pexels-photo-590029.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
     };
   }
 
@@ -60,7 +62,22 @@ class Portfolio extends Component {
           name={this.state.photographerName}
           profilePic={this.state.profilePic}
           headerCoverImage={this.state.headerCoverImage}
+          rating={this.state.rating}
+          totalReview={this.state.reviewList.length}
         />
+        {this.state.reviewList.length > 0 ? (
+          <div
+            className="container-fluid my-4"
+            style={{ height: "230px", maxHeight: "230px" }}
+          >
+            <h1>Reviews</h1>
+            <div className="row flex-row flex-nowrap overflow-auto">
+              {this.state.reviewList.map((review) => (
+                <ReviewCard />
+              ))}
+            </div>
+          </div>
+        ) : null}
         <div className="container-fluid my-4">
           <div className="row">
             {/* If there is more than 1 category we have to map this */}
