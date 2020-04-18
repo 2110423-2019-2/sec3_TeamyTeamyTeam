@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PortfolioHeader from "./portfolioHeader";
-import PhotoAlbum from "./photoAlbum";
+import PhotoCategory from "./photoCategory";
 import ReviewCard from "../Review/ReviewCard";
 import { Link } from "react-router-dom";
 import "../../stylesheets/portfolio.css";
@@ -59,6 +59,7 @@ class Portfolio extends Component {
         </a>
 
         <PortfolioHeader
+          key={this.state.photographerName}
           name={this.state.photographerName}
           profilePic={this.state.profilePic}
           headerCoverImage={this.state.headerCoverImage}
@@ -72,8 +73,8 @@ class Portfolio extends Component {
           >
             <h1>Reviews</h1>
             <div className="row flex-row flex-nowrap overflow-auto">
-              {this.state.reviewList.map((review) => (
-                <ReviewCard />
+              {this.state.reviewList.map((review, index) => (
+                <ReviewCard key={index.toString()} />
               ))}
             </div>
           </div>
@@ -81,7 +82,11 @@ class Portfolio extends Component {
         <div className="container-fluid my-4">
           <div className="row">
             {/* If there is more than 1 category we have to map this */}
-            <PhotoAlbum category="Photo" photoList={this.state.photoList} />
+            <PhotoCategory
+              key={1}
+              category="Photo"
+              photoList={this.state.photoList}
+            />
           </div>
         </div>
       </div>

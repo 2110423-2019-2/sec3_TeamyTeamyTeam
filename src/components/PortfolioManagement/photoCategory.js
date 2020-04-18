@@ -28,8 +28,8 @@ class PhotoCategory extends Component {
         <div className="card-columns">
           {photoList
             .filter((photo, index) => index < this.state.maxNumberOfPhoto)
-            .map((photo) => (
-              <Photo imgLink={photo} />
+            .map((photo, index) => (
+              <Photo key={index.toString()} imgLink={photo} />
             ))}
           {photoList.length > this.state.maxNumberOfPhoto ? (
             <div className="mb-3">

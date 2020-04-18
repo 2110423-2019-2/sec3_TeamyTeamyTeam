@@ -22,16 +22,29 @@ class ReviewCard extends Component {
     let ratingStar = [];
     for (let i = 0; i < fullStar; i++) {
       ratingStar.push(
-        <ion-icon style={{ color: "#ffa135" }} name="star"></ion-icon>
+        <ion-icon
+          key={i.toString()}
+          style={{ color: "#ffa135" }}
+          name="star"
+        ></ion-icon>
       );
     }
     for (let j = 0; j < halfStar; j++) {
       ratingStar.push(
-        <ion-icon style={{ color: "#ffa135" }} name="star-half"></ion-icon>
+        <ion-icon
+          key={(fullStar + j).toString()}
+          style={{ color: "#ffa135" }}
+          name="star-half"
+        ></ion-icon>
       );
     }
     for (let k = 0; k < emptyStar; k++) {
-      ratingStar.push(<ion-icon name="star-outline"></ion-icon>);
+      ratingStar.push(
+        <ion-icon
+          key={(fullStar + halfStar + k).toString()}
+          name="star-outline"
+        ></ion-icon>
+      );
     }
     console.log(ratingStar);
     return ratingStar;
