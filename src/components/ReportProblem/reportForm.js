@@ -44,6 +44,7 @@ class ReportProblem extends Component {
     }
     return (
         <div className="container my-5 w-50">
+        <h1 className="text-purple"><ion-icon name="alert-outline"></ion-icon>Report your problem</h1>
         <form onSubmit = {this.onSubmit}>
           <div className="form-group">
             <label>Problem title</label>

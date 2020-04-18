@@ -4,7 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import Home from "../components/home";
 import Login from "../components/AuthenticationSystem/signin";
 import SignUp from "../components/AuthenticationSystem/signup";
-import Search from "../components/search/search";
+import Search from "../components/Search/search";
 import Portfolio from "../components/PortfolioManagement/portfolio";
 import JobOffer from "../components/JobManagement/createOffer";
 import PhotoHis from "../components/JobManagement/jobHistory";
@@ -16,7 +16,7 @@ import NotificationPage from "../components/Notification/notificationPage";
 import Review from "../components/Review/review";
 import ReportProblem from "../components/ReportProblem/reportForm.js";
 import ProposedOffer from "../components/JobManagement/jobOffer";
-import NewChatComponent from "../components/Chat/NewChat/newChat";
+import NewChatComponent from "../components/Chat/ChatControl";
 
 export default class Routing extends React.Component {
   constructor(props) {

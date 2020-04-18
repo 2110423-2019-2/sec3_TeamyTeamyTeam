@@ -85,6 +85,7 @@ class JobOffer extends Component {
           noValidate
           className={this.state.displayErrors ? "displayErrors" : ""}
         >
+          <h1 className="text-purple"><ion-icon name="document-outline"></ion-icon>Offer Job</h1>
           <div className="form-group">
             <label>Job title</label>
 
