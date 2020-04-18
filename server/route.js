@@ -113,7 +113,8 @@ router.get("/offer/:email", (req, res, next) => {
             offer.find({ $or: [{ employerEmail: req.params.email }, { portfolioName: documents[0].portfolioName }] }).then(documents2 => {
                 res.status(status_ok).json({
                     message: "Get Offer successfully!",
-                    data: documents2
+                    data: documents2,
+                    timestamp: documents2[documents2.length - 1]._id.getTimestamp()
                 });
                 console.log(documents2);
             });
@@ -121,7 +122,8 @@ router.get("/offer/:email", (req, res, next) => {
             offer.find({ employerEmail: req.params.email }).then(documents2 => {
                 res.status(status_ok).json({
                     message: "Get Offer successfully!",
-                    data: documents2
+                    data: documents2,
+                    timestamp: "No Offer"
                 });
                 console.log(documents2);
             });
@@ -306,12 +308,15 @@ router.post("/report", (req, res, next) => {
 });
 
 router.get("/user/:email", (req, res, next) => {
+    console.log('Access Get user')
     user.find({ email: req.params.email }).then(documents => {
         res.status(status_ok).json({
             message: "get employee fetched successfully!",
-            data: documents
+            data: documents,
+            timestamp: documents[0]._id.getTimestamp()
         });
         console.log(documents);
+        // ObjectId(documents[0]._id).getTimestamp()
     });
 });
 
