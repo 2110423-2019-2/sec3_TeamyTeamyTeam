@@ -14,7 +14,7 @@ class Employer extends Component {
       email: this.props.appState.email, // from sign up, can edit
       phone: "08x-xxx-xxxx", // from sign up, can edit
       firstRegister: "1/1/2019", //date of first register
-      latestOffer: "11/3/2020" //date of the latest offer base on photographers' history
+      latestOffer: "11/3/2020", //date of the latest offer base on photographers' history
     };
   }
 
@@ -29,28 +29,12 @@ class Employer extends Component {
 
   //   };
 
-  renderStyle() {
-    //this.getData()
-    return this.state.style.map((style, index) => {
-      const { s } = style; //destructuring
-      return <div style={{ fontSize: "18px", paddingBottom: "1vh" }}>{s}</div>;
-    });
-  }
-
   render() {
     return (
-      <div className="container has-text-centered">
+      <div className="container">
         <div className="row">
           <div className="col-6 " style={{ padding: "10vh" }}>
-            <div
-              style={{
-                height: "auto",
-                maxWidth: "100%",
-                paddingBottom: "5vh",
-                overflow: "hidden",
-                position: "relative"
-              }}
-            >
+            <div>
               <div className="img-round">
                 <img
                   className="img-fluid"
@@ -58,16 +42,6 @@ class Employer extends Component {
                 />
               </div>
             </div>
-            <p
-              style={{
-                fontSize: "30px",
-                fontStyle: "lead",
-                paddingBottom: "1vh"
-              }}
-            >
-              Interest
-            </p>
-            {this.renderStyle()}
           </div>
 
           <div
@@ -80,7 +54,7 @@ class Employer extends Component {
                 style={{
                   fontSize: "30px",
                   fontStyle: "oblique",
-                  paddingBottom: "5vh"
+                  paddingBottom: "5vh",
                 }}
               >
                 {this.state.name}

@@ -19,7 +19,7 @@ class JobStatus extends Component {
       currency: "$",
       uploadProgress: 0,
       isUploading: false,
-      file: null
+      file: null,
     };
     this.getStatusMessageEmployer = this.getStatusMessageEmployer.bind(this);
     this.getStatusMessagePhotographer = this.getStatusMessagePhotographer.bind(
@@ -48,18 +48,18 @@ class JobStatus extends Component {
       .put(this.state.file);
     uploadTask.on(
       "state_changed",
-      snapshot => {
+      (snapshot) => {
         const uploadProgress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
         this.setState({ uploadProgress });
         this.setState({ isUploading: true });
       },
-      error => {
+      (error) => {
         console.log(error);
       },
       () => {
-        uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
           this.setState({ isUploading: false });
           this.setState({ statusCode: 7 });
           //ใช้ตัวแปร downloadURL ได้เลยเพื่อส่งลิงก์
@@ -68,13 +68,11 @@ class JobStatus extends Component {
       }
     );
   }
-  
 
   getStatusMessagePhotographer() {
     //สำหรับphotographer
     const { statusCode } = this.state;
 
-    
     switch (statusCode) {
       case 2: //เคสนี้ให้photographerรอ employer accept proposed fees ถ้าไม่ accept ก็drop job ทิ้ง
         return (
