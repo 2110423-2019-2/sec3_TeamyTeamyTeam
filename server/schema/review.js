@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var reviewSchema = new Schema({
     portfolioName: { type: String, required: true },
-    rating: { type: int, required: true },
+    rating: { type: Number, required: true },
     content: { type: String, required: false }
 })
 

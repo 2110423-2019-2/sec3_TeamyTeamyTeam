@@ -15,7 +15,8 @@ class App extends Component {
       isLogin: false,
       email: "-",
       uid: "-",
-      phoneNo: "-"
+      phoneNo: "-",
+      isPhotographer: false
     };
 
     
@@ -30,15 +31,17 @@ class App extends Component {
       isLogin: isLogin,
       email: localStorage.getItem("email"),
       uid: localStorage.getItem("uid"),
-      phoneNo: localStorage.getItem("phoneNo")
+      phoneNo: localStorage.getItem("phoneNo"),
+      isPhotographer: localStorage.getItem("isPhotographer")
     })
   }
 
-  storeStorage(isLogin, email, uid, phoneNo) {
+  storeStorage(isLogin, email, uid, phoneNo, isPhotographer) {
     localStorage.setItem("isLogin", isLogin);
     localStorage.setItem("email", email);
     localStorage.setItem("uid", uid);
     localStorage.setItem("phoneNo", phoneNo)
+    localStorage.setItem("isPhotographer", isPhotographer)
   }
 
 
@@ -54,14 +57,15 @@ class App extends Component {
     console.log(this.state);
   }
 
-  login = (username, uid, phoneNo) => {
+  login = (username, uid, phoneNo, isPhotographer) => {
     this.setState({
       isLogin: true,
       email: username,
       uid: uid,
-      phoneNo: phoneNo
+      phoneNo: phoneNo,
+      isPhotographer: isPhotographer
     });
-    this.storeStorage(true, username, uid, phoneNo);
+    this.storeStorage(true, username, uid, phoneNo, isPhotographer);
   };
   logout = () => {
     this.setState({
@@ -70,7 +74,7 @@ class App extends Component {
       uid: "-",
       phoneNo: "-"
     });
-    this.storeStorage(false, "-", "-", "-");
+    this.storeStorage(false, "-", "-", "-", false);
   };
 
   render() {
