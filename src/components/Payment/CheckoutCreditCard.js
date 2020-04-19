@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import Script from "react-load-script";
-
-
 import { publicKey } from "./keys";
 
 let OmiseCard;
@@ -43,7 +41,7 @@ export class Checkout extends Component {
     });
   };
 
-  handleClick = e => {
+  checkoutCreditCard = e => {
     e.preventDefault();
     this.creditCardConfigure();
     this.omiseCardHandler();
@@ -65,7 +63,7 @@ export class Checkout extends Component {
             id="credit-card"
             className="btn btn-outline-dark"
             type="button"
-            onClick={this.handleClick}
+            onClick={this.checkoutCreditCard}
           >
             Pay with Credit Card
           </button>

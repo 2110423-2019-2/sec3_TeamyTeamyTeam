@@ -9,9 +9,9 @@ class UploadedPhoto extends Component {
       tag: this.props.img.tag,
       ref: this.props.img.ref,
       tagTemp: this.props.img.tag,
-      albumID: this.props.albumID
+      albumID: this.props.albumID,
     };
-    this.handleEdit = this.handleEdit.bind(this);
+    this.ChangeTag = this.ChangeTag.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -30,14 +30,14 @@ class UploadedPhoto extends Component {
     return false;
   }
 
-  handleEdit() {
+  ChangeTag() {
     this.setState({ tag: this.state.tagTemp });
   }
 
   handleChange(e) {
     const { name, value } = e.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
     e.preventDefault();
   }
@@ -170,7 +170,7 @@ class UploadedPhoto extends Component {
                 <button
                   type="button"
                   className="btn btn-success"
-                  onClick={this.handleEdit}
+                  onClick={this.ChangeTag}
                   data-dismiss="modal"
                 >
                   Save Changes
@@ -184,7 +184,7 @@ class UploadedPhoto extends Component {
           className="managePhoto text-center"
           style={{
             backgroundImage: 'url("' + this.state.url + '")',
-            opacity: this.props.isDeleting ? "0.3" : "1"
+            opacity: this.props.isDeleting ? "0.3" : "1",
           }}
         >
           <div

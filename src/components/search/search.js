@@ -11,7 +11,7 @@ export default class Search extends Component {
       searchResult: [],
       inputKeyword: "", //inputKeyword and keyword are for a Category text display purpose
       keyword: "",
-      isSubmit: false //Check if is user clicked on the submit button for a Category text display purpose
+      isSubmit: false, //Check if is user clicked on the submit button for a Category text display purpose
     };
   }
 
@@ -26,12 +26,12 @@ export default class Search extends Component {
     axios
       .get("http://localhost:9000/api/portfolioTags/" + this.state.inputKeyword)
       .then(console.log(this.state.keyword))
-      .then(res => {
+      .then((res) => {
         console.log(res.data.data);
         searchResult = res.data.data;
         this.setState({ searchResult: searchResult });
       })
-      .catch(err => console.error(err));
+      .catch((err) => console.error(err));
   }
 
   handleSubmit(e) {
@@ -55,6 +55,9 @@ export default class Search extends Component {
         : "There are no photographers in " + this.state.keyword + " category.";
     return (
       <div className="container my-5">
+        <h1 className="text-purple">
+          <ion-icon name="search-outline"></ion-icon> Search
+        </h1>
         <form method="post">
           <div className="input-group mb-3">
             <input
@@ -84,14 +87,14 @@ export default class Search extends Component {
             visibility:
               this.state.searchResult.length >= 0 && this.state.isSubmit
                 ? "visible"
-                : "hidden"
+                : "hidden",
           }}
         >
           {numberOfResultText}
         </p>
         {/* Results show here */}
         <div className="row">
-          {this.state.searchResult.map(card => (
+          {this.state.searchResult.map((card) => (
             <SearchResultCard pid={card._id} name={card.portfolioName} />
           ))}
         </div>

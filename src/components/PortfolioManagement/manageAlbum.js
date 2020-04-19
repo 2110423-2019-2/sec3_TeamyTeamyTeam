@@ -14,20 +14,20 @@ class manageAlbum extends Component {
         name: "",
         url: "",
         tag: "",
-        ref: ""
+        ref: "",
       },
       newName: "",
       uploadProgress: 0,
       isUploading: false,
       isDeleting: false,
-      isChangingName: false
+      isChangingName: false,
     };
     this.imgToBeUpload = this.imgToBeUpload.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
     this.imgInfoChange = this.imgInfoChange.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
+    this.DeletePhoto = this.DeletePhoto.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.changeAlbumName = this.changeAlbumName.bind(this);
+    this.ChangeAlbumName = this.ChangeAlbumName.bind(this);
   }
   // Function ที่ Get ตัวของ URL ทั้งหมด
 
@@ -39,8 +39,8 @@ class manageAlbum extends Component {
         name: [name] == "name" ? value : this.state.lastUploadedImg.name,
         url: this.state.lastUploadedImg.url,
         tag: [name] == "tag" ? value : this.state.lastUploadedImg.tag,
-        ref: this.state.lastUploadedImg.ref
-      }
+        ref: this.state.lastUploadedImg.ref,
+      },
     });
   }
 
@@ -59,18 +59,18 @@ class manageAlbum extends Component {
       .put(lastUploadedImg.ref);
     uploadTask.on(
       "state_changed",
-      snapshot => {
+      (snapshot) => {
         const uploadProgress = Math.round(
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
         this.setState({ uploadProgress });
         this.setState({ isUploading: true });
       },
-      error => {
+      (error) => {
         console.log(error);
       },
       () => {
-        uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
           lastUploadedImg = {
             id: this.state.lastUploadedImg.id,
             name: this.state.lastUploadedImg.name,
@@ -82,7 +82,7 @@ class manageAlbum extends Component {
               "_photoID=" +
               this.state.lastUploadedImg.id +
               "_albumID=" +
-              this.state.id
+              this.state.id,
           };
           this.setState({ lastUploadedImg });
           photoLists.push(lastUploadedImg);
@@ -106,21 +106,21 @@ class manageAlbum extends Component {
           name: "Image #" + imageID,
           url: URL.createObjectURL(photoFile),
           tag: "Portrait",
-          ref: photoFile
-        }
+          ref: photoFile,
+        },
       });
     }
     document.getElementById("imgInfoButton" + this.state.id).click();
   }
 
-  handleDelete(id, ref) {
+  DeletePhoto(id, ref) {
     this.setState({ isDeleting: true });
     let desertRef = storage.ref().child(ref);
     // Delete the file
     desertRef
       .delete()
       .then(() => {
-        const photoLists = this.state.photoLists.filter(img => img.id !== id);
+        const photoLists = this.state.photoLists.filter((img) => img.id !== id);
         this.setState({ photoLists });
         this.setState({ isDeleting: false });
       })
@@ -133,12 +133,12 @@ class manageAlbum extends Component {
   handleChange(e) {
     const { name, value } = e.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
     e.preventDefault();
   }
 
-  changeAlbumName() {
+  ChangeAlbumName() {
     this.setState({ name: this.state.newName });
     this.setState({ isChangingName: false });
     //แก้ชื่อalbumในserver/database
@@ -159,12 +159,12 @@ class manageAlbum extends Component {
                   className="form-control"
                   value={this.state.newName}
                   onChange={this.handleChange}
-                  onBlur={this.changeAlbumName}
+                  onBlur={this.ChangeAlbumName}
                 />
               ) : (
                 <span
                   style={{ cursor: "text" }}
-                  onDoubleClick={e => {
+                  onDoubleClick={(e) => {
                     e.stopPropagation();
                     this.setState({ newName: this.state.name });
                     this.setState({ isChangingName: true });
@@ -217,7 +217,7 @@ class manageAlbum extends Component {
                         backgroundImage:
                           'url("' + this.state.lastUploadedImg.url + '")',
                         height: "200px",
-                        width: "200px"
+                        width: "200px",
                       }}
                     ></div>
                   </row>
@@ -291,12 +291,12 @@ class manageAlbum extends Component {
         {/* imgInfo Modal */}
 
         <div className="row">
-          {this.state.photoLists.map(img => (
+          {this.state.photoLists.map((img) => (
             <UploadedPhoto
               key={img.id.toString()}
               img={img}
               albumID={this.state.id}
-              onDelete={this.handleDelete}
+              onDelete={this.DeletePhoto}
               isDeleting={this.state.isDeleting}
             />
           ))}

@@ -6,7 +6,7 @@ class Employer extends Component {
   constructor(props) {
     super(props);
     //this.renderStyle = this.renderStyle.bind(this);
-    //this.getData = this.getData.bind(this);
+    this.getData = this.getData.bind(this);
     this.state = {
       name: this.props.appState.name,
       numberOfJob: 2, // from history that has the same employer's name
@@ -14,60 +14,60 @@ class Employer extends Component {
       email: localStorage.getItem("email"), // from sign up, can edit
       phone: localStorage.getItem("phoneNo"), // from sign up, can edit
       firstRegister: "1/1/2019", //date of first register
-      latestOffer: "11/3/2020" //date of the latest offer base on photographers' history
+      latestOffer: "11/3/2020", //date of the latest offer base on photographers' history
+      image: ''
+
     };
   }
 
-  //   getData(){
-  //     let EmployeeResult = {}
-  //     axios.get("http://localhost:9000/user/"+ localStorage.getItem("email"))
-  //     .then(res => {
-  //         EmployeeResult = res.data.data;
-  //         const {name  , email ,phone } = EmployeeResult;
-  //         this.setState({name: name , email:email, phone:phone })
-  //     })
+  async getData(){
+      var EmployeeResult = {}
+      let res = await axios.get("http://localhost:9000/api/user/"+ localStorage.getItem("email"))
+      let offerStatus = await axios.get("http://localhost:9000/api/offer/"+ localStorage.getItem("email"))
+    
+      EmployeeResult = res.data;
 
-  //   };
+      const {firstName  , email ,phoneNo, profileImage} = EmployeeResult.data[0];
+      const numberOfJob = offerStatus.data.data.length
+      //gen date
+      const firstRegis = EmployeeResult.timestamp.substring(8,10)+'/'+EmployeeResult.timestamp.substring(5,7)+'/' +EmployeeResult.timestamp.substring(0,4)
+      // lastestOffer get lastdate
+      const lastestOffer= offerStatus.data.timestamp;
+      if (lastestOffer != "No Offer") {
+        console.log('Yes Offer',offerStatus.timestamp.substring(8,10)+'/'+offerStatus.timestamp.substring(5,7)+'/' +offerStatus.timestamp.substring(0,4)) 
+        this.setState({latestOffer:offerStatus.timestamp.substring(8,10)+'/'+offerStatus.timestamp.substring(5,7)+'/' +offerStatus.timestamp.substring(0,4)})
+      } else {
+        console.log('No Offer',lastestOffer)
+        this.setState({latestOffer:'No Offer'})
+      }
 
-  renderStyle() {
-    //this.getData()
-    return this.state.style.map((style, index) => {
-      const { s } = style; //destructuring
-      return <div style={{ fontSize: "18px", paddingBottom: "1vh" }}>{s}</div>;
-    });
+      this.setState({name: firstName ,numberOfJob:numberOfJob, email:email, phone:phoneNo ,firstRegister: firstRegis,image:profileImage})
+
+      console.log('res',this.state.image)
+      // console.log("numberOfJob",numberOfJob)
+      // console.log('offerStatus',offerStatus.data)
+      //image base :: "https://firebasestorage.googleapis.com/v0/b/phomo-image.appspot.com/o/newUser.png?alt=media&token=331b27aa-d46b-464e-a10f-8f0af4e40792"
+
+  };
+
+  componentDidMount(){
+    this.getData()
   }
 
-  render() {
+  generateRender(){
+    var image = this.state.image.toString()
     return (
-      <div className="container has-text-centered">
+      <div className="container">
         <div className="row">
           <div className="col-6 " style={{ padding: "10vh" }}>
-            <div
-              style={{
-                height: "auto",
-                maxWidth: "100%",
-                paddingBottom: "5vh",
-                overflow: "hidden",
-                position: "relative"
-              }}
-            >
+            <div>
               <div className="img-round">
                 <img
                   className="img-fluid"
-                  src="https://firebasestorage.googleapis.com/v0/b/phomo-image.appspot.com/o/newUser.png?alt=media&token=331b27aa-d46b-464e-a10f-8f0af4e40792"
+                  src= {image}
                 />
               </div>
             </div>
-            <p
-              style={{
-                fontSize: "30px",
-                fontStyle: "lead",
-                paddingBottom: "1vh"
-              }}
-            >
-              Interest
-            </p>
-            {this.renderStyle()}
           </div>
 
           <div
@@ -80,7 +80,7 @@ class Employer extends Component {
                 style={{
                   fontSize: "30px",
                   fontStyle: "oblique",
-                  paddingBottom: "5vh"
+                  paddingBottom: "5vh",
                 }}
               >
                 {this.state.name}
@@ -120,6 +120,19 @@ class Employer extends Component {
           </div>
         </div>
       </div>
+    );
+
+
+
+  }
+
+
+
+  render() {
+    return (
+      <div> 
+      {this.generateRender()}
+    </div>   
     );
   }
 }

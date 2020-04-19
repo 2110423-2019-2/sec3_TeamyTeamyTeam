@@ -11,31 +11,31 @@ class ManagePortfolio extends Component {
         {
           id: 1,
           name: "Cafe",
-          photoLists: []
-        }
-      ] //เก็บjsonของalbum ในalbumก็เก็บรูปอีกที
+          photoLists: [],
+        },
+      ], //เก็บjsonของalbum ในalbumก็เก็บรูปอีกที
     };
-    this.deleteAlbum = this.deleteAlbum.bind(this);
-    this.addAlbum = this.addAlbum.bind(this);
+    this.DeleteAlbum = this.DeleteAlbum.bind(this);
+    this.AddAlbum = this.AddAlbum.bind(this);
   }
 
   componentDidMount() {
     //ดึงalbumมาจากdatabase
   }
 
-  deleteAlbum(id) {
-    let albums = this.state.albums.filter(album => album.id !== id);
+  DeleteAlbum(id) {
+    let albums = this.state.albums.filter((album) => album.id !== id);
     this.setState({ albums });
     //แก้databaseส่วนalbumพร้อมทั้งลบรูปทั้งหมด
   }
 
-  addAlbum() {
+  AddAlbum() {
     const album = {
       id: this.state.albums[this.state.albums.length - 1]
         ? this.state.albums[this.state.albums.length - 1].id + 1
         : 1,
       name: "Added Album",
-      photoLists: []
+      photoLists: [],
     };
     let albums = this.state.albums;
     albums.push(album);
@@ -45,7 +45,7 @@ class ManagePortfolio extends Component {
   render() {
     return (
       <div className="my-5 container">
-        <h1>
+        <h1 className="text-purple">
           <ion-icon name="images-outline"></ion-icon> Manage Portfolio
         </h1>
         <div class="d-flex align-items-center mt-3">
@@ -53,7 +53,7 @@ class ManagePortfolio extends Component {
             <h2>Albums</h2>
           </div>
           <div class="bd-highlight">
-            <a href="#" className="text-success" onClick={this.addAlbum}>
+            <a href="#" className="text-success" onClick={this.AddAlbum}>
               <h3>
                 <ion-icon name="add-circle"></ion-icon>
               </h3>
@@ -61,11 +61,11 @@ class ManagePortfolio extends Component {
           </div>
         </div>
         <div className="container">
-          {this.state.albums.map(album => (
+          {this.state.albums.map((album) => (
             <ManageAlbum
               key={album.id.toString()}
               album={album}
-              onDelete={this.deleteAlbum}
+              onDelete={this.DeleteAlbum}
               hasSeperateLine={
                 album !== this.state.albums[this.state.albums.length - 1]
               }

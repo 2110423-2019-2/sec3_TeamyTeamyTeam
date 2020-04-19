@@ -1,0 +1,25 @@
+.change-profile-pic {
+  height: 250px;
+  width: 250px;
+  background-position: center;
+  background-size: cover;
+  background-clip: content-box;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.change-profile-pic-overlay {
+  background: rgba(0, 0, 0, 0.7);
+  width: max-content;
+  height: max-content;
+  opacity: 0;
+  transition: ease-in-out 0.2s;
+  color: #ffffff;
+  border-radius: 50%;
+}
+
+.change-profile-pic:hover .change-profile-pic-overlay {
+  opacity: 1;
+  transition: ease-in-out 0.2s;
+}
