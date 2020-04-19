@@ -6,6 +6,7 @@ const user = require("./schema/user");
 const offer = require("./schema/offer");
 const notify = require("./schema/notify");
 const penalty = require("./schema/penalty");
+const review = require("./schema/review");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 
@@ -361,6 +362,29 @@ router.put("/penalty/:email:", (req, res, next) => {
             isRead: true
         })
         .exec();
+});
+
+router.get("/review/:portfolioName", (req, res, next) => {
+    penalty.find({ portfolioName: req.params.portfolioName }).then(documents => {
+        res.status(status_ok).json({
+            message: "get penalty  successfully!",
+            data: documents
+        });
+        console.log(documents);
+    });
+});
+
+router.post("/review", (req, res, next) => {
+    const review_post = new review({
+        portfolioName: req.body.portfolioName,
+        rating: req.body.rating,
+        content: req.body.content
+    })
+    review_post.save()
+    console.log(review_post);
+    res.status(status_created).json({
+        message: "review_post added successful"
+    });
 });
 
 
