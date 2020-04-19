@@ -8,11 +8,11 @@ class Employer extends Component {
     //this.renderStyle = this.renderStyle.bind(this);
     this.getData = this.getData.bind(this);
     this.state = {
-      name: "Otto Otto",
+      name: this.props.appState.name,
       numberOfJob: 2, // from history that has the same employer's name
       style: [{ s: "Graduation" }, { s: "Portrait" }, { s: "Wedding" }], // default, can edit
-      email: this.props.appState.email, // from sign up, can edit
-      phone: "08x-xxx-xxxx", // from sign up, can edit
+      email: localStorage.getItem("email"), // from sign up, can edit
+      phone: localStorage.getItem("phoneNo"), // from sign up, can edit
       firstRegister: "1/1/2019", //date of first register
       latestOffer: "11/3/2020", //date of the latest offer base on photographers' history
       image: ''
@@ -34,8 +34,8 @@ class Employer extends Component {
       // lastestOffer get lastdate
       const lastestOffer= offerStatus.data.timestamp;
       if (lastestOffer != "No Offer") {
-        console.log('Yes Offer',offerStatus.timestamp.substring(8,10)+'/'+offerStatus.timestamp.substring(5,7)+'/' +offerStatus.timestamp.substring(0,4)) 
-        this.setState({latestOffer:offerStatus.timestamp.substring(8,10)+'/'+offerStatus.timestamp.substring(5,7)+'/' +offerStatus.timestamp.substring(0,4)})
+        console.log('Yes Offer',lastestOffer.substring(8,10)+'/'+lastestOffer.substring(5,7)+'/' +lastestOffer.substring(0,4)) 
+        this.setState({latestOffer: lastestOffer.substring(8,10)+'/'+lastestOffer.substring(5,7)+'/' +lastestOffer.substring(0,4)})
       } else {
         console.log('No Offer',lastestOffer)
         this.setState({latestOffer:'No Offer'})

@@ -46,7 +46,8 @@ class LoginForm extends React.Component {
         console.log(res);
         const email = res.data.data[0].email;
         const uid = res.data.data[0]._id;
-        this.props.login(email, uid);
+        const phoneNo = res.data.data[0].phoneNo;
+        this.props.login(email, uid, phoneNo);
         this.setState({ redirect: true });
       })
       .catch((err) => console.error(err));
