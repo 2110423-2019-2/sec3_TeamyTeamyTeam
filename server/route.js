@@ -42,6 +42,17 @@ router.use(function(req, res, next) {
 });
 
 router.post("/user", (req, res, next) => {
+    if(req.body.isPhotographer == true){
+        const portfolio_post = new portfolio({
+            portfolioName: req.body.displayName, // gather email by ID
+            email: req.body.email,
+            tags: [],
+            minBath: -1,
+            maxBath: -1
+        });
+        portfolio_post.save();
+        console.log(portfolio_post);
+    }
     const user_post = new user({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
