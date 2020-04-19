@@ -337,6 +337,10 @@ router.post("/report", (req, res, next) => {
 //     });
 // });
 
+router.put("/user/:email", (req, res, next) =>{
+
+})
+
 router.get("/user/:email", (req, res, next) => {
     user.find({ email: req.params.email }).then(documents => {
         res.status(status_ok).json({
