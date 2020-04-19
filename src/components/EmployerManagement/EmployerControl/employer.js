@@ -34,8 +34,8 @@ class Employer extends Component {
       // lastestOffer get lastdate
       const lastestOffer= offerStatus.data.timestamp;
       if (lastestOffer != "No Offer") {
-        console.log('Yes Offer',offerStatus.timestamp.substring(8,10)+'/'+offerStatus.timestamp.substring(5,7)+'/' +offerStatus.timestamp.substring(0,4)) 
-        this.setState({latestOffer:offerStatus.timestamp.substring(8,10)+'/'+offerStatus.timestamp.substring(5,7)+'/' +offerStatus.timestamp.substring(0,4)})
+        console.log('Yes Offer',lastestOffer.substring(8,10)+'/'+lastestOffer.substring(5,7)+'/' +lastestOffer.substring(0,4)) 
+        this.setState({latestOffer: lastestOffer.substring(8,10)+'/'+lastestOffer.substring(5,7)+'/' +lastestOffer.substring(0,4)})
       } else {
         console.log('No Offer',lastestOffer)
         this.setState({latestOffer:'No Offer'})
