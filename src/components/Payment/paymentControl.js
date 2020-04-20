@@ -19,6 +19,7 @@ export class CheckoutPage extends Component {
         //items: [],
         amount: 100000
         //totalQty: 0
+        
       },
       charge: undefined
     };

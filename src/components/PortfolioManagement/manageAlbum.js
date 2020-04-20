@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import UploadedPhoto from "./uploadedPhoto";
 import { storage } from "../../firebase";
-
+import axios from 'axios';
 class manageAlbum extends Component {
   constructor(props) {
     super(props);
@@ -9,6 +9,7 @@ class manageAlbum extends Component {
       id: this.props.album.id,
       name: this.props.album.name,
       photoLists: this.props.album.photoLists,
+      // portfolioId = 'email-name-id'
       lastUploadedImg: {
         id: 0,
         name: "",
@@ -30,6 +31,19 @@ class manageAlbum extends Component {
     this.ChangeAlbumName = this.ChangeAlbumName.bind(this);
   }
   // Function ที่ Get ตัวของ URL ทั้งหมด
+  getAlbum(){ 
+    var Photolist = ''
+    axios
+      .get("http://localhost:9000/album/" + localStorage.email +'-'+this.state.name+'-'+this.state.id)
+      .then(console.log(this.state.keyword))
+      .then((res) => {
+        console.log(res.data.data);
+        Photolist = res.data.data.imageURLs;
+        this.setState({ photoLists: Photolist });
+      })
+      .catch((err) => console.error(err));
+  }
+
 
   imgInfoChange(e) {
     const { name, value } = e.target;
@@ -64,6 +78,7 @@ class manageAlbum extends Component {
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
         );
         this.setState({ uploadProgress });
+
         this.setState({ isUploading: true });
       },
       (error) => {
@@ -89,6 +104,32 @@ class manageAlbum extends Component {
           this.setState({ photoLists });
           this.setState({ isUploading: false });
           //เพิ่มรูปลงdatabaseของuserนั้น ๆ
+          var tempPhotoPost = ""
+          console.log('uploadImage',localStorage.email +'-'+this.state.name+'-'+this.state.id)
+          axios
+          .get("http://localhost:9000/api/album/" + localStorage.email +'-'+this.state.name+'-'+this.state.id)
+          .then((response) => {
+            console.log(response);
+            tempPhotoPost = response.data.data;
+            console.log('tempPhotoPost',tempPhotoPost);
+            // if (!tempPhotoPost) {
+            //   console.log('True',tempPhotoPost);
+            //   axios
+            //   // .post("http://localhost:9000/api/album/"+ localStorage.email +'-'+this.state.name+'-'+this.state.id ,{
+            //   //   albumName: this.state.name,
+            //   //   portfolioID: localStorage.email +'-'+this.state.name+'-'+this.state.id, 
+            //   //   imageURLs: this.state.photoLists
+            //   // })
+            // }else{
+            //   console.log('False',tempPhotoPost);
+            //   // axios
+            //   // .put("http://localhost:9000/api/album/"+ localStorage.email +'-'+this.state.name+'-'+this.state.id,{
+            //   //   albumName: this.state.name,
+            //   //   portfolioID: localStorage.email +'-'+this.state.name+'-'+this.state.id, 
+            //   //   imageURLs: this.state.photoLists
+            //   // })
+            // }
+          })
         });
       }
     );
@@ -113,11 +154,12 @@ class manageAlbum extends Component {
     document.getElementById("imgInfoButton" + this.state.id).click();
   }
 
-  DeletePhoto(id, ref) {
+  async DeletePhoto(id, ref) {
     this.setState({ isDeleting: true });
-    let desertRef = storage.ref().child(ref);
+    let desertRef = await storage.ref().child(ref);
     // Delete the file
-    desertRef
+    
+    await desertRef
       .delete()
       .then(() => {
         const photoLists = this.state.photoLists.filter((img) => img.id !== id);
@@ -128,6 +170,13 @@ class manageAlbum extends Component {
         console.log(error);
         this.setState({ isDeleting: false });
       });
+
+      await axios
+      .put("http://localhost:9000/album/"+ localStorage.email +'-'+this.state.name+'-'+this.state.id ,{
+        albumName: this.state.name,
+        portfolioID: localStorage.email +'-'+this.state.name+'-'+this.state.id, 
+        imageURLs: this.state.photoLists
+      })
   }
 
   handleChange(e) {
@@ -138,10 +187,20 @@ class manageAlbum extends Component {
     e.preventDefault();
   }
 
-  ChangeAlbumName() {
+  async ChangeAlbumName() {
+    var oldName = this.state.name
     this.setState({ name: this.state.newName });
     this.setState({ isChangingName: false });
     //แก้ชื่อalbumในserver/database
+    console.log('ChangeAlbumName')
+    console.log('oldName',oldName)
+    console.log('oldName',this.state.newName)
+    await axios
+    .put("http://localhost:9000/album/"+ localStorage.email +'-'+this.state.name+'-'+this.state.id ,{
+      albumName: this.state.name,
+      portfolioID: localStorage.email +'-'+oldName+'-'+this.state.id, 
+      imageURLs: this.state.photoLists
+    })
   }
 
   render() {

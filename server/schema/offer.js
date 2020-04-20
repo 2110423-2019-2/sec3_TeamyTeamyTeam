@@ -11,8 +11,8 @@ var offerSchema = new Schema({
     actDate: { type: String, required: true }, // data_tag in server !!!
     meetUpTime: { type: String, required: true }, // meetUpTime เวลาที่มาเจอกัน
     location: { type: String, required: true },
-    progress: { type: String, required: true },
-    optionalRequest: { type: String } // Text_block สำหรับการคุยคร่าวๆ
+    progress: { type: String, required: true }, // status job
+    fee: { type: String, required: true } // Text_block สำหรับการคุยคร่าวๆ
 })
 
 var Offer = mongoose.model('offer', offerSchema);

@@ -7,6 +7,7 @@ const offer = require("./schema/offer");
 const notify = require("./schema/notify");
 const penalty = require("./schema/penalty");
 const review = require("./schema/review");
+const album = require("./schema/album");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 
@@ -91,15 +92,7 @@ router.get("/login/:email.:password", (req, res, next) => {
             console.log(documents);
         });
 });
-router.get("/portfolio/:email", (req, res, next) => {
-    portfolio.find().then(documents => {
-        res.status(status_ok).json({
-            message: "Get portfolio successfully!",
-            data: documents
-        });
-        console.log(documents);
-    });
-});
+
 router.get("/portfolio", (req, res, next) => {
     portfolio.find().then(documents => {
         res.status(status_ok).json({
@@ -190,20 +183,7 @@ router.post("/offer", (req, res, next) => {
         message: "Post added successful"
     });
 });
-router.post("/portfolio", (req, res, next) => {
-    const port = new portfolio({
-        photographerName: req.body.photographerName, // gather email by ID
-        email: req.body.email,
-        tags: req.body.tags,
-        minBath: req.body.minBath,
-        maxBath: req.body.maxBath
-    });
-    port.save();
-    console.log(offer_post);
-    res.status(status_created).json({
-        message: "Post added successful"
-    });
-});
+
 router.get("/notify/:email", (req, res, next) => {
     notify.find({ email: req.params.email }).then(documents => {
         res.status(status_ok).json({
@@ -367,13 +347,28 @@ router.post("/penalty/:email", (req, res, next) => {
     });
 });
 
-router.put("/penalty/:email:", (req, res, next) => {
+router.put("/penalty/:email", (req, res, next) => {
     penalty
         .update({ email: req.params.email, isRead: false }, {
             isRead: true
         })
         .exec();
+    });
+
+
+// Api to getAlbum() in manageAlbum
+router.get("/album/:portfolioID", (req, res, next) => {
+    console.log('Api to getAlbum() in manageAlbum')
+    console.log('Api to getAlbum() in manageAlbum',req.params)
+    album.find({ portfolioID: req.params.portfolioID }).then(documents => {
+        res.status(status_ok).json({
+            message: "get album successfully!",
+            data: documents
+        });
+        console.log(documents);
+    });
 });
+
 
 router.get("/review/:portfolioName", (req, res, next) => {
     penalty.find({ portfolioName: req.params.portfolioName }).then(documents => {
@@ -398,5 +393,61 @@ router.post("/review", (req, res, next) => {
     });
 });
 
+// Api to uploadImage() in manageAlbum
+router.post("/album/:portfolioID", (req, res, next) => {
+    console.log('Api to uploadImage() in manageAlbum')
+    console.log(req.body)
+    const album_post = new album({
+        albumName: req.body.albumName,
+        portfolioID: req.body.portfolioID,
+        imageURLs: req.body.imageURLs
+    });
+    album_post.save();
+    console.log('album_post',album_post);
+    res.status(status_created).json({
+        message: "Post album successful"
+    });
+});
+
+// Api to uploadImage() & DeletePhoto() & ChangeAlbumName()in manageAlbum || DeleteAlbum() & AddAlbum() in ManagePortfolio
+router.put("/album/:portfolioID", (req, res, next) => {
+    console.log('Api to uploadImage() & DeletePhoto() & ChangeAlbumName()in manageAlbum || DeleteAlbum() & AddAlbum() in ManagePortfolio')
+    // album
+    //     .update({ albumName: req.params.albumName, portfolioID:portfolioID ,imageURLs:req.params.imageURLs },
+    //     {
+    //         albumName: req.params.albumName, portfolioID:portfolioID ,imageURLs:req.params.imageURLs 
+    //     })
+    //     .exec().then(res => {
+    //         res.status(status_created).json({
+    //             message: "Post album successful"
+    //         });
+    //     });
+    });
+
+// Api to componentDidMount() in ManagePortfolio --> need to test to send real one
+router.get("/portfolio/:email", (req, res, next) => {
+    console.log('Api to componentDidMount() in ManagePortfolio --> need to test to send real one',req.params.email)
+    portfolio.find({ email: req.params.email }).then(documents => {
+            res.status(status_ok).json({
+                message: "get portfolio in portfolio config successfully!",
+                data: documents
+            });
+            console.log();
+    });
+});
+
+// Api to componentDidMount() in ManagePortfolio --> need to test to send real one
+router.put("/portfolio/:email", (req, res, next) => { 
+    console.log('Api to componentDidMount() in ManagePortfolio --> need to test to send real one')
+    // album
+    //     .update({ albumName: req.params.email, isRead: false }, {
+    //         isRead: true
+    //     })
+    //     .exec().then(res => {
+    //         res.status(status_created).json({
+    //             message: "Post album successful"
+    //         });
+    //     });
+});
 
 module.exports = router;
