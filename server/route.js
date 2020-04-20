@@ -287,6 +287,10 @@ router.post("/report", (req, res, next) => {
     });
 });
 
+router.put("/user/:email", (req, res, next) =>{
+
+})
+
 router.get("/user/:email", (req, res, next) => {
     console.log('Access Get user')
     user.find({ email: req.params.email }).then(documents => {

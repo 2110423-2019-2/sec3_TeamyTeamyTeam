@@ -4,7 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import Home from "../components/home";
 import Login from "../components/AuthenticationSystem/signin";
 import SignUp from "../components/AuthenticationSystem/signup";
-import Search from "../components/search/search";
+import Search from "../components/Search/search";
 import Portfolio from "../components/PortfolioManagement/portfolio";
 import JobOffer from "../components/JobManagement/createOffer";
 import PhotoHis from "../components/JobManagement/jobHistory";
