@@ -6,6 +6,7 @@ const user = require("./schema/user");
 const offer = require("./schema/offer");
 const notify = require("./schema/notify");
 const penalty = require("./schema/penalty");
+const review = require("./schema/review");
 const album = require("./schema/album");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
@@ -42,6 +43,17 @@ router.use(function(req, res, next) {
 });
 
 router.post("/user", (req, res, next) => {
+    if(req.body.isPhotographer == true){
+        const portfolio_post = new portfolio({
+            portfolioName: req.body.displayName, // gather email by ID
+            email: req.body.email,
+            tags: [],
+            minBath: -1,
+            maxBath: -1
+        });
+        portfolio_post.save();
+        console.log(portfolio_post);
+    }
     const user_post = new user({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -354,6 +366,30 @@ router.get("/album/:portfolioID", (req, res, next) => {
             data: documents
         });
         console.log(documents);
+    });
+});
+
+
+router.get("/review/:portfolioName", (req, res, next) => {
+    penalty.find({ portfolioName: req.params.portfolioName }).then(documents => {
+        res.status(status_ok).json({
+            message: "get penalty  successfully!",
+            data: documents
+        });
+        console.log(documents);
+    });
+});
+
+router.post("/review", (req, res, next) => {
+    const review_post = new review({
+        portfolioName: req.body.portfolioName,
+        rating: req.body.rating,
+        content: req.body.content
+    })
+    review_post.save()
+    console.log(review_post);
+    res.status(status_created).json({
+        message: "review_post added successful"
     });
 });
 

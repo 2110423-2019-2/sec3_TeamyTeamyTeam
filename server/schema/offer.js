@@ -8,7 +8,7 @@ var offerSchema = new Schema({
     employerID: { type: String, required: true },
     employerEmail: { type: String, required: true },
     style: { type: String, required: true },
-    actDate: { type: Date, required: true }, // data_tag in server !!!
+    actDate: { type: String, required: true }, // data_tag in server !!!
     meetUpTime: { type: String, required: true }, // meetUpTime เวลาที่มาเจอกัน
     location: { type: String, required: true },
     progress: { type: String, required: true }, // status job

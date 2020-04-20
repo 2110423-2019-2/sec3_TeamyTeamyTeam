@@ -53,6 +53,7 @@ class JobOffer extends Component {
       return;
     }
     this.setState({ displayErrors: false });
+    var date_str = this.state.date.toString().substring(0, 10);
     axios
       .post("http://localhost:9000/api/offer", {
         title: this.state.title,
@@ -60,7 +61,7 @@ class JobOffer extends Component {
         employerID: this.props.appState.uid,
         employerEmail: this.props.appState.email,
         style: this.state.style,
-        actDate: this.state.date, // data_tag in server !!!
+        actDate: date_str, // data_tag in server !!!
         meetUpTime: this.state.time, // meetUpTime เวลาที่มาเจอกัน
         location: this.state.location,
         progress: "wait photographer reply",

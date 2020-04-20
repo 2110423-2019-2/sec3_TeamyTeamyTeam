@@ -16,7 +16,7 @@ class NotificationBox extends Component {
     };
   }
 
-  handleAcceptJob() {
+  handleAcceptJob = () => {
     axios
       .get(
         "http://localhost:9000/api/replyNotify/" +
@@ -28,7 +28,7 @@ class NotificationBox extends Component {
       .catch(err => console.error(err));
   }
 
-  handleDeclineJob() {
+  handleDeclineJob = () => {
     axios
       .get(
         "http://localhost:9000/api/replyNotify/" +
@@ -40,7 +40,7 @@ class NotificationBox extends Component {
       .catch(err => console.error(err));
   }
 
-  handleRead() {
+  handleRead = () => {
     this.setState({ isRead: true });
   }
 
