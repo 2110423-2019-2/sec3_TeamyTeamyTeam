@@ -16,7 +16,7 @@ import NotificationPage from "../components/Notification/notificationPage";
 import Review from "../components/Review/review";
 import ReportProblem from "../components/ReportProblem/reportForm.js";
 import ProposedOffer from "../components/JobManagement/jobOffer";
-import NewChatComponent from "../components/Chat/NewChat/newChat";
+import NewChatComponent from "../components/Chat/ChatControl";
 
 export default class Routing extends React.Component {
   constructor(props) {

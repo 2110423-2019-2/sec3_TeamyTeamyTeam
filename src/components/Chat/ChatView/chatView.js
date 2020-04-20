@@ -32,7 +32,7 @@ class ChatViewComponent extends React.Component {
             {
               this.props.chat.messages.map((_msg, _index) => {
                 return(
-                <div key={_index} className={_msg.sender === this.props.user ? classes.userSent : classes.friendSent}>
+                <div key={_index} className={_msg.sender === this.props.user ? 'userSent' : 'friendSent'}>
                   {_msg.message}
                 </div>
                 )

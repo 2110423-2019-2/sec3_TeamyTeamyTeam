@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ManageAlbum from "./manageAlbum";
 import "../../stylesheets/portfolio.css";
-
+import axios from 'axios';
 class ManagePortfolio extends Component {
   constructor(props) {
     super(props);
@@ -20,26 +20,50 @@ class ManagePortfolio extends Component {
   }
 
   componentDidMount() {
+    
     //ดึงalbumมาจากdatabase
+    axios
+    .get("http://localhost:9000/api/portfolio/" + localStorage.email)
+    .then((res) => {
+      console.log("",res);
+      this.setState({ albums: res.data.data[0].album  });
+    })
+    .catch((err) => console.error(err));
   }
 
-  DeleteAlbum(id) {
-    let albums = this.state.albums.filter((album) => album.id !== id);
+  async DeleteAlbum(id) {
+    let albums = await this.state.albums.filter((album) => album.id !== id);
     this.setState({ albums });
     //แก้databaseส่วนalbumพร้อมทั้งลบรูปทั้งหมด
+    // ------------------------- Fix ------------------------- //
+    await axios
+    .put("http://localhost:9000/album/"+ localStorage.email +'-'+this.state.name+'-'+this.state.id ,{
+      albumName: this.state.name,
+      portfolioID: localStorage.email +'-'+this.state.name+'-'+this.state.id, 
+      imageURLs: this.state.photoLists
+    })
+     // ------------------------- Fix ------------------------- //
   }
 
-  AddAlbum() {
-    const album = {
+  async AddAlbum() {
+    const album = await {
       id: this.state.albums[this.state.albums.length - 1]
         ? this.state.albums[this.state.albums.length - 1].id + 1
         : 1,
       name: "Added Album",
       photoLists: [],
     };
-    let albums = this.state.albums;
+    let albums = await this.state.albums;
     albums.push(album);
     this.setState({ albums });
+    // ------------------------- Fix ------------------------- //
+    await axios
+    .put("http://localhost:9000/album/"+ localStorage.email +'-'+this.state.name+'-'+this.state.id ,{
+      albumName: this.state.name,
+      portfolioID: localStorage.email +'-'+this.state.name+'-'+this.state.id, 
+      imageURLs: this.state.photoLists
+    })
+    // ------------------------- Fix ------------------------- //
   }
 
   render() {
