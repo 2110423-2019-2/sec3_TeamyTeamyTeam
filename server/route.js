@@ -33,6 +33,36 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+createNotify = (email, content, redirectLink, isReply) => {
+    const notify_post = new notify({
+        email: email,
+        content: content,
+        redirectLink: redirectLink,
+        isRead: false,
+        isReply: isReply
+    })
+    console.log(notify_post)
+    notify_post.save()
+}
+
+getPortfolioIDFromName = (name) => {
+    portfolio.findOne({portfolioName: name}).then(document => {
+        return document.portfolioName
+    })
+}
+
+getPortfolioNameFromID = (id) => {
+    portfolio.findOne({_id: id}).then(document => {
+        return document.portfolioName
+    })
+}
+
+getPortfolioEmailFromName = (name) => {
+    portfolio.findOne({portfolioName: name}).then(document => {
+        return document.email
+    })
+}
+
 router.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header(
@@ -104,6 +134,27 @@ router.get("/portfolio", (req, res, next) => {
         console.log(documents);
     });
 });
+
+router.get("/portfolioNameToID/:name", (req, res, next) => {
+    portfolio.findOne({portfolioName: req.params.name}).then(documents => {
+        res.status(status_ok).json({
+            message: "Get portfolio successfully!",
+            data: documents.portfolio
+        });
+        console.log(documents);
+    });
+});
+
+router.get("/portfolioNameToEmail/:name", (req, res, next) => {
+    portfolio.findOne({portfolioName: req.params.name}).then(portfolio => {
+        res.status(status_ok).json({
+            message: "Get portfolio successfully!",
+            data: portfolio.email
+        });
+        console.log(user);
+    });
+});
+
 router.get("/portfolioTags/:key", (req, res, next) => {
     portfolio.find({ tags: req.params.key }).then(documents => {
         res.status(status_ok).json({
@@ -113,6 +164,17 @@ router.get("/portfolioTags/:key", (req, res, next) => {
         console.log(documents);
     });
 });
+
+router.get("/offerid/:id", (req, res, next) => {
+    offer.find({ _id: req.params.id }).then(documents => {
+        res.status(status_ok).json({
+            message: "Get offer successfully!",
+            data: documents
+        });
+        console.log(documents);
+    });
+});
+
 
 router.get("/offer/:email", (req, res, next) => {
     portfolio.find({ email: req.params.email }).then(documents => {
@@ -139,52 +201,68 @@ router.get("/offer/:email", (req, res, next) => {
 
 });
 
+router.get("/offerHistory/:email", (req, res, next) => {
+    offer
+        .find({ $or: [{ employerEmail: req.params.email }, { portfolioEmail: req.params.email }] })
+        .sort({ 'created_at' : -1 })
+        .then(documents => {
+            res.status(status_ok).json({
+                message: "Get Offer successfully!",
+                data: documents,
+            });
+        })
+
+});
+
 router.post("/offer", (req, res, next) => {
     const offer_post = new offer({
         title: req.body.title,
         photographerID: req.body.photographerID,
         portfolioName: req.body.portfolioName, // portfolioName == portfolioID
-        employerID: req.body.employerID,
+        portfolioEmail: req.body.portfolioEmail,
         employerEmail: req.body.employerEmail,
         style: req.body.style,
         actDate: req.body.actDate, // data_tag in server !!!
         meetUpTime: req.body.meetUpTime, // meetUpTime เวลาที่มาเจอกัน
         location: req.body.location,
         progress: req.body.progress,
-        optionalRequest: req.body.optionalRequest // Text_block สำหรับการคุยคร่าวๆ
+        optionalRequest: req.body.optionalRequest, // Text_block สำหรับการคุยคร่าวๆ
+        fee: -1,
+        resultURL: '-'
     });
     console.log(offer_post)
-    offer_post.save().then(() => {
-        portfolio
-            .find({ portfolioName: offer_post.portfolioName })
-            .then(documents => {
-                // create notify for photographer
-                const notify_post_photographer = new notify({
-                    email: documents[0].email,
-                    content: offer_post.title + ": " + offer_post.progress,
-                    redirectLink: offer_post._id, // redirect to the  accept/decline section
-                    isRead: false,
-                    isReply: true
-                });
-                notify_post_photographer.save();
-                // create notify for employer
-                const notify_post_employer = new notify({
-                    email: req.body.employerEmail,
-                    content: offer_post.title + ": " + offer_post.progress,
-                    redirectLink: offer_post._id, // redirect to the  accept/decline section
-                    isRead: false,
-                    isReply: false
-                });
-                notify_post_employer.save();
-                console.log(offer_post);
-                console.log(notify_post_photographer);
-            });
-    });
-
+    offer_post.save()
     res.status(status_created).json({
-        message: "Post added successful"
+        message: "Post offer added successful"
     });
+    createNotify(
+        req.body.portfolioEmail,
+        req.body.title + ": " + "Waiting your reply, plese reply by clicking the below button",
+        offer_post._id,
+        true
+    )
+    createNotify(
+        req.body.employerEmail,
+        req.body.title + ": " + "Waiting photographer's reply",
+        offer_post._id,
+        false
+    )
 });
+
+router.post("/notify", (req, res, next) => {
+    const notify_post = new notify({
+        email: req.body.email,
+        content: req.body.content,
+        redirectLink: req.body.redirectLink,
+        isRead: false,
+        isReply: req.body.isReply
+    })
+    console.log(notify_post)
+    notify_post.save()
+    res.status(status_created).json({
+        message: "Post notify added successful"
+    });
+})
 
 router.get("/notify/:email", (req, res, next) => {
     notify.find({ email: req.params.email }).then(documents => {
@@ -203,84 +281,51 @@ router.put("/readNotify/:email", (req, res, next) => {
         .exec();
 });
 
-router.get("/replyNotify/:id.:isAccept", (req, res, next) => {
-    var of;
-    var false_notify;
-    offer
-        .find({ _id: req.params.id })
-        .then(documents => {
-            of = documents[0];
-            console.log("find " + of.progress)
-            if (req.params.isAccept == "true") {
-                if (of.progress == "wait photographer reply") {
-                    console.log("wait photographer reply:" + req.params.id)
-                    const new_content = of.title + ": " + "wait employer reply"
-                    console.log("update to " + new_content)
-                    notify
-                        .find({ redirectLink: req.params.id, isReply: false })
-                        .then(documents2 => {
-                            var false_notify = documents2[0];
-                            notify
-                                .update({ _id: false_notify._id }, {
-                                    content: new_content,
-                                    isReply: true
-                                })
-                                .exec(() => {
-                                    console.log("wait employer reply notify update step2")
-                                });
-                        })
-                    notify
-                        .update({ redirectLink: req.params.id, isReply: true }, {
-                            content: new_content,
-                            isReply: false
-                        })
-                        .exec(() => {
-                            console.log("wait employer reply notify update step1")
-                        });
-                    offer
-                        .update({ _id: req.params.id }, {
-                            progress: "wait employer reply"
-                        })
-                        .exec(() => {
-                            console.log("wait employer reply offer update")
-                        });
-                } else if (of.progress == "wait employer reply") {
-                    const new_content = of.title + ": " + "offer complete"
-                    notify
-                        .updateMany({ redirectLink: req.params.id }, {
-                            content: new_content,
-                            isReply: false
-                        })
-                        .exec(() => {
-                            console.log("offer complete notify update")
-                        });
-                    offer
-                        .update({ _id: req.params.id }, {
-                            progress: "offer complete"
-                        })
-                        .exec(() => {
-                            console.log("offer complete offer update")
-                        });
-                }
-            } else {
-                const new_content = of.title + ": " + "offer fail"
-                notify
-                    .update({ redirectLink: req.params.id }, {
-                        content: new_content,
-                        isReply: false
-                    })
-                    .exec(() => {
-                        console.log("offer fail notify update")
-                    });
-                offer
-                    .update({ _id: req.params.id }, {
-                        progress: "offer fail"
-                    })
-                    .exec(() => {
-                        console.log("offer fail offer update")
-                    });
-            }
-        });
+router.post("/photographerAccept", (req, res, next) => {
+    offer.update({_id: req.body.id},{
+        progress: 2,
+        fee: req.body.fee
+    }).exec();
+    offer.findOne({_id: req.body.id}).then(repliedOffer => {
+        createNotify(
+            repliedOffer.portfolioEmail,
+            repliedOffer.title + ": " + "Waiting employer reply",
+            req.body.id,
+            false
+        )
+        createNotify(
+            repliedOffer.employerEmail,
+            repliedOffer.title + ": " + "Waiting your reply, plese reply in history page",
+            req.body.id,
+            false
+        )
+    })
+    notify.update({redirectLink: req.body.id},{
+        isReply: false
+    }).exec()
+});
+
+router.post("/declineOffer", (req, res, next) => {
+    offer.findOne({_id: req.body.id}).then(repliedOffer => {
+        createNotify(
+            repliedOffer.portfolioEmail,
+            repliedOffer.title + ": " + "Offer is declined",
+            req.body.id,
+            false
+        )
+        createNotify(
+            repliedOffer.employerEmail,
+            repliedOffer.title + ": " + "Offer is declined",
+            req.body.id,
+            false
+        )
+        offer.remove({_id: req.body.id},() => {
+            console.log("remove declined offer complete")
+        })
+    })
+    notify.update({redirectLink: req.body.id},{
+        isReply: false
+    }).exec()
 });
 
 router.post("/report", (req, res, next) => {
@@ -520,6 +565,7 @@ router.get("/album/", (req, res, next) => {
         console.log(documents);
     });
 });
+
 
 router.delete('/album', (req, res, next) =>{
     console.log('Delete test all album')

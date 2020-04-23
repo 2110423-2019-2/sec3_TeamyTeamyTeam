@@ -12,7 +12,8 @@ class NotificationBox extends Component {
       message: this.props.res.content,
       date: "Dec 12, 2019",
       isRead: false,
-      redirectLink: this.props.res.redirectLink
+      redirectLink: this.props.res.redirectLink,
+      isRedirect: false
     };
   }
 
@@ -40,6 +41,10 @@ class NotificationBox extends Component {
       .catch(err => console.error(err));
   }
 
+  handleReply = () => {
+    window.location.href = "/offerID="+this.state.redirectLink
+  }
+
   handleRead = () => {
     this.setState({ isRead: true });
   }
@@ -52,13 +57,7 @@ class NotificationBox extends Component {
             className="btn btn-sm btn-success mr-2"
             onClick={this.handleAcceptJob}
           >
-            Accept Offer
-          </button>
-          <button
-            className="btn btn-sm btn-danger"
-            onClick={this.handleDeclineJob}
-          >
-            Decline Offer
+            Reply Offer
           </button>
         </div>
       );
@@ -67,7 +66,6 @@ class NotificationBox extends Component {
 
   render() {
     const { sender, message, date, isRead, isReply } = this.state;
-
     return (
       <div className="bd-highlight mb-3">
         <li
@@ -97,15 +95,9 @@ class NotificationBox extends Component {
                     <div>
                       <button
                         className="btn btn-sm btn-success mr-2"
-                        onClick={this.handleAcceptJob}
+                        onClick={this.handleReply}
                       >
-                        Accept Offer
-                      </button>
-                      <button
-                        className="btn btn-sm btn-danger"
-                        onClick={this.handleDeclineJob}
-                      >
-                        Decline Offer
+                        Reply Offer
                       </button>
                     </div>
                   ) : (

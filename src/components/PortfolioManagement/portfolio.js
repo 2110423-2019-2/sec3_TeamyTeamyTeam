@@ -3,6 +3,7 @@ import PortfolioHeader from "./portfolioHeader";
 import PhotoCategory from "./photoCategory";
 import ReviewCard from "../Review/ReviewCard";
 import { Link } from "react-router-dom";
+import axios from "axios"
 import "../../stylesheets/portfolio.css";
 
 class Portfolio extends Component {
@@ -10,6 +11,7 @@ class Portfolio extends Component {
     super(props);
     this.state = {
       photographerName: this.props.match.params.name,
+      pid: '-',
       profilePic:
         "https://firebasestorage.googleapis.com/v0/b/phomo-image.appspot.com/o/newUser.png?alt=media&token=331b27aa-d46b-464e-a10f-8f0af4e40792",
       portfolioLink: "/portfolio/" + this.props.name,
@@ -45,6 +47,7 @@ class Portfolio extends Component {
     );
     this.setState({ photoList });
   }
+
 
   render() {
     return (

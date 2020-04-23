@@ -11,7 +11,7 @@ import PhotoHis from "../components/JobManagement/jobHistory";
 import ManagePortfolio from "../components/PortfolioManagement/managePortfolio";
 import Employer from "../components/EmployerManagement/EmployerControl/employer";
 import EditEmployerProfile from "../components/EmployerManagement/EmployerControl/editEmployerProfile";
-// import Payment from "../components/Payment/payment";
+import Payment from "../components/Payment/paymentControl";
 import NotificationPage from "../components/Notification/notificationPage";
 import Review from "../components/Review/review";
 import ReportProblem from "../components/ReportProblem/reportForm.js";
@@ -75,11 +75,11 @@ export default class Routing extends React.Component {
           path="/profile/:displayname/edit"
           render={(props) => <EditEmployerProfile {...this.props} {...props} />}
         />
-        {/* <Route
+        <Route
           exact
           path="/payment"
           render={(props) => <Payment {...this.props} {...props} />}
-        /> */}
+        />
         <Route
           exact
           path="/notifications"
