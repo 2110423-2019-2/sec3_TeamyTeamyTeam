@@ -328,7 +328,28 @@ router.post("/employerAccept", (req, res, next) => {
     }).exec()
 });
 
-
+router.post("/pay30", (req, res, next) => {
+    offer.update({_id: req.body.id},{
+        progress: 4,
+    }).exec();
+    offer.findOne({_id: req.body.id}).then(repliedOffer => {
+        createNotify(
+            repliedOffer.portfolioEmail,
+            repliedOffer.title + ": " + "Waiting appointment",
+            req.body.id,
+            false
+        )
+        createNotify(
+            repliedOffer.employerEmail,
+            repliedOffer.title + ": " + "Waiting appointment",
+            req.body.id,
+            false
+        )
+    })
+    notify.update({redirectLink: req.body.id},{
+        isReply: false
+    }).exec()
+});
 
 router.post("/declineOffer", (req, res, next) => {
     offer.findOne({_id: req.body.id}).then(repliedOffer => {

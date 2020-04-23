@@ -57,17 +57,27 @@ class JobStatus extends Component {
       })
       .then(res => console.res(res))
       .catch(err => console.error(err));
-    window.location.href = "/"
+    window.location.href = "/history"
   }
 
   handleDeclineJob = () => {
     axios
       .post("http://localhost:9000/api/declineOffer",{
-        id: this.props.match.params.id,
+        id: this.state.jobID,
       })
       .then(res => console.res(res))
       .catch(err => console.error(err));
     window.location.href = "/"
+  }
+
+  pay = () => {
+    axios
+      .post("http://localhost:9000/api/pay30",{
+        id: this.state.jobID,
+      })
+      .then(res => console.res(res))
+      .catch(err => console.error(err));
+    window.location.href = "/history"
   }
 
   imgToBeUpload(e) {
@@ -335,7 +345,7 @@ class JobStatus extends Component {
               </span>{" "}
               from {this.state.currency} {this.state.totalFees}
             </h3>
-            <button className="mr-3 btn btn-sm btn-yellow">
+            <button className="mr-3 btn btn-sm btn-yellow" onClick={this.pay}>
               <strong>
                 <ion-icon name="card-outline"></ion-icon> Pay via Credit Card
               </strong>
@@ -343,7 +353,7 @@ class JobStatus extends Component {
           </div>
         );
       case 4: //อันนี้ไม่มีอะไรแค่แสดงผลว่าให้รอถึงวันถ่ายภาพ กับบอกว่าวันนี้เป็นวันถ่ายภาพ
-        if (new Date().toString().substr(4, 11) !== this.state.date) {
+        if (new Date().toString().substr(5, 11) !== this.state.date) {
           return (
             <div>
               <h2>
