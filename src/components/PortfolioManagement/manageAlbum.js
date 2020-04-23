@@ -35,7 +35,6 @@ class manageAlbum extends Component {
     var Photolist = ''
     axios
       .get("http://localhost:9000/album/" + localStorage.email +'-'+this.state.name+'-'+this.state.id)
-      .then(console.log(this.state.keyword))
       .then((res) => {
         console.log(res.data.data);
         Photolist = res.data.data.imageURLs;
@@ -110,25 +109,25 @@ class manageAlbum extends Component {
           .get("http://localhost:9000/api/album/" + localStorage.email +'-'+this.state.name+'-'+this.state.id)
           .then((response) => {
             console.log(response);
-            tempPhotoPost = response.data.data;
+            tempPhotoPost = response.data;
             console.log('tempPhotoPost',tempPhotoPost);
-            // if (!tempPhotoPost) {
-            //   console.log('True',tempPhotoPost);
-            //   axios
-            //   // .post("http://localhost:9000/api/album/"+ localStorage.email +'-'+this.state.name+'-'+this.state.id ,{
-            //   //   albumName: this.state.name,
-            //   //   portfolioID: localStorage.email +'-'+this.state.name+'-'+this.state.id, 
-            //   //   imageURLs: this.state.photoLists
-            //   // })
-            // }else{
-            //   console.log('False',tempPhotoPost);
-            //   // axios
-            //   // .put("http://localhost:9000/api/album/"+ localStorage.email +'-'+this.state.name+'-'+this.state.id,{
-            //   //   albumName: this.state.name,
-            //   //   portfolioID: localStorage.email +'-'+this.state.name+'-'+this.state.id, 
-            //   //   imageURLs: this.state.photoLists
-            //   // })
-            // }
+            if (tempPhotoPost.length == 0) {
+              console.log('True',tempPhotoPost);
+              // axios
+              // .post("http://localhost:9000/api/album/"+ localStorage.email +'-'+this.state.name+'-'+this.state.id ,{
+              //   albumName: this.state.name,
+              //   portfolioID: localStorage.email +'-'+this.state.name+'-'+this.state.id, 
+              //   imageURLs: this.state.photoLists
+              // })
+            }else{
+              console.log('False',tempPhotoPost);
+              // axios
+              // .put("http://localhost:9000/api/album/"+ localStorage.email +'-'+this.state.name+'-'+this.state.id,{
+              //   albumName: this.state.name,
+              //   portfolioID: localStorage.email +'-'+this.state.name+'-'+this.state.id, 
+              //   imageURLs: this.state.photoLists
+              // })
+            }
           })
         });
       }

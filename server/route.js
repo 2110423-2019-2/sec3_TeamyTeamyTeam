@@ -10,7 +10,8 @@ const review = require("./schema/review");
 const album = require("./schema/album");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
-
+// const mongo = require('mongodb').MongoClient
+// const ObjectId = require('mongodb').ObjectID
 // define http status
 const status_ok = 200;
 const status_created = 201;
@@ -48,6 +49,7 @@ router.post("/user", (req, res, next) => {
             portfolioName: req.body.displayName, // gather email by ID
             email: req.body.email,
             tags: [],
+            albums:[],
             minBath: -1,
             maxBath: -1
         });
@@ -356,20 +358,6 @@ router.put("/penalty/:email", (req, res, next) => {
     });
 
 
-// Api to getAlbum() in manageAlbum
-router.get("/album/:portfolioID", (req, res, next) => {
-    console.log('Api to getAlbum() in manageAlbum')
-    console.log('Api to getAlbum() in manageAlbum',req.params)
-    album.find({ portfolioID: req.params.portfolioID }).then(documents => {
-        res.status(status_ok).json({
-            message: "get album successfully!",
-            data: documents
-        });
-        console.log(documents);
-    });
-});
-
-
 router.get("/review/:portfolioName", (req, res, next) => {
     penalty.find({ portfolioName: req.params.portfolioName }).then(documents => {
         res.status(status_ok).json({
@@ -393,6 +381,21 @@ router.post("/review", (req, res, next) => {
     });
 });
 
+
+// Api to getAlbum() in manageAlbum
+router.get("/album/:portfolioID", (req, res, next) => {
+    console.log('Api to getAlbum() in manageAlbum')
+    console.log('Api to getAlbum() in manageAlbum req',req.params)
+    album.find({ portfolioID: req.params.portfolioID }).then(documents => {
+        res.status(status_ok).json({
+            message: "get album successfully!",
+            data: documents
+        });
+        console.log(documents);
+    });
+});
+
+
 // Api to uploadImage() in manageAlbum
 router.post("/album/:portfolioID", (req, res, next) => {
     console.log('Api to uploadImage() in manageAlbum')
@@ -409,9 +412,11 @@ router.post("/album/:portfolioID", (req, res, next) => {
     });
 });
 
+
 // Api to uploadImage() & DeletePhoto() & ChangeAlbumName()in manageAlbum || DeleteAlbum() & AddAlbum() in ManagePortfolio
 router.put("/album/:portfolioID", (req, res, next) => {
     console.log('Api to uploadImage() & DeletePhoto() & ChangeAlbumName()in manageAlbum || DeleteAlbum() & AddAlbum() in ManagePortfolio')
+    console.log(req.body)
     // album
     //     .update({ albumName: req.params.albumName, portfolioID:portfolioID ,imageURLs:req.params.imageURLs },
     //     {
@@ -424,30 +429,94 @@ router.put("/album/:portfolioID", (req, res, next) => {
     //     });
     });
 
-// Api to componentDidMount() in ManagePortfolio --> need to test to send real one
+// Api to componentDidMount() in ManagePortfolio 
 router.get("/portfolio/:email", (req, res, next) => {
-    console.log('Api to componentDidMount() in ManagePortfolio --> need to test to send real one',req.params.email)
+    console.log('Api to get componentDidMount() in ManagePortfolio ',req.params.email)
     portfolio.find({ email: req.params.email }).then(documents => {
             res.status(status_ok).json({
                 message: "get portfolio in portfolio config successfully!",
-                data: documents
+                data: documents[0]
             });
-            console.log();
+            console.log(documents[0]);
     });
 });
 
-// Api to componentDidMount() in ManagePortfolio --> need to test to send real one
-router.put("/portfolio/:email", (req, res, next) => { 
-    console.log('Api to componentDidMount() in ManagePortfolio --> need to test to send real one')
-    // album
-    //     .update({ albumName: req.params.email, isRead: false }, {
-    //         isRead: true
-    //     })
-    //     .exec().then(res => {
-    //         res.status(status_created).json({
-    //             message: "Post album successful"
-    //         });
-    //     });
+// Api to put in ManagePortfolio
+router.put("/portfolio/", (req, res, next) => { 
+    console.log('Api to put in ManagePortfolio')
+    console.log(req.body)
+    portfolio.findById(req.body._id, function (err, doc) {
+        if (err) {
+            res.status(status_ok).json({
+                message: "Fail to put portfolio album!",
+                data: documents[0]
+            });
+        }
+        
+        doc.albums.push(req.body.album_id);
+        doc.save();
+        // refresh 
+        // doc.albums = []
+        // doc.save();
+        
+      });
 });
+
+// Delete From DeleteAlbum(id)
+router.put("/portfolio/delete", (req, res, next) => { 
+    console.log('Api to DeleteAlbum(id) put("/portfolio/delete) in ManagePortfolio',req.body)
+    portfolio.findById(req.body._id, function (err, doc) {
+        if (err) {
+            res.status(status_ok).json({
+                message: "Fail to put portfolio album!",
+            });
+        }
+        console.log(req.body.album_id)
+        console.log(doc.albums)
+        if (req.body.album_id.length == 0  ){
+            console.log('True',req.body.album_id)
+            doc.albums = []
+            doc.save();
+        }else {
+            console.log('False',req.body.album_id)
+            doc.albums = req.body.album_id ;
+            doc.save();
+        }
+      });
+});
+// DeleteAlbum(id) delete portfolio in ManagePortfolio
+router.delete('/album/:portfolioID', (req, res, next) =>{
+    console.log('delete',req.params.portfolioID)
+    try {
+        album.findByIdAndDelete(req.params.portfolioID).exec()
+    }catch{
+    }
+    
+    
+      
+})
+
+
+
+// Test print all album
+router.get("/album/", (req, res, next) => {
+    console.log('Print All')
+    album.find().then(documents => {
+        res.status(status_ok).json({
+            message: "get album successfully!",
+            data: documents
+        });
+        console.log(documents);
+    });
+});
+
+router.delete('/album', (req, res, next) =>{
+    console.log('Delete test all album')
+    album.deleteMany({},res =>{
+        res.status(status_ok).json({
+            message: "delete album successfully!",
+        });
+    })
+})
 
 module.exports = router;
