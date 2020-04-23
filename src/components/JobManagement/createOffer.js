@@ -8,6 +8,7 @@ class JobOffer extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      portfolioEmail:"-",
       title: "",
       style: "Graduation",
       date: new Date(),
@@ -45,6 +46,17 @@ class JobOffer extends Component {
   handleCheck = () => {
     this.setState({ isChecked: !this.state.isChecked });
   };
+  
+  componentDidMount() {
+    axios
+      .get("http://localhost:9000/api/portfolioNameToEmail/"+this.state.photographer)
+      .then(res => {
+        this.setState({
+          portfolioEmail: res.data.data
+        })
+      })
+      .catch(err => console.error(err));
+  }
 
   onSubmit = e => {
     e.preventDefault();
@@ -58,15 +70,14 @@ class JobOffer extends Component {
       .post("http://localhost:9000/api/offer", {
         title: this.state.title,
         portfolioName: this.state.photographer, // portfolioName == portfolioID
-        employerID: this.props.appState.uid,
+        portfolioEmail: this.state.portfolioEmail,
         employerEmail: this.props.appState.email,
         style: this.state.style,
         actDate: date_str, // data_tag in server !!!
         meetUpTime: this.state.time, // meetUpTime เวลาที่มาเจอกัน
         location: this.state.location,
-        progress: "wait photographer reply",
-        optionalRequest: "", // Text_block สำหรับการคุยคร่าวๆ
-        isReply: true
+        progress: 1,
+        optionalRequest: "" // Text_block สำหรับการคุยคร่าวๆ
       })
       .then(res => {
         console.log(res);

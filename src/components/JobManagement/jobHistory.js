@@ -43,7 +43,7 @@ class JobHistory extends Component {
     let history = []; // use next sprint to match real case
     //Use this.state.keyword to query correct photographers
     axios
-      .get("http://localhost:9000/api/offer/" + localStorage.getItem("email")) // ควรจะเป็น this.props.appState.email
+      .get("http://localhost:9000/api/offerHistory/" + localStorage.getItem("email")) // ควรจะเป็น this.props.appState.email
       .then(res => {
         console.log(res.data.data);
         //historyResult = res.data.data;

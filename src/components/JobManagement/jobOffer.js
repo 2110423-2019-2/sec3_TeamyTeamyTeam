@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios"
+import { Redirect } from "react-router-dom";
 class ProposedOffer extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +14,8 @@ class ProposedOffer extends Component {
       location: "Chula",
       totalFees: 0,
       currency: "THB",
-      acceptOffer: false
+      acceptOffer: false,
+      isRedirect: false
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -62,6 +64,48 @@ class ProposedOffer extends Component {
 
     }
 
+  }
+
+  loadoffer = () => {
+    axios
+      .get("http://localhost:9000/api/offerid/"+this.props.match.params.id)
+      .then(res => {
+        const offer = res.data.data[0]
+        console.log(res)
+        this.setState({
+          jobTitle: offer.title,
+          style: offer.style,
+          date: offer.actDate,
+          time: offer.meetUpTime,
+          location: offer.location
+        })
+      })
+      .catch(err => console.error(err));
+  }
+
+  handleAcceptJob = () => {
+    axios
+      .post("http://localhost:9000/api/photographerAccept",{
+        id: this.props.match.params.id,
+        fee: this.state.totalFees
+      })
+      .then(res => console.res(res))
+      .catch(err => console.error(err));
+    window.location.href = "/"
+  }
+
+  handleDeclineJob = () => {
+    axios
+      .post("http://localhost:9000/api/declineOffer",{
+        id: this.props.match.params.id,
+      })
+      .then(res => console.res(res))
+      .catch(err => console.error(err));
+    window.location.href = "/"
+  }
+
+  componentDidMount(){
+    this.loadoffer()
   }
 
   render() {
@@ -122,8 +166,8 @@ class ProposedOffer extends Component {
               </div>
               <div className="mx-auto text-center">
                 {/* <button className="btn btn-danger mr-3" onClick = {this.DeclineJob}  >Decline</button> */}
-                <button className="btn btn-danger mr-3"  >Decline</button>
-                <button className="btn btn-purple">Accept and Propose</button>
+                <button className="btn btn-danger mr-3"  onClick={this.handleDeclineJob}>Decline</button>
+                <button className="btn btn-purple" onClick={this.handleAcceptJob}>Accept and Propose</button>
               </div>
             </div>
           </div>
