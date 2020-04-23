@@ -15,7 +15,7 @@ mongoose
     .catch(() => {
         console.log('Connection failed!')
     })
-
+mongoose.set('useFindAndModify', true)
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
