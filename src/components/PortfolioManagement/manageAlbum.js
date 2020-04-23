@@ -31,13 +31,19 @@ class manageAlbum extends Component {
     this.ChangeAlbumName = this.ChangeAlbumName.bind(this);
   }
   // Function ที่ Get ตัวของ URL ทั้งหมด
-  getAlbum(){ 
+
+  componentDidMount(){
+    this.getAllPhoto()
+    console.log('componentDidMount manageAlbum',this.state)
+  }
+
+  async getAllPhoto(){ 
     var Photolist = ''
-    axios
-      .get("http://localhost:9000/album/" + localStorage.email +'-'+this.state.name+'-'+this.state.id)
+    await axios
+      .get("http://localhost:9000/api/album/" + this.state.id)
       .then((res) => {
-        console.log(res.data.data);
-        Photolist = res.data.data.imageURLs;
+        console.log('componentDidMount getAlbum',res.data.data[0].imageURLs);
+        Photolist = res.data.data[0].imageURLs;
         this.setState({ photoLists: Photolist });
       })
       .catch((err) => console.error(err));
@@ -58,6 +64,7 @@ class manageAlbum extends Component {
   }
 
   uploadImage() {
+    console.log("Access uploadImage")
     let { photoLists, lastUploadedImg } = this.state;
     var uploadTask = storage
       .ref()
@@ -103,32 +110,7 @@ class manageAlbum extends Component {
           this.setState({ photoLists });
           this.setState({ isUploading: false });
           //เพิ่มรูปลงdatabaseของuserนั้น ๆ
-          var tempPhotoPost = ""
-          console.log('uploadImage',localStorage.email +'-'+this.state.name+'-'+this.state.id)
-          axios
-          .get("http://localhost:9000/api/album/" + localStorage.email +'-'+this.state.name+'-'+this.state.id)
-          .then((response) => {
-            console.log(response);
-            tempPhotoPost = response.data;
-            console.log('tempPhotoPost',tempPhotoPost);
-            if (tempPhotoPost.length == 0) {
-              console.log('True',tempPhotoPost);
-              // axios
-              // .post("http://localhost:9000/api/album/"+ localStorage.email +'-'+this.state.name+'-'+this.state.id ,{
-              //   albumName: this.state.name,
-              //   portfolioID: localStorage.email +'-'+this.state.name+'-'+this.state.id, 
-              //   imageURLs: this.state.photoLists
-              // })
-            }else{
-              console.log('False',tempPhotoPost);
-              // axios
-              // .put("http://localhost:9000/api/album/"+ localStorage.email +'-'+this.state.name+'-'+this.state.id,{
-              //   albumName: this.state.name,
-              //   portfolioID: localStorage.email +'-'+this.state.name+'-'+this.state.id, 
-              //   imageURLs: this.state.photoLists
-              // })
-            }
-          })
+          console.log('Tricker')
         });
       }
     );
@@ -184,8 +166,9 @@ class manageAlbum extends Component {
       [name]: value,
     });
     e.preventDefault();
+    console.log('e.target',e.target)
   }
-
+// finish ChangeAlbumName
   async ChangeAlbumName() {
     var oldName = this.state.name
     this.setState({ name: this.state.newName });
@@ -194,10 +177,19 @@ class manageAlbum extends Component {
     console.log('ChangeAlbumName')
     console.log('oldName',oldName)
     console.log('oldName',this.state.newName)
+    console.log('query state in album doc',this.state.id)
+    var obj_id ;
     await axios
-    .put("http://localhost:9000/album/"+ localStorage.email +'-'+this.state.name+'-'+this.state.id ,{
+    .get("http://localhost:9000/api/album/" + this.state.id)
+    .then((res) => {
+      obj_id = res.data.data[0]._id
+    })
+    .catch((err) => console.error(err));
+    console.log(obj_id)
+    await axios
+    .put("http://localhost:9000/api/album/name/"+obj_id,{
       albumName: this.state.name,
-      portfolioID: localStorage.email +'-'+oldName+'-'+this.state.id, 
+      portfolioID: this.state.id, 
       imageURLs: this.state.photoLists
     })
   }

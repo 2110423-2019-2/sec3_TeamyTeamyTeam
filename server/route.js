@@ -381,17 +381,17 @@ router.post("/review", (req, res, next) => {
     });
 });
 
+// ----------------------------------- New Feature ----------------------------------- //
 
-// Api to getAlbum() in manageAlbum
+
 router.get("/album/:portfolioID", (req, res, next) => {
-    console.log('Api to getAlbum() in manageAlbum')
-    console.log('Api to getAlbum() in manageAlbum req',req.params)
+    console.log('Api to ChangeAlbumName() by obj_id & getAllPhoto() get picture array  in manageAlbum req',req.params)
     album.find({ portfolioID: req.params.portfolioID }).then(documents => {
         res.status(status_ok).json({
             message: "get album successfully!",
             data: documents
         });
-        console.log(documents);
+        console.log('Print doc from get album',documents);
     });
 });
 
@@ -413,7 +413,7 @@ router.post("/album/:portfolioID", (req, res, next) => {
 });
 
 
-// Api to uploadImage() & DeletePhoto() & ChangeAlbumName()in manageAlbum || DeleteAlbum() & AddAlbum() in ManagePortfolio
+// Api to uploadImage() & DeletePhoto() 
 router.put("/album/:portfolioID", (req, res, next) => {
     console.log('Api to uploadImage() & DeletePhoto() & ChangeAlbumName()in manageAlbum || DeleteAlbum() & AddAlbum() in ManagePortfolio')
     console.log(req.body)
@@ -462,9 +462,9 @@ router.put("/portfolio/", (req, res, next) => {
       });
 });
 
-// Delete From DeleteAlbum(id)
+// Delete From DeleteAlbum(id) ManagePortfolio
 router.put("/portfolio/delete", (req, res, next) => { 
-    console.log('Api to DeleteAlbum(id) put("/portfolio/delete) in ManagePortfolio',req.body)
+    console.log('Api to DeleteAlbum(id) put("/portfolio/delete in ManagePortfolio',req.body)
     portfolio.findById(req.body._id, function (err, doc) {
         if (err) {
             res.status(status_ok).json({
@@ -491,11 +491,23 @@ router.delete('/album/:portfolioID', (req, res, next) =>{
         album.findByIdAndDelete(req.params.portfolioID).exec()
     }catch{
     }
-    
-    
-      
 })
 
+
+router.put("/album/name/:obj_id", (req, res, next) => {
+    console.log('Api to  ChangeAlbumName() name put in manageAlbum')
+    console.log(req.params)
+    album.findById(req.params.obj_id, function (err, doc) {
+        if (err) {
+            res.status(status_ok).json({
+                message: "Fail to put album!",
+            });
+        }
+        console.log(doc)
+        doc.albumName = req.body.albumName ;
+        doc.save();
+    });
+})
 
 
 // Test print all album

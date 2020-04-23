@@ -41,7 +41,7 @@ class ManagePortfolio extends Component {
       .catch((err) => console.error(err));
     }
     this.setState({albums: albums })
-    console.log('albums Array ',albums)
+    // console.log('albums Array ',albums)
   }
 
   async DeleteAlbum(id) {
@@ -51,19 +51,20 @@ class ManagePortfolio extends Component {
     // แก้databaseส่วนalbumพร้อมทั้งลบรูปทั้งหมด
     var Result = []
     for (let album of albums){
-      Result.push(localStorage.email +'-'+this.state.name+'-'+ album.id)
+      Result.push(localStorage.email +'-'+this.state.name+'-'+ parseInt(album.id.match(/[^-]+$/),10))
     }
     
     var obj_id ;
-    console.log('albums_target',albums_target[0]._id)
-    console.log('albums',albums)
-    console.log(albums_target,albums_target[0]._id)
+    // console.log('Result',Result)
+    // console.log('albums_target',albums_target[0]._id)
+    // console.log('albums',albums)
+    // console.log(albums_target,albums_target[0]._id)
     await axios
     .get("http://localhost:9000/api/portfolio/" + localStorage.email)
     .then((res) => {
       obj_id = res.data.data._id
-      console.log(obj_id)
-      console.log('albums_target',albums_target)
+      // console.log(obj_id)
+      // console.log('albums_target',albums_target)
       axios.put("http://localhost:9000/api/portfolio/delete",{
         album_id: Result, 
         _id: obj_id
@@ -104,8 +105,8 @@ class ManagePortfolio extends Component {
     .catch((err) => console.error(err));
 
     // put ใน Portfolio
-    console.log('AddAlbum put ---->',obj_id)
-    console.log(this.state.albums)
+    // console.log('AddAlbum put ---->',obj_id)
+    // console.log(this.state.albums)
     await axios.put("http://localhost:9000/api/portfolio/",
     {
       album_id: localStorage.email +'-'+this.state.name+'-'+ album.id, 
@@ -121,10 +122,11 @@ class ManagePortfolio extends Component {
     }).then((res)=>{
       console.log(res)
     })
-    ).then(window.location.reload(false));
+    )
+    .then(window.location.reload(false));
 
-    //post ใน Album
-    console.log('portfolioID',localStorage.email +'-'+this.state.name+'-'+ album.id)
+    // //post ใน Album
+    // console.log('portfolioID',localStorage.email +'-'+this.state.name+'-'+ album.id)
 
   }
 
