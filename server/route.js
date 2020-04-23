@@ -415,20 +415,19 @@ router.post("/album/:portfolioID", (req, res, next) => {
 
 // Api to uploadImage() & DeletePhoto() 
 router.put("/album/:portfolioID", (req, res, next) => {
-    console.log('Api to uploadImage() & DeletePhoto() & ChangeAlbumName()in manageAlbum || DeleteAlbum() & AddAlbum() in ManagePortfolio')
-    console.log(req.body)
-    // album
-    //     .update({ albumName: req.params.albumName, portfolioID:portfolioID ,imageURLs:req.params.imageURLs },
-    //     {
-    //         albumName: req.params.albumName, portfolioID:portfolioID ,imageURLs:req.params.imageURLs 
-    //     })
-    //     .exec().then(res => {
-    //         res.status(status_created).json({
-    //             message: "Post album successful"
-    //         });
-    //     });
+    console.log('Api to uploadImage() & DeletePhoto()  in ManagePortfolio')
+    console.log(req.body._id)
+    album.findById(req.body._id, function (err, doc) {
+        if (err) {
+            res.status(status_ok).json({
+                message: "Fail to put portfolio album!",
+            });
+        }
+        console.log(req.body.photoLists)
+        doc.imageURLs = req.body.photoLists
+        doc.save();
     });
-
+});
 // Api to componentDidMount() in ManagePortfolio 
 router.get("/portfolio/:email", (req, res, next) => {
     console.log('Api to get componentDidMount() in ManagePortfolio ',req.params.email)

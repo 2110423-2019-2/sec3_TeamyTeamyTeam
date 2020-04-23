@@ -8,7 +8,6 @@ class ManagePortfolio extends Component {
     this.state = {
       name: this.props.match.params.name,
       albums: [], //เก็บjsonของalbum ในalbumก็เก็บรูปอีกที
-      portfolio_album:[]
     };
     this.DeleteAlbum = this.DeleteAlbum.bind(this);
     this.AddAlbum = this.AddAlbum.bind(this);
@@ -18,7 +17,10 @@ class ManagePortfolio extends Component {
     
     //ดึงalbumมาจากdatabase
     this.getAlbum()
-    console.log(this.state.albums)
+    console.log('In componentDidMount Portfolio',this.props.match.params.name)
+    console.log(localStorage.email.match(/[a-zA-Z0-9._-]+/))
+    
+
   }
 
   async getAlbum(){
@@ -51,7 +53,7 @@ class ManagePortfolio extends Component {
     // แก้databaseส่วนalbumพร้อมทั้งลบรูปทั้งหมด
     var Result = []
     for (let album of albums){
-      Result.push(localStorage.email +'-'+this.state.name+'-'+ parseInt(album.id.match(/[^-]+$/),10))
+      Result.push(localStorage.email.match(/[a-zA-Z0-9._-]+/)+this.state.name+'-' +parseInt(album.id.match(/[^-]+$/),10))
     }
     
     var obj_id ;
@@ -95,7 +97,7 @@ class ManagePortfolio extends Component {
     albums.push(album);
     this.setState({ albums });
     // สร้างใหม่
-
+    console.log('Album  in AddAblbum-->',albums)
     var obj_id ;
     await axios
     .get("http://localhost:9000/api/portfolio/" + localStorage.email)
@@ -109,15 +111,15 @@ class ManagePortfolio extends Component {
     // console.log(this.state.albums)
     await axios.put("http://localhost:9000/api/portfolio/",
     {
-      album_id: localStorage.email +'-'+this.state.name+'-'+ album.id, 
+      album_id: localStorage.email.match(/[a-zA-Z0-9._-]+/) +this.state.name+'-'+ album.id, 
       _id: obj_id
     }).then((res)=>{
       console.log(res)
     })
-    .then( await axios.post("http://localhost:9000/api/album/"+  localStorage.email +'-'+this.state.name+'-'+ album.id,
+    .then( await axios.post("http://localhost:9000/api/album/"+  localStorage.email.match(/[a-zA-Z0-9._-]+/)+this.state.name+ '-'+album.id,
     {
       albumName: album.name,
-      portfolioID: localStorage.email +'-'+this.state.name+'-'+ album.id,
+      portfolioID: localStorage.email.match(/[a-zA-Z0-9._-]+/) +this.state.name+'-'+ album.id,
       imageURLs: album.photoLists
     }).then((res)=>{
       console.log(res)
