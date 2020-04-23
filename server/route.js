@@ -219,6 +219,7 @@ router.post("/offer", (req, res, next) => {
         portfolioName: req.body.portfolioName, // portfolioName == portfolioID
         portfolioEmail: req.body.portfolioEmail,
         employerEmail: req.body.employerEmail,
+        employerName: req.body.employerName,
         style: req.body.style,
         actDate: req.body.actDate, // data_tag in server !!!
         meetUpTime: req.body.meetUpTime, // meetUpTime เวลาที่มาเจอกัน
@@ -302,6 +303,30 @@ router.post("/photographerAccept", (req, res, next) => {
         isReply: false
     }).exec()
 });
+router.post("/employerAccept", (req, res, next) => {
+    offer.update({_id: req.body.id},{
+        progress: 3,
+    }).exec();
+    offer.findOne({_id: req.body.id}).then(repliedOffer => {
+        createNotify(
+            repliedOffer.portfolioEmail,
+            repliedOffer.title + ": " + "Waiting payment",
+            req.body.id,
+            false
+        )
+        createNotify(
+            repliedOffer.employerEmail,
+            repliedOffer.title + ": " + "Waiting payment",
+            req.body.id,
+            false
+        )
+    })
+    notify.update({redirectLink: req.body.id},{
+        isReply: false
+    }).exec()
+});
+
+
 
 router.post("/declineOffer", (req, res, next) => {
     offer.findOne({_id: req.body.id}).then(repliedOffer => {

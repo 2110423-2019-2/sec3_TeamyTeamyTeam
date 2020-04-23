@@ -1,22 +1,25 @@
 import React, { Component } from "react";
 import { storage } from "../../firebase";
+import axios from "axios"
 
 class JobStatus extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      jobID: "0",
-      statusCode: 7,
-      photographer: "phomo",
-      employer: "Nick",
-      title: "Chill out at Chula",
-      style: "Portrait",
-      date: new Date().toString().substr(4, 11),
+      jobID: this.props.offer._id,
+      statusCode: this.props.offer.progress,
+      photographer: this.props.offer.portfolioName,
+      photographerEmail: "-",
+      employer: this.props.offer.employerName,
+      employerEmail: "-",
+      title: this.props.offer.title,
+      style: this.props.offer.style,
+      date: this.props.offer.actDate,
       //   date: "Jan 10 2019",
-      time: "Full day",
-      location: "Chulalongkorn",
-      totalFees: 299,
-      currency: "$",
+      time: this.props.offer.meetUpTime,
+      location: this.props.offer.location,
+      totalFees: this.props.offer.fee,
+      currency: "THB",
       uploadProgress: 0,
       isUploading: false,
       file: null,
@@ -27,6 +30,44 @@ class JobStatus extends Component {
     );
     this.uploadImage = this.uploadImage.bind(this);
     this.imgToBeUpload = this.imgToBeUpload.bind(this);
+  }
+
+  updateData(data) {
+    this.setState({
+      jobID: data._id,
+      statusCode: data.progress,
+      photographer: data.portfolioName,
+      photographerEmail: data.portfolioEmail,
+      employer: data.employerName,
+      employerEmail: data.employerEmail,
+      title: data.title,
+      style: data.style,
+      date: data.actDate,
+      //   date: "Jan 10 2019",
+      time: data.meetUpTime,
+      location: data.location,
+      totalFees: data.fee
+    })
+  }
+
+  handleAcceptJob = () => {
+    axios
+      .post("http://localhost:9000/api/employerAccept",{
+        id: this.state.jobID,
+      })
+      .then(res => console.res(res))
+      .catch(err => console.error(err));
+    window.location.href = "/"
+  }
+
+  handleDeclineJob = () => {
+    axios
+      .post("http://localhost:9000/api/declineOffer",{
+        id: this.props.match.params.id,
+      })
+      .then(res => console.res(res))
+      .catch(err => console.error(err));
+    window.location.href = "/"
   }
 
   imgToBeUpload(e) {
@@ -67,6 +108,12 @@ class JobStatus extends Component {
         });
       }
     );
+  }
+
+  getStatusMessage = () => {
+    if(this.state.employerEmail == this.props.appState.email){
+      return this.getStatusMessageEmployer()
+    }else return this.getStatusMessagePhotographer()
   }
 
   getStatusMessagePhotographer() {
@@ -261,11 +308,11 @@ class JobStatus extends Component {
             <h3>
               {this.state.currency} {this.state.totalFees}
             </h3>
-            <button className="mr-3 btn btn-sm btn-outline-light">
+            <button className="mr-3 btn btn-sm btn-outline-light" onClick={this.handleAcceptJob}>
               Accept
             </button>
             {/* เขียนฟังก์ชันขึ้นมาเพื่อเปลี่ยนstatusCodeในdatabase */}
-            <button className="btn btn-sm btn-outline-warning">Decline</button>
+            <button className="btn btn-sm btn-outline-warning" onClick={this.handleDeclineJob}>Decline</button>
           </div>
         );
       case 3: //เคสนี้ก็ให้เปลี่ยนstatusCodeก็ต่อเมื่อจ่าย30%แล้ว
@@ -443,7 +490,7 @@ class JobStatus extends Component {
                 style={{ borderLeft: "2px solid white" }}
               ></div>
               <div className="col-md p-3 text-center my-auto">
-                {this.getStatusMessageEmployer()}
+                {this.getStatusMessage()}
                 {/* ตรงนี้จะให้เช็กว่าเป็นemployerหรือphotographerเพื่อแสดงผลjob status ตาม user type */}
               </div>
             </div>

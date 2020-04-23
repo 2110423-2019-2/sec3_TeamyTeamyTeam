@@ -72,6 +72,7 @@ class JobOffer extends Component {
         portfolioName: this.state.photographer, // portfolioName == portfolioID
         portfolioEmail: this.state.portfolioEmail,
         employerEmail: this.props.appState.email,
+        employerName: this.props.appState.displayName,
         style: this.state.style,
         actDate: date_str, // data_tag in server !!!
         meetUpTime: this.state.time, // meetUpTime เวลาที่มาเจอกัน
