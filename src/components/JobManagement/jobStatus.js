@@ -19,6 +19,7 @@ class JobStatus extends Component {
       time: this.props.offer.meetUpTime,
       location: this.props.offer.location,
       totalFees: this.props.offer.fee,
+      resultURL: this.props.offer.resultURL,
       currency: "THB",
       uploadProgress: 0,
       isUploading: false,
@@ -46,7 +47,8 @@ class JobStatus extends Component {
       //   date: "Jan 10 2019",
       time: data.meetUpTime,
       location: data.location,
-      totalFees: data.fee
+      totalFees: data.fee,
+      resultURL: data.resultURL
     })
   }
 
@@ -458,7 +460,7 @@ class JobStatus extends Component {
             </h2>
             <small>Download them</small>
             <p>
-              <button className="btn btn-light">
+              <button className="btn btn-light" onClick={() => window.location.href = this.state.resultURL}>
                 <ion-icon
                   name="download"
                   style={{ fontSize: "42px" }}

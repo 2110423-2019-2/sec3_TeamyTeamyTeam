@@ -20,7 +20,7 @@ class JobHistory extends Component {
           actDate: new Date().toString().substr(4, 11),
           location: "123456",
           status: "Cancelled",
-          download: "url"
+          resultURL: "url"
         }
       ],
       columns: [
@@ -32,7 +32,7 @@ class JobHistory extends Component {
         { dataField: "actDate", text: "Appointed Date" },
         { dataField: "location", text: "Location" },
         { dataField: "progress", text: "Status" },
-        { dataField: "download", text: "Download" }
+        { dataField: "resultURL", text: "Download" }
       ],
       index: 0
     };
