@@ -70,10 +70,31 @@ class JobStatus extends Component {
     window.location.href = "/"
   }
 
-  pay = () => {
+  pay30 = () => {
     axios
       .post("http://localhost:9000/api/pay30",{
         id: this.state.jobID,
+      })
+      .then(res => console.res(res))
+      .catch(err => console.error(err));
+    window.location.href = "/history"
+  }
+
+  pay70 = () => {
+    axios
+      .post("http://localhost:9000/api/pay70",{
+        id: this.state.jobID,
+      })
+      .then(res => console.res(res))
+      .catch(err => console.error(err));
+    window.location.href = "/history"
+  }
+
+  postUpload = (downloadURL) => {
+    axios
+      .post("http://localhost:9000/api/uploadFile",{
+        id: this.state.jobID,
+        resultURL: downloadURL
       })
       .then(res => console.res(res))
       .catch(err => console.error(err));
@@ -115,6 +136,7 @@ class JobStatus extends Component {
           this.setState({ statusCode: 7 });
           //ใช้ตัวแปร downloadURL ได้เลยเพื่อส่งลิงก์
           //ส่งdownload urlให้employer แล้วdrop job นี้ออกจากตาราง แล้วไปเพิ่มใน history
+          this.postUpload(downloadURL)
         });
       }
     );
@@ -345,7 +367,7 @@ class JobStatus extends Component {
               </span>{" "}
               from {this.state.currency} {this.state.totalFees}
             </h3>
-            <button className="mr-3 btn btn-sm btn-yellow" onClick={this.pay}>
+            <button className="mr-3 btn btn-sm btn-yellow" onClick={this.pay30}>
               <strong>
                 <ion-icon name="card-outline"></ion-icon> Pay via Credit Card
               </strong>
@@ -405,7 +427,7 @@ class JobStatus extends Component {
                 {this.state.totalFees - this.state.totalFees * 0.3}
               </span>
             </h3>
-            <button className="mr-3 btn btn-sm btn-yellow">
+            <button className="mr-3 btn btn-sm btn-yellow" onClick={this.pay70}>
               <strong>
                 <ion-icon name="card-outline"></ion-icon> Pay via Credit Card
               </strong>

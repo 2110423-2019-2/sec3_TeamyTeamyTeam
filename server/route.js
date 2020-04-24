@@ -351,6 +351,49 @@ router.post("/pay30", (req, res, next) => {
     }).exec()
 });
 
+router.post("/pay70", (req, res, next) => {
+    console.log("pay the rest")
+    offer.update({_id: req.body.id},{
+        progress: 6,
+    }).exec();
+    offer.findOne({_id: req.body.id}).then(repliedOffer => {
+        createNotify(
+            repliedOffer.portfolioEmail,
+            repliedOffer.title + ": " + "Waiting your uploading",
+            req.body.id,
+            false
+        )
+        createNotify(
+            repliedOffer.employerEmail,
+            repliedOffer.title + ": " + "Waiting photographer upload your photo",
+            req.body.id,
+            false
+        )
+    })
+});
+
+router.post("/uploadFile", (req, res, next) => {
+    console.log("upload file")
+    offer.update({_id: req.body.id},{
+        progress: 7,
+        resultURL: req.body.resultURL
+    }).exec();
+    offer.findOne({_id: req.body.id}).then(repliedOffer => {
+        createNotify(
+            repliedOffer.portfolioEmail,
+            repliedOffer.title + ": " + "Complete",
+            req.body.id,
+            false
+        )
+        createNotify(
+            repliedOffer.employerEmail,
+            repliedOffer.title + ": " + "Complete",
+            req.body.id,
+            false
+        )
+    })
+});
+
 router.post("/declineOffer", (req, res, next) => {
     offer.findOne({_id: req.body.id}).then(repliedOffer => {
         createNotify(
