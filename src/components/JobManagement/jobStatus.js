@@ -292,7 +292,7 @@ class JobStatus extends Component {
             <button className="mr-3 btn btn-sm btn-yellow">
               <strong>
                 <Payment 
-                fee = {totalFees * 0.3}
+                fee = {totalFees * 30}
                 name = {employer}
                 />
                 {/* <ion-icon name="card-outline"></ion-icon> Pay via Credit Card */}
@@ -350,13 +350,13 @@ class JobStatus extends Component {
             <h3>
               <span className="text-yellow">
                 {this.state.currency}
-                {this.state.totalFees - this.state.totalFees * 0.3}
+                {(this.state.totalFees - this.state.totalFees * 0.3)}
               </span>
             </h3>
             <button className="mr-3 btn btn-sm btn-yellow">
               <strong>
                 <Payment 
-                fee = {this.state.totalFees - this.state.totalFees * 0.3}
+                fee = {(this.state.totalFees - this.state.totalFees * 0.3)*100}
                 name = {this.state.employer}
                 />
                 {/* <ion-icon name="card-outline"></ion-icon> Pay via Credit Card */}

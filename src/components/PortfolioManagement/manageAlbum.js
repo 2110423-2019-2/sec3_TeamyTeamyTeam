@@ -126,7 +126,7 @@ class manageAlbum extends Component {
               })
             .then(() => {
               var obj_port ;
-              await axios
+               axios
               .get("http://localhost:9000/api/portfolio/" + localStorage.email)
               .then((res) => {
                 obj_port = res.data.data._id
