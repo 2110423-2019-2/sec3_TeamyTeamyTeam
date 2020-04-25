@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { storage } from "../../firebase";
-
+import Payment from '../Payment/paymentControl'
 class JobStatus extends Component {
   constructor(props) {
     super(props);
     this.state = {
       jobID: "0",
-      statusCode: 7,
+      statusCode: 5,
       photographer: "phomo",
       employer: "Nick",
       title: "Chill out at Chula",
@@ -270,6 +270,7 @@ class JobStatus extends Component {
         );
       case 3: //เคสนี้ก็ให้เปลี่ยนstatusCodeก็ต่อเมื่อจ่าย30%แล้ว
         //ถ้าถึงวันถ่ายแล้วไม่จ่ายให้drop job นี้ทิ้ง
+        const {totalFees , employer } = this.state
         return (
           <div>
             <h1>
@@ -290,7 +291,11 @@ class JobStatus extends Component {
             </h3>
             <button className="mr-3 btn btn-sm btn-yellow">
               <strong>
-                <ion-icon name="card-outline"></ion-icon> Pay via Credit Card
+                <Payment 
+                fee = {totalFees * 0.3}
+                name = {employer}
+                />
+                {/* <ion-icon name="card-outline"></ion-icon> Pay via Credit Card */}
               </strong>
             </button>
           </div>
@@ -350,7 +355,11 @@ class JobStatus extends Component {
             </h3>
             <button className="mr-3 btn btn-sm btn-yellow">
               <strong>
-                <ion-icon name="card-outline"></ion-icon> Pay via Credit Card
+                <Payment 
+                fee = {this.state.totalFees - this.state.totalFees * 0.3}
+                name = {this.state.employer}
+                />
+                {/* <ion-icon name="card-outline"></ion-icon> Pay via Credit Card */}
               </strong>
             </button>
           </div>
