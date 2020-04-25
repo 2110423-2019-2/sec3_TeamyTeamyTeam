@@ -528,14 +528,23 @@ router.put("/portfolio/delete", (req, res, next) => {
         }
       });
 });
-// DeleteAlbum(id) delete portfolio in ManagePortfolio
-router.delete('/album/:portfolioID', (req, res, next) =>{
-    console.log('delete',req.params.portfolioID)
-    try {
-        album.findByIdAndDelete(req.params.portfolioID).exec()
-    }catch{
-    }
-})
+
+
+router.put("/portfolio/tag/", (req, res, next) => {
+    console.log('Api to add portfolio tags() in ManagePortfolio')
+    console.log(req.body._id)
+    portfolio.findById(req.body._id, function (err, doc) {
+        if (err) {
+            res.status(status_ok).json({
+                message: "Fail to put portfolio album!",
+            });
+        }
+        console.log(req.body.tags)
+        doc.tags.push(req.body.tags)
+        doc.save();
+    });
+});
+
 
 
 router.put("/album/name/:obj_id", (req, res, next) => {
@@ -554,26 +563,37 @@ router.put("/album/name/:obj_id", (req, res, next) => {
 })
 
 
-// Test print all album
-router.get("/album/", (req, res, next) => {
-    console.log('Print All')
-    album.find().then(documents => {
-        res.status(status_ok).json({
-            message: "get album successfully!",
-            data: documents
-        });
-        console.log(documents);
-    });
-});
-
-
-router.delete('/album', (req, res, next) =>{
-    console.log('Delete test all album')
-    album.deleteMany({},res =>{
-        res.status(status_ok).json({
-            message: "delete album successfully!",
-        });
-    })
+// DeleteAlbum(id) delete portfolio in ManagePortfolio
+router.delete('/album/:portfolioID', (req, res, next) =>{
+    console.log('delete',req.params.portfolioID)
+    try {
+        album.findByIdAndDelete(req.params.portfolioID).exec()
+    }catch{
+    }
 })
+
+
+
+// Test print all album
+// router.get("/album/", (req, res, next) => {
+//     console.log('Print All')
+//     album.find().then(documents => {
+//         res.status(status_ok).json({
+//             message: "get album successfully!",
+//             data: documents
+//         });
+//         console.log(documents);
+//     });
+// });
+
+
+// router.delete('/album', (req, res, next) =>{
+//     console.log('Delete test all album')
+//     album.deleteMany({},res =>{
+//         res.status(status_ok).json({
+//             message: "delete album successfully!",
+//         });
+//     })
+// })
 
 module.exports = router;

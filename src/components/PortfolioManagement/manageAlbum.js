@@ -124,6 +124,20 @@ class manageAlbum extends Component {
                 photoLists: this.state.photoLists, 
                 _id: obj_id
               })
+            .then(() => {
+              var obj_port ;
+              await axios
+              .get("http://localhost:9000/api/portfolio/" + localStorage.email)
+              .then((res) => {
+                obj_port = res.data.data._id
+              }).then(
+                axios.put("http://localhost:9000/api/portfolio/tag/",
+                {
+                  tags: this.state.lastUploadedImg.tag, 
+                  _id: obj_port
+                })
+              )
+            })
           )
         })
       }
