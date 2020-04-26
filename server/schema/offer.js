@@ -7,6 +7,7 @@ var offerSchema = new Schema({
     portfolioName: { type: String, required: true },
     portfolioEmail: { type: String, required: true },
     employerEmail: { type: String, required: true },
+    employerName: { type: String, required: true },
     style: { type: String, required: true },
     actDate: { type: String, required: true }, // data_tag in server !!!
     meetUpTime: { type: String, required: true }, // meetUpTime เวลาที่มาเจอกัน

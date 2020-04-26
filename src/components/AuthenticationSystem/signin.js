@@ -48,7 +48,8 @@ class LoginForm extends React.Component {
         const uid = res.data.data[0]._id;
         const phoneNo = res.data.data[0].phoneNo;
         const isPhotographer = res.data.data[0].isPhotographer;
-        this.props.login(email, uid, phoneNo, isPhotographer);
+        const displayName = res.data.data[0].displayName
+        this.props.login(email, uid, phoneNo, isPhotographer, displayName);
         this.setState({ redirect: true });
       })
       .catch((err) => console.error(err));
