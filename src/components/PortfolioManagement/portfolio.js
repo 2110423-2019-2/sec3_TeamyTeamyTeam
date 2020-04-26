@@ -34,8 +34,19 @@ class Portfolio extends Component {
 
     console.log(' From search  >>>>>>',this.props.match.params.name)
     console.log('Print Personal nick id should be == "5e67e17e6726591834031203" ',this.props.location.state)
-  
-    this.getPortfolio()
+    if (this.props.match.params.name == "users"){
+      axios
+      .get("http://localhost:9000/api/portfolio/" + localStorage.email)
+      .then((res) => {
+        console.log('getPortfolio()',res.data.data)
+        this.setState({albumlist: res.data.data.albums})
+      }).then( () =>{
+        this.fetchPersonalData(localStorage.email)
+      })
+    } else {
+      this.getPortfolio()
+    }
+    
   }
 
 
