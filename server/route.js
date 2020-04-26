@@ -221,6 +221,7 @@ router.post("/offer", (req, res, next) => {
         portfolioName: req.body.portfolioName, // portfolioName == portfolioID
         portfolioEmail: req.body.portfolioEmail,
         employerEmail: req.body.employerEmail,
+        employerName: req.body.employerName,
         style: req.body.style,
         actDate: req.body.actDate, // data_tag in server !!!
         meetUpTime: req.body.meetUpTime, // meetUpTime เวลาที่มาเจอกัน
@@ -303,6 +304,94 @@ router.post("/photographerAccept", (req, res, next) => {
     notify.update({redirectLink: req.body.id},{
         isReply: false
     }).exec()
+});
+router.post("/employerAccept", (req, res, next) => {
+    offer.update({_id: req.body.id},{
+        progress: 3,
+    }).exec();
+    offer.findOne({_id: req.body.id}).then(repliedOffer => {
+        createNotify(
+            repliedOffer.portfolioEmail,
+            repliedOffer.title + ": " + "Waiting payment",
+            req.body.id,
+            false
+        )
+        createNotify(
+            repliedOffer.employerEmail,
+            repliedOffer.title + ": " + "Waiting payment",
+            req.body.id,
+            false
+        )
+    })
+    notify.update({redirectLink: req.body.id},{
+        isReply: false
+    }).exec()
+});
+
+router.post("/pay30", (req, res, next) => {
+    offer.update({_id: req.body.id},{
+        progress: 4,
+    }).exec();
+    offer.findOne({_id: req.body.id}).then(repliedOffer => {
+        createNotify(
+            repliedOffer.portfolioEmail,
+            repliedOffer.title + ": " + "Waiting appointment",
+            req.body.id,
+            false
+        )
+        createNotify(
+            repliedOffer.employerEmail,
+            repliedOffer.title + ": " + "Waiting appointment",
+            req.body.id,
+            false
+        )
+    })
+    notify.update({redirectLink: req.body.id},{
+        isReply: false
+    }).exec()
+});
+
+router.post("/pay70", (req, res, next) => {
+    console.log("pay the rest")
+    offer.update({_id: req.body.id},{
+        progress: 6,
+    }).exec();
+    offer.findOne({_id: req.body.id}).then(repliedOffer => {
+        createNotify(
+            repliedOffer.portfolioEmail,
+            repliedOffer.title + ": " + "Waiting your uploading",
+            req.body.id,
+            false
+        )
+        createNotify(
+            repliedOffer.employerEmail,
+            repliedOffer.title + ": " + "Waiting photographer upload your photo",
+            req.body.id,
+            false
+        )
+    })
+});
+
+router.post("/uploadFile", (req, res, next) => {
+    console.log("upload file")
+    offer.update({_id: req.body.id},{
+        progress: 7,
+        resultURL: req.body.resultURL
+    }).exec();
+    offer.findOne({_id: req.body.id}).then(repliedOffer => {
+        createNotify(
+            repliedOffer.portfolioEmail,
+            repliedOffer.title + ": " + "Complete",
+            req.body.id,
+            false
+        )
+        createNotify(
+            repliedOffer.employerEmail,
+            repliedOffer.title + ": " + "Complete",
+            req.body.id,
+            false
+        )
+    })
 });
 
 router.post("/declineOffer", (req, res, next) => {

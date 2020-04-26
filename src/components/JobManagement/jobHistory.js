@@ -20,7 +20,7 @@ class JobHistory extends Component {
           actDate: new Date().toString().substr(4, 11),
           location: "123456",
           status: "Cancelled",
-          download: "url"
+          resultURL: "url"
         }
       ],
       columns: [
@@ -32,8 +32,9 @@ class JobHistory extends Component {
         { dataField: "actDate", text: "Appointed Date" },
         { dataField: "location", text: "Location" },
         { dataField: "progress", text: "Status" },
-        { dataField: "download", text: "Download" }
-      ]
+        { dataField: "resultURL", text: "Download" }
+      ],
+      index: 0
     };
   }
 
@@ -51,7 +52,7 @@ class JobHistory extends Component {
         this.setState({
           historyResult: res.data.data
         });
-
+        this.refs.jobStatus.updateData(res.data.data[this.state.index])
         // {  title: 'Title2', style: 'Wedding', portfolioName: 'Ton', meetUpTime: '1/1/2020', actDate: 'Half day morning', location:'123456', progress:'Cancelled' },
         // { title: 'Title3', style: 'Portrait', portfolioName: 'Jane', meetUpTime: '17/10/2019', actDate: 'Half day evening', location:'123456', progress:'Finished' },
         // {  title: 'Title4', style: 'Graduation', portfolioName: 'Otto', meetUpTime: '16/9/2019', actDate: 'Full day', location:'123456', progress:'Finished' }
@@ -106,7 +107,7 @@ class JobHistory extends Component {
 
     return (
       <div className="container">
-        <JobStatus />
+        <JobStatus offer={this.state.historyResult[this.state.index]} ref="jobStatus" {...this.props}/>
         <h1 className="text-purple">
           <ion-icon name="file-tray-full-outline"></ion-icon> History
         </h1>
