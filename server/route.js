@@ -461,14 +461,15 @@ router.post("/album/:portfolioID", (req, res, next) => {
 // Api to uploadImage() & DeletePhoto() 
 router.put("/album/:portfolioID", (req, res, next) => {
     console.log('Api to uploadImage() & DeletePhoto()  in ManagePortfolio')
-    console.log(req.body._id)
+    console.log('req.body._id',req.body._id)
     album.findById(req.body._id, function (err, doc) {
         if (err) {
             res.status(status_ok).json({
                 message: "Fail to put portfolio album!",
             });
         }
-        console.log(req.body.photoLists)
+        // console.log('req.body.photoLists',req.body.photoLists)
+        // console.log('doc.imageURLs',doc.imageURLs)
         doc.imageURLs = req.body.photoLists
         doc.save();
     });
@@ -536,12 +537,14 @@ router.put("/portfolio/tag/", (req, res, next) => {
     portfolio.findById(req.body._id, function (err, doc) {
         if (err) {
             res.status(status_ok).json({
-                message: "Fail to put portfolio album!",
+                message: "Fail to put tag portfolio album!",
             });
         }
         console.log(req.body.tags)
-        doc.tags.push(req.body.tags)
-        doc.save();
+        if (!doc.tags.includes(req.body.tags)){
+            doc.tags.push(req.body.tags)
+            doc.save();
+        }
     });
 });
 
@@ -571,6 +574,21 @@ router.delete('/album/:portfolioID', (req, res, next) =>{
     }catch{
     }
 })
+
+
+
+// Api to componentDidMount() >> getPortfolio() in Portfolio 
+router.get("/portfolio/id/:id", (req, res, next) => {
+    console.log('Api to componentDidMount() >> getPortfolio() in Portfolio',req.params)
+    portfolio.find({ _id: req.params.id }).then(documents => {
+            res.status(status_ok).json({
+                message: "get portfolio in portfolio config successfully!",
+                data: documents[0]
+            });
+            console.log(documents[0]);
+    });
+});
+
 
 
 

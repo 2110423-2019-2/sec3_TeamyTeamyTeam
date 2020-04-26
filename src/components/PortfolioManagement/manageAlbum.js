@@ -117,32 +117,48 @@ class manageAlbum extends Component {
           .get("http://localhost:9000/api/album/" + this.state.id)
           .then((res) => {
             obj_id = res.data.data[0]._id
-            console.log(obj_id)
-          }).then( () =>
+            console.log('obj_id',obj_id)
+          }).then( () => {
+            console.log('obj_id',obj_id)
             axios.put("http://localhost:9000/api/album/" +  this.state.id,
             {
                 photoLists: this.state.photoLists, 
                 _id: obj_id
               })
-            .then(() => {
-              var obj_port ;
-               axios
-              .get("http://localhost:9000/api/portfolio/" + localStorage.email)
-              .then((res) => {
-                obj_port = res.data.data._id
-              }).then(
-                axios.put("http://localhost:9000/api/portfolio/tag/",
-                {
-                  tags: this.state.lastUploadedImg.tag, 
-                  _id: obj_port
-                })
-              )
-            })
-          )
+          }).then( () =>{
+            console.log('Pass in putPhotoTag')
+            this.putPhotoTag()
+          })
         })
       }
     );
   }
+
+
+  async putPhotoTag(){
+    console.log('In obj_port add to tag in porfolio',this.state.lastUploadedImg.tag)
+    var obj_port ;
+
+    await axios
+    .get("http://localhost:9000/api/portfolio/" + localStorage.email)
+    .then((res) => {
+      obj_port = res.data.data._id
+      console.log('obj_port',obj_port)
+    })
+
+      console.log('Print tag album ',obj_port)
+    await axios.put("http://localhost:9000/api/portfolio/tag/",
+      {
+        tags: this.state.lastUploadedImg.tag, 
+        _id: obj_port
+      });
+  }
+
+
+
+
+
+
 
   imgToBeUpload(e) {
     let photoFile = e.target.files[0];
