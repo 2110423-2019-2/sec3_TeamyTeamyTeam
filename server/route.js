@@ -178,7 +178,7 @@ router.get("/offerid/:id", (req, res, next) => {
 
 router.get("/offer/:email", (req, res, next) => {
     portfolio.find({ email: req.params.email }).then(documents => {
-        if (documents.length >= 1) {
+        if (documents.length > 1) {
             offer.find({ $or: [{ employerEmail: req.params.email }, { portfolioName: documents[0].portfolioName }] }).then(documents2 => {
                 res.status(status_ok).json({
                     message: "Get Offer successfully!",
@@ -345,9 +345,22 @@ router.post("/report", (req, res, next) => {
             console.log(info);
     });
 });
-
+// 'Api to uploadImage() in editEmployee profile'
 router.put("/user/:email", (req, res, next) =>{
+    console.log('Api to uploadImage() in editEmployee profile')
+    user.find({ email: req.params.email }).then(documents => {
+        res.status(status_ok).json({
+            message: "get penalty  successfully!",
+        });
+        console.log(documents);
+        console.log(req.body.imageUrl)
+        documents[0].profileImage = req.body.imageUrl
+        documents[0].phoneNo = req.body.newPhoneNo
+        documents[0].save()
 
+    });
+        //doc.imageURLs = req.body.photoLists
+        //doc.save();
 })
 
 router.get("/user/:email", (req, res, next) => {
