@@ -113,7 +113,7 @@ class JobHistory extends Component {
         </h1>
         <div class="table-responsive">
           <BootstrapTable
-            keyField="id"
+            keyField="_id"
             data={this.state.historyResult}
             columns={this.state.columns}
             pagination={paginationFactory(options)}

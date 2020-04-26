@@ -7,12 +7,13 @@ class ReviewCard extends Component {
     super(props);
     this.state = {
       date: new Date(),
-      reviewer: "I dunno who?",
-      review: "Good Job",
-      rating: 3.7,
+      reviewer: "",
+      review: this.props.review.content,
+      rating: this.props.review.rating,
     };
     this.generateStar = this.generateStar.bind(this);
   }
+
 
   generateStar() {
     const fullStar = Math.floor(this.state.rating);

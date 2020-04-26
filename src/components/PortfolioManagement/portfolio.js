@@ -25,7 +25,7 @@ class Portfolio extends Component {
     this.getPortfolio = this.getPortfolio.bind(this)
   }
 
-  componentDidMount() {
+  componentWillMount() {
     //Fetch photographer data in this function and then update the state
     //Write something to fetch data e.g. profile's pic, and photos
     // this.setState({profilePic: });
@@ -48,7 +48,9 @@ class Portfolio extends Component {
     }
     
   }
-
+  async componentDidMount(){
+    await console.log(this.state.reviewList)
+  }
 
   async getPortfolio(){
     await this.setState({pid:this.props.location.state._id})
@@ -96,7 +98,7 @@ class Portfolio extends Component {
       }else {
         let sum ;
         for (let iter in res.data.data) {
-          tempReviewArray.push(iter.rating)
+          tempReviewArray.push(res.data.data[iter])
           sum += iter.rating
         }
           this.setState({
@@ -168,8 +170,8 @@ class Portfolio extends Component {
           >
             <h1>Reviews</h1>
             <div className="row flex-row flex-nowrap overflow-auto">
-              {this.state.reviewList.map((review, index) => (
-                <ReviewCard key={index.toString()} />
+              {this.state.reviewList.map((rev) => (
+                <ReviewCard review={rev} />
               ))}
             </div>
           </div>

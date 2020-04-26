@@ -480,7 +480,7 @@ class JobStatus extends Component {
                 ></ion-icon>
               </button>
             </p>
-            <a href="/review">
+            <a href={"/review/"+this.state.photographer}>
               <button className="btn btn-light">
                 Review your photographer
               </button>

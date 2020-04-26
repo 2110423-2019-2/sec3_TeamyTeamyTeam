@@ -87,7 +87,7 @@ export default class Routing extends React.Component {
         />
         <Route
           exact
-          path="/review"
+          path="/review/:portfolioName"
           render={(props) => <Review {...this.props} {...props} />}
         />
         <Route
