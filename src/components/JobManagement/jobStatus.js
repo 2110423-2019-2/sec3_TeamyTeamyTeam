@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { storage } from "../../firebase";
+
 import axios from "axios"
+
+
+import Payment from '../Payment/paymentControl'
 
 class JobStatus extends Component {
   constructor(props) {
@@ -351,6 +355,7 @@ class JobStatus extends Component {
         );
       case 3: //เคสนี้ก็ให้เปลี่ยนstatusCodeก็ต่อเมื่อจ่าย30%แล้ว
         //ถ้าถึงวันถ่ายแล้วไม่จ่ายให้drop job นี้ทิ้ง
+        const {totalFees , employer } = this.state
         return (
           <div>
             <h1>
@@ -371,7 +376,11 @@ class JobStatus extends Component {
             </h3>
             <button className="mr-3 btn btn-sm btn-yellow" onClick={this.pay30}>
               <strong>
-                <ion-icon name="card-outline"></ion-icon> Pay via Credit Card
+                <Payment 
+                fee = {totalFees * 30}
+                name = {employer}
+                />
+                {/* <ion-icon name="card-outline"></ion-icon> Pay via Credit Card */}
               </strong>
             </button>
           </div>
@@ -426,12 +435,16 @@ class JobStatus extends Component {
             <h3>
               <span className="text-yellow">
                 {this.state.currency}
-                {this.state.totalFees - this.state.totalFees * 0.3}
+                {(this.state.totalFees - this.state.totalFees * 0.3)}
               </span>
             </h3>
             <button className="mr-3 btn btn-sm btn-yellow" onClick={this.pay70}>
               <strong>
-                <ion-icon name="card-outline"></ion-icon> Pay via Credit Card
+                <Payment 
+                fee = {(this.state.totalFees - this.state.totalFees * 0.3)*100}
+                name = {this.state.employer}
+                />
+                {/* <ion-icon name="card-outline"></ion-icon> Pay via Credit Card */}
               </strong>
             </button>
           </div>

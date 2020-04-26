@@ -11,16 +11,18 @@ class Portfolio extends Component {
     super(props);
     this.state = {
       photographerName: this.props.match.params.name,
-      pid: '-',
-      profilePic:
-        "https://firebasestorage.googleapis.com/v0/b/phomo-image.appspot.com/o/newUser.png?alt=media&token=331b27aa-d46b-464e-a10f-8f0af4e40792",
+      pid: '',
+      profilePic:'',
       portfolioLink: "/portfolio/" + this.props.name,
       photoList: [],
-      rating: 3.7,
-      reviewList: [1, 2, 3, 4, 5, 6, 7],
+      rating: 0,
+      reviewList: [],
       headerCoverImage:
         "https://images.pexels.com/photos/590029/pexels-photo-590029.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+      email: '',
+      albumlist: [] 
     };
+    this.getPortfolio = this.getPortfolio.bind(this)
   }
 
   componentDidMount() {
@@ -29,37 +31,116 @@ class Portfolio extends Component {
     // this.setState({profilePic: });
     // this.setState({headerCoverImage: });
     //photoList Sample
-    let photoList = [];
-    photoList.push(
-      "https://images.pexels.com/photos/1800994/pexels-photo-1800994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-    );
-    photoList.push(
-      "https://images.pexels.com/photos/999515/pexels-photo-999515.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-    );
-    photoList.push(
-      "https://images.pexels.com/photos/997512/pexels-photo-997512.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-    );
-    photoList.push(
-      "https://images.pexels.com/photos/773371/pexels-photo-773371.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-    );
-    photoList.push(
-      "https://images.pexels.com/photos/1553783/pexels-photo-1553783.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-    );
-    this.setState({ photoList });
+
+    console.log(' From search  >>>>>>',this.props.match.params.name)
+    console.log('Print Personal nick id should be == "5e67e17e6726591834031203" ',this.props.location.state)
+  
+    this.getPortfolio()
+  }
+
+
+  async getPortfolio(){
+    await this.setState({pid:this.props.location.state._id})
+    var tempEmail ;
+    await axios
+    .get("http://localhost:9000/api/portfolio/id/" + this.state.pid)
+    .then((res) => {
+      console.log('getPortfolio()',res.data.data)
+      this.setState({albumlist: res.data.data.albums})
+      tempEmail = res.data.data.email;
+    })
+
+    await this.fetchPersonalData(tempEmail);
+  }
+
+  async fetchPersonalData(email){
+    console.log('Use fetchPersonalData')
+    var tempPortfolioName;
+    // Get profile in portfolio
+    await axios
+    .get("http://localhost:9000/api/user/" + email )  
+    .then((res) => {
+      console.log('getUser()',res.data.data[0])
+      var resData = res.data.data[0] ;
+      // setstate data 
+      this.setState({
+        profilePic: resData.profileImage,
+        email: email ,
+        
+      })
+      tempPortfolioName = resData.displayName
+    })
+
+    // Get rating in Review 
+    await axios
+    .get("http://localhost:9000/api/review/" + tempPortfolioName )  
+    .then((res) => {
+      console.log('Get rating in Review',res.data.data)
+      var tempReviewArray = [] ;
+      if (res.data.data.length == 0){
+        this.setState({
+          rating: 0,
+          reviewList: []
+        })
+      }else {
+        let sum ;
+        for (let iter in res.data.data) {
+          tempReviewArray.push(iter.rating)
+          sum += iter.rating
+        }
+          this.setState({
+            rating: sum / (tempReviewArray.length - 1),
+            reviewList: tempReviewArray
+          })
+      }
+      })
+
+
+    // Get Picture from album
+    if (this.state.albumlist){
+      var Photolist = []
+      for (let album_id of this.state.albumlist){
+        await axios
+          .get("http://localhost:9000/api/album/" + album_id)
+          .then((res) => {
+            console.log('Get Picture from album portfolio',res.data.data[0].imageURLs);
+            for ( let iter of res.data.data[0].imageURLs) {
+              console.log(iter)
+              Photolist.push(iter.url)
+            }
+            console.log('Photolist',Photolist)
+            
+          })
+          .catch((err) => console.error(err));
+      }
+      this.setState({ photoList: Photolist });
+    }else{
+      this.setState({ photoList: [] });
+    }
+    console.log('album list',this.state.albumlist)
   }
 
 
   render() {
     return (
       <div>
-        <a href={this.state.photographerName + "/" + "edit"}>
-          <button
-            className="btn btn-md btn-primary position-fixed m-3"
-            style={{ right: "0", bottom: "0" }}
-          >
-            <ion-icon name="settings-outline"></ion-icon> Edit Portfolio
-          </button>
-        </a>
+        <div className="some-container">
+          {
+            (() => {
+                if ( localStorage.email == this.state.email)
+                    return <a href={this.state.photographerName + "/" + "edit"}>
+                              <button
+                                className="btn btn-md btn-primary position-fixed m-3"
+                                style={{ right: "0", bottom: "0" }}
+                              >
+                                <ion-icon name="settings-outline"></ion-icon> Edit Portfolio
+                              </button>
+                            </a>
+                else
+                    return <span>Three</span>
+            })()
+          }
+        </div>
 
         <PortfolioHeader
           key={this.state.photographerName}

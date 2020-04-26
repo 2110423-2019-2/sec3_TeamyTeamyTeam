@@ -28,12 +28,21 @@ class SearchResultCard extends Component {
               Some quick example text to build on the card title and make up the
               bulk of the card's content.
             </p> */}
-            <Link
+            {/* <Link
               to={this.state.portfolioLink}
+              
               className="btn btn-primary mx-auto"
             >
               See {this.state.photographerName}'s Portfolio
-            </Link>
+            </Link> */}
+
+            <Link to={{
+              pathname: this.state.portfolioLink,
+              state: {
+                _id: this.props.pid
+              }
+            }}>See {this.state.photographerName}'s Portfolio</Link>
+
           </div>
         </div>
       </div>
