@@ -204,12 +204,13 @@ router.get("/offer/:email", (req, res, next) => {
 router.get("/offerHistory/:email", (req, res, next) => {
     offer
         .find({ $or: [{ employerEmail: req.params.email }, { portfolioEmail: req.params.email }] })
-        .sort({ 'created_at' : -1 })
+        .sort({_id: -1})
         .then(documents => {
             res.status(status_ok).json({
                 message: "Get Offer successfully!",
                 data: documents,
             });
+            console.log(documents)
         })
 
 });
@@ -266,7 +267,7 @@ router.post("/notify", (req, res, next) => {
 })
 
 router.get("/notify/:email", (req, res, next) => {
-    notify.find({ email: req.params.email }).then(documents => {
+    notify.find({ email: req.params.email }).sort({_id: 1}).then(documents => {
         res.status(status_ok).json({
             message: "Get notify",
             data: documents
@@ -506,7 +507,7 @@ router.put("/penalty/:email", (req, res, next) => {
 
 
 router.get("/review/:portfolioName", (req, res, next) => {
-    penalty.find({ portfolioName: req.params.portfolioName }).then(documents => {
+    review.find({ portfolioName: req.params.portfolioName }).then(documents => {
         res.status(status_ok).json({
             message: "get penalty  successfully!",
             data: documents

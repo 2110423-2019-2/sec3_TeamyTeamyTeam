@@ -63,7 +63,7 @@ class SignUp extends Component {
     this.setState({ displayErrors: false });
     console.log("success!");
     axios
-      .post("http://localhost:9000/api/user", {
+      .post("https://phomo-api.herokuapp.com/api/user", {
         firstName: this.state.firstName,
         lastName: this.state.lastName,
         email: this.state.email,

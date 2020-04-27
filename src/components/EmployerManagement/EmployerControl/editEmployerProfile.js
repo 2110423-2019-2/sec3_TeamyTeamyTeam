@@ -26,7 +26,7 @@ class EditEmployerProfile extends Component {
   }
 
   componentDidMount(){
-    axios.get("http://localhost:9000/api/user/"+ localStorage.getItem("email"))
+    axios.get("https://phomo-api.herokuapp.com/api/user/"+ localStorage.getItem("email"))
     .then( (res) => {
       console.log(res.data.data[0])
       this.setState({profilePic:res.data.data[0].profileImage})
@@ -87,14 +87,14 @@ class EditEmployerProfile extends Component {
           console.log('this.state.newPhoneNo',this.state.newPhoneNo)
           if (this.state.newPhoneNo == ""){
             console.log("True >>>>>>> ")
-            axios.put("http://localhost:9000/api/user/" + localStorage.email , {
+            axios.put("https://phomo-api.herokuapp.com/api/user/" + localStorage.email , {
               imageUrl : this.state.profilePic,
               newPhoneNo : this.props.appState.phoneNo
             });
   
           }else{
             console.log("False >>>>>>> ")
-            axios.put("http://localhost:9000/api/user/" + localStorage.email , {
+            axios.put("https://phomo-api.herokuapp.com/api/user/" + localStorage.email , {
               imageUrl : this.state.profilePic,
               newPhoneNo : this.state.newPhoneNo
             })

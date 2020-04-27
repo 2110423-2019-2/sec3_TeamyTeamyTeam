@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import "../../stylesheets/review.css";
+import axios from "axios"
 
 class Review extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      Name: "A",
-      Rating: 0,
+      Name: this.props.match.params.portfolioName,
+      stars: 0,
       ReviewMsg: ""
     };
   }
@@ -15,10 +16,27 @@ class Review extends Component {
     document.getElementById("launchModal").click();
   }
 
-  handleChange(event) {
+  handleChange = e => {
+    //ตรวจค่าของ name ใน Onchange และ set ค่าตามไปเรื่อยๆ
+    const { name, value } = e.target;
+    console.log(e.target.name);
+    console.log(e.target.value);
     this.setState({
-      Rating: event.target.value
+      [name]: value
     });
+    // console.log(this.state);
+  };
+
+  handleSubmit = () => {
+    axios
+      .post("https://phomo-api.herokuapp.com/api/review",{
+        portfolioName: this.state.Name,
+        rating: this.state.stars,
+        content: this.state.ReviewMsg
+      })
+      .then(res => console.log(res))
+      .catch(err => console.error(err));
+      window.location.href = "/"
   }
 
   render() {
@@ -68,7 +86,7 @@ class Review extends Component {
                           type="radio"
                           name="stars"
                           value="1"
-                          onChange={() => this.handleChange}
+                          onChange={this.handleChange}
                         />
                         <span class="icon">★</span>
                       </label>
@@ -77,7 +95,7 @@ class Review extends Component {
                           type="radio"
                           name="stars"
                           value="2"
-                          onChange={() => this.handleChange}
+                          onChange={this.handleChange}
                         />
                         <span class="icon">★</span>
                         <span class="icon">★</span>
@@ -87,7 +105,7 @@ class Review extends Component {
                           type="radio"
                           name="stars"
                           value="3"
-                          onChange={() => this.handleChange}
+                          onChange={this.handleChange}
                         />
                         <span class="icon">★</span>
                         <span class="icon">★</span>
@@ -98,7 +116,7 @@ class Review extends Component {
                           type="radio"
                           name="stars"
                           value="4"
-                          onChange={() => this.handleChange}
+                          onChange={this.handleChange}
                         />
                         <span class="icon">★</span>
                         <span class="icon">★</span>
@@ -110,7 +128,7 @@ class Review extends Component {
                           type="radio"
                           name="stars"
                           value="5"
-                          onChange={() => this.handleChange}
+                          onChange={this.handleChange}
                         />
                         <span class="icon">★</span>
                         <span class="icon">★</span>
@@ -126,10 +144,12 @@ class Review extends Component {
                       class="form-control"
                       id="exampleFormControlTextarea1"
                       rows="3"
+                      name="ReviewMsg"
+                      onChange={this.handleChange}
                     ></textarea>
                   </div>
                   <div class="text-center mt-4">
-                    <button className="btn btn-purple mx-3">
+                    <button className="btn btn-purple mx-3" onClick={this.handleSubmit}>
                       <i className="mr-2"></i>Submit
                     </button>
                   </div>

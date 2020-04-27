@@ -25,7 +25,7 @@ class Portfolio extends Component {
     this.getPortfolio = this.getPortfolio.bind(this)
   }
 
-  componentDidMount() {
+  componentWillMount() {
     //Fetch photographer data in this function and then update the state
     //Write something to fetch data e.g. profile's pic, and photos
     // this.setState({profilePic: });
@@ -36,7 +36,7 @@ class Portfolio extends Component {
     console.log('Print Personal nick id should be == "5e67e17e6726591834031203" ',this.props.location.state)
     if (this.props.match.params.name == "users"){
       axios
-      .get("http://localhost:9000/api/portfolio/" + localStorage.email)
+      .get("https://phomo-api.herokuapp.com/api/portfolio/" + localStorage.email)
       .then((res) => {
         console.log('getPortfolio()',res.data.data)
         this.setState({albumlist: res.data.data.albums})
@@ -48,13 +48,15 @@ class Portfolio extends Component {
     }
     
   }
-
+  async componentDidMount(){
+    await console.log(this.state.reviewList)
+  }
 
   async getPortfolio(){
     await this.setState({pid:this.props.location.state._id})
     var tempEmail ;
     await axios
-    .get("http://localhost:9000/api/portfolio/id/" + this.state.pid)
+    .get("https://phomo-api.herokuapp.com/api/portfolio/id/" + this.state.pid)
     .then((res) => {
       console.log('getPortfolio()',res.data.data)
       this.setState({albumlist: res.data.data.albums})
@@ -69,7 +71,7 @@ class Portfolio extends Component {
     var tempPortfolioName;
     // Get profile in portfolio
     await axios
-    .get("http://localhost:9000/api/user/" + email )  
+    .get("https://phomo-api.herokuapp.com/api//user/" + email )  
     .then((res) => {
       console.log('getUser()',res.data.data[0])
       var resData = res.data.data[0] ;
@@ -84,7 +86,7 @@ class Portfolio extends Component {
 
     // Get rating in Review 
     await axios
-    .get("http://localhost:9000/api/review/" + tempPortfolioName )  
+    .get("https://phomo-api.herokuapp.com/api/review/" + tempPortfolioName )  
     .then((res) => {
       console.log('Get rating in Review',res.data.data)
       var tempReviewArray = [] ;
@@ -96,7 +98,7 @@ class Portfolio extends Component {
       }else {
         let sum ;
         for (let iter in res.data.data) {
-          tempReviewArray.push(iter.rating)
+          tempReviewArray.push(res.data.data[iter])
           sum += iter.rating
         }
           this.setState({
@@ -112,7 +114,7 @@ class Portfolio extends Component {
       var Photolist = []
       for (let album_id of this.state.albumlist){
         await axios
-          .get("http://localhost:9000/api/album/" + album_id)
+          .get("https://phomo-api.herokuapp.com/api/album/" + album_id)
           .then((res) => {
             console.log('Get Picture from album portfolio',res.data.data[0].imageURLs);
             for ( let iter of res.data.data[0].imageURLs) {
@@ -168,8 +170,8 @@ class Portfolio extends Component {
           >
             <h1>Reviews</h1>
             <div className="row flex-row flex-nowrap overflow-auto">
-              {this.state.reviewList.map((review, index) => (
-                <ReviewCard key={index.toString()} />
+              {this.state.reviewList.map((rev) => (
+                <ReviewCard review={rev} />
               ))}
             </div>
           </div>

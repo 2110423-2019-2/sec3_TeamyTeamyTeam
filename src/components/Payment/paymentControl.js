@@ -17,13 +17,13 @@ export class CheckoutPage extends Component {
         email: localStorage.email,
         name: this.props.name,
         //items: [],
-        amount: this.props.fee
+        amount: this.props.fee,
         //totalQty: 0
-        
       },
       charge: undefined
     };
   }
+
 
   componentDidMount(){
     console.log(this.state)
@@ -36,7 +36,7 @@ export class CheckoutPage extends Component {
     try {
       const res = await axios({
         method: "POST",
-        url: "http://localhost:9000/api/checkout-creditCard",
+        url: "https://phomo-api.herokuapp.com/api/checkout-creditCard",
         data: { email, name, amount, token },
         headers: {
           "Content-Type": "application/json"
@@ -45,7 +45,7 @@ export class CheckoutPage extends Component {
 
       if (res.data) {
         this.setState({ charge: res.data });
-        this.props.clearCart();
+        //this.props.clearCart();
       }
     } catch (err) {
       console.log(err);
@@ -56,7 +56,7 @@ export class CheckoutPage extends Component {
     try {
       const res = await axios({
         method: "POST",
-        url: "http://localhost:9000/api/checkout-internetBanking",
+        url: "https://phomo-api.herokuapp.com/api/checkout-internetBanking",
         data: { email, name, amount, token },
         headers: {
           "Content-Type": "application/json"
@@ -83,10 +83,12 @@ export class CheckoutPage extends Component {
         <ChekoutCreditCard
           cart={cart}
           createCreditCardCharge={this.createCreditCardCharge}
+          {...this.props}
         />
         <CheckoutInternetBanking
           cart={cart}
           createInternetBankingCharge={this.createInternetBankingCharge}
+          {...this.props}
         />
         <div className="message">
           {charge && (

@@ -18,7 +18,7 @@ class Notification extends Component {
   readNotify = e => {
     e.preventDefault();
     axios.put(
-      "http://localhost:9000/api/readNotify/" + this.props.appState.email,
+      "https://phomo-api.herokuapp.com/api/readNotify/" + this.props.appState.email,
       {}
     );
     console.log("read notification");
@@ -26,7 +26,7 @@ class Notification extends Component {
 
   getNotify() {
     axios
-      .get("http://localhost:9000/api/notify/" + this.props.appState.email)
+      .get("https://phomo-api.herokuapp.com/api/notify/" + this.props.appState.email)
       .then(res => {
         console.log(res);
         //Retrieve notification's object
@@ -34,7 +34,7 @@ class Notification extends Component {
         let numberOfUnreadNotification = 0;
         //จะกำหนดให้แสดงผล10อันล่าสุดเท่านั้น แต่ตัวnotiที่ยังไม่อ่านจะแสดงตามจริง
         let toTalnotification = res.data.data.length;
-        for (let i = 0; i < Math.min(toTalnotification, 10); i += 1) {
+        for (let i = Math.max(toTalnotification-3, 0); i < toTalnotification ; i = i + 1) {
           notifications.push(res.data.data[i]);
           if (res.data.data[i].isRead == false) {
             numberOfUnreadNotification = numberOfUnreadNotification + 1;

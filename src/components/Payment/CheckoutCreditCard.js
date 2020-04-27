@@ -1,14 +1,44 @@
 import React, { Component } from "react";
 import Script from "react-load-script";
 import { publicKey } from "./keys";
-
+import axios from "axios"
 let OmiseCard;
 
 export class Checkout extends Component {
   constructor(props) {
     super(props);
-
+    this.state = {
+      offer: this.props.offer,
+      mode: this.props.mode
+    }
   }
+
+  pay30 = (id) => {
+    console.log("pay30")
+    axios
+      .post("https://phomo-api.herokuapp.com/api/pay30",{
+        id: id,
+      })
+      .then(res => console.res(res))
+      .catch(err => console.error(err));
+    window.location.href = "/history"
+  }
+
+  pay70 = (id) => {
+    console.log("pay70")
+    axios
+      .post("https://phomo-api.herokuapp.com/api/pay70",{
+        id: id,
+      })
+      .then(res => console.res(res))
+      .catch(err => console.error(err));
+    window.location.href = "/history"
+  }
+
+  componentDidMount(){
+    console.log(this.state)
+  }
+
   handleScriptLoad = () => {
     OmiseCard = window.OmiseCard;
     OmiseCard.configure({
@@ -31,13 +61,18 @@ export class Checkout extends Component {
   omiseCardHandler = () => {
     console.log("Credit Card --> ",this.props.cart)
     const { cart, createCreditCardCharge } = this.props;
+    const id = this.state.offer
+    const mode = this.state.mode
     OmiseCard.open({
       frameDescription: "Invoice #3847",
       amount: cart.amount,
       onCreateTokenSuccess: token => {
         createCreditCardCharge(cart.email, cart.name, cart.amount, token);
+        if(mode == 30) this.pay30(id)
+        else if(mode == 70) this.pay70(id)
+        console.log("success")
       },
-      onFormClosed: () => {}
+      onFormClosed: () => {console.log("off")}
     });
   };
 

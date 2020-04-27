@@ -13,14 +13,14 @@ class JobHistory extends Component {
       currentJob: [], //ให้fetch job มาแสดงผล
       historyResult: [
         {
-          title: "Title2",
-          style: "Wedding",
-          user: "Ton",
-          meetUpTime: "Half day morning",
-          actDate: new Date().toString().substr(4, 11),
-          location: "123456",
-          status: "Cancelled",
-          resultURL: "url"
+          title: "-",
+          style: "-",
+          user: "-",
+          meetUpTime: "-",
+          actDate: "-",
+          location: "-",
+          status: "-",
+          resultURL: "-"
         }
       ],
       columns: [
@@ -34,8 +34,44 @@ class JobHistory extends Component {
         { dataField: "progress", text: "Status" },
         { dataField: "resultURL", text: "Download" }
       ],
-      index: 0
+      index: 0,
+      selectRow: {
+        mode: 'radio',
+        clickToSelect: true,
+        onSelect: this.handleOnSelect,
+        selected: ["wait"]
+      }
     };
+  }
+
+  selectRow = (id) => {
+    this.setState({
+      selectRow: {
+        mode: 'radio',
+        clickToSelect: true,
+        onSelect: this.handleOnSelect,
+        selected: [id]
+      }
+    })
+  }
+
+  selectIndex = (id) => {
+    for(var i=0; i < this.state.historyResult.length; i++){
+      if(this.state.historyResult[i]._id == id){
+        this.setState({
+          index: i
+        })
+        this.refs.jobStatus.updateData(this.state.historyResult[i])
+        console.log(this.state.historyResult[i].progress)
+      }
+    }
+  }
+  
+  handleOnSelect = (row, isSelect) => {
+    if (isSelect) {
+      this.selectRow(row._id)
+      this.selectIndex(row._id)
+    }
   }
 
   getResult() {
@@ -44,11 +80,12 @@ class JobHistory extends Component {
     let history = []; // use next sprint to match real case
     //Use this.state.keyword to query correct photographers
     axios
-      .get("http://localhost:9000/api/offerHistory/" + localStorage.getItem("email")) // ควรจะเป็น this.props.appState.email
+      .get("https://phomo-api.herokuapp.com/api/offerHistory/" + localStorage.getItem("email")) // ควรจะเป็น this.props.appState.email
       .then(res => {
         console.log(res.data.data);
         //historyResult = res.data.data;
         //console.log(historyResult)
+        this.selectRow(res.data.data[0]._id)
         this.setState({
           historyResult: res.data.data
         });
@@ -113,10 +150,11 @@ class JobHistory extends Component {
         </h1>
         <div class="table-responsive">
           <BootstrapTable
-            keyField="id"
+            keyField="_id"
             data={this.state.historyResult}
             columns={this.state.columns}
             pagination={paginationFactory(options)}
+            selectRow={this.state.selectRow}
           />
         </div>
       </div>

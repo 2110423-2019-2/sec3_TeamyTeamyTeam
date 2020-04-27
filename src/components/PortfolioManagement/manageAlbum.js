@@ -39,7 +39,7 @@ class manageAlbum extends Component {
   async getAllPhoto(){ 
     var Photolist = []
     await axios
-      .get("http://localhost:9000/api/album/" + this.state.id)
+      .get("https://phomo-api.herokuapp.com/api/album/" + this.state.id)
       .then((res) => {
         console.log('componentDidMount getAlbum',res.data.data[0].imageURLs);
         Photolist = res.data.data[0].imageURLs;
@@ -114,13 +114,13 @@ class manageAlbum extends Component {
           //เพิ่มรูปลงdatabaseของuserนั้น ๆ
           var obj_id ;
           axios
-          .get("http://localhost:9000/api/album/" + this.state.id)
+          .get("https://phomo-api.herokuapp.com/api/album/" + this.state.id)
           .then((res) => {
             obj_id = res.data.data[0]._id
             console.log('obj_id',obj_id)
           }).then( () => {
             console.log('obj_id',obj_id)
-            axios.put("http://localhost:9000/api/album/" +  this.state.id,
+            axios.put("https://phomo-api.herokuapp.com/api/album/" +  this.state.id,
             {
                 photoLists: this.state.photoLists, 
                 _id: obj_id
@@ -140,14 +140,14 @@ class manageAlbum extends Component {
     var obj_port ;
 
     await axios
-    .get("http://localhost:9000/api/portfolio/" + localStorage.email)
+    .get("https://phomo-api.herokuapp.com/api/portfolio/" + localStorage.email)
     .then((res) => {
       obj_port = res.data.data._id
       console.log('obj_port',obj_port)
     })
 
       console.log('Print tag album ',obj_port)
-    await axios.put("http://localhost:9000/api/portfolio/tag/",
+    await axios.put("https://phomo-api.herokuapp.com/api/portfolio/tag/",
       {
         tags: this.state.lastUploadedImg.tag, 
         _id: obj_port
@@ -197,12 +197,12 @@ class manageAlbum extends Component {
 
       var obj_id ;
       await axios
-      .get("http://localhost:9000/api/album/" + this.state.id)
+      .get("https://phomo-api.herokuapp.com/api/album/" + this.state.id)
       .then((res) => {
         obj_id = res.data.data[0]._id
         console.log(obj_id)
       }).then( () =>
-        axios.put("http://localhost:9000/api/album/" +  this.state.id,
+        axios.put("https://phomo-api.herokuapp.com/api/album/" +  this.state.id,
         {
             photoLists: this.state.photoLists, 
             _id: obj_id
@@ -230,14 +230,14 @@ class manageAlbum extends Component {
     console.log('query state in album doc',this.state.id)
     var obj_id ;
     await axios
-    .get("http://localhost:9000/api/album/" + this.state.id)
+    .get("https://phomo-api.herokuapp.com/api/album/" + this.state.id)
     .then((res) => {
       obj_id = res.data.data[0]._id
     })
     .catch((err) => console.error(err));
     console.log(obj_id)
     await axios
-    .put("http://localhost:9000/api/album/name/"+obj_id,{
+    .put("https://phomo-api.herokuapp.com/api/name/"+obj_id,{
       albumName: this.state.name,
       portfolioID: this.state.id, 
       imageURLs: this.state.photoLists

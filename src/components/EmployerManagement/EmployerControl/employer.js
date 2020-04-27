@@ -22,8 +22,8 @@ class Employer extends Component {
 
   async getData(){
       var EmployeeResult = {}
-      let res = await axios.get("http://localhost:9000/api/user/"+ localStorage.getItem("email"))
-      let offerStatus = await axios.get("http://localhost:9000/api/offer/"+ localStorage.getItem("email"))
+      let res = await axios.get("https://phomo-api.herokuapp.com/api/user/"+ localStorage.getItem("email"))
+      let offerStatus = await axios.get("https://phomo-api.herokuapp.com/api/offer/"+ localStorage.getItem("email"))
     
       EmployeeResult = res.data;
       console.log('EmployeeResult',EmployeeResult)
