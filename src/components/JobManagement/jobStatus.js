@@ -1,22 +1,30 @@
 import React, { Component } from "react";
 import { storage } from "../../firebase";
 
+import axios from "axios"
+
+
+import Payment from '../Payment/paymentControl'
+
 class JobStatus extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      jobID: "0",
-      statusCode: 7,
-      photographer: "phomo",
-      employer: "Nick",
-      title: "Chill out at Chula",
-      style: "Portrait",
-      date: new Date().toString().substr(4, 11),
+      jobID: this.props.offer._id,
+      statusCode: this.props.offer.progress,
+      photographer: this.props.offer.portfolioName,
+      photographerEmail: "-",
+      employer: this.props.offer.employerName,
+      employerEmail: "-",
+      title: this.props.offer.title,
+      style: this.props.offer.style,
+      date: this.props.offer.actDate,
       //   date: "Jan 10 2019",
-      time: "Full day",
-      location: "Chulalongkorn",
-      totalFees: 299,
-      currency: "$",
+      time: this.props.offer.meetUpTime,
+      location: this.props.offer.location,
+      totalFees: this.props.offer.fee,
+      resultURL: this.props.offer.resultURL,
+      currency: "THB",
       uploadProgress: 0,
       isUploading: false,
       file: null,
@@ -27,6 +35,76 @@ class JobStatus extends Component {
     );
     this.uploadImage = this.uploadImage.bind(this);
     this.imgToBeUpload = this.imgToBeUpload.bind(this);
+  }
+
+  updateData(data) {
+    this.setState({
+      jobID: data._id,
+      statusCode: data.progress,
+      photographer: data.portfolioName,
+      photographerEmail: data.portfolioEmail,
+      employer: data.employerName,
+      employerEmail: data.employerEmail,
+      title: data.title,
+      style: data.style,
+      date: data.actDate,
+      //   date: "Jan 10 2019",
+      time: data.meetUpTime,
+      location: data.location,
+      totalFees: data.fee,
+      resultURL: data.resultURL
+    })
+  }
+
+  handleAcceptJob = () => {
+    axios
+      .post("http://localhost:9000/api/employerAccept",{
+        id: this.state.jobID,
+      })
+      .then(res => console.res(res))
+      .catch(err => console.error(err));
+    window.location.href = "/history"
+  }
+
+  handleDeclineJob = () => {
+    axios
+      .post("http://localhost:9000/api/declineOffer",{
+        id: this.state.jobID,
+      })
+      .then(res => console.res(res))
+      .catch(err => console.error(err));
+    window.location.href = "/"
+  }
+
+  pay30 = () => {
+    axios
+      .post("http://localhost:9000/api/pay30",{
+        id: this.state.jobID,
+      })
+      .then(res => console.res(res))
+      .catch(err => console.error(err));
+    window.location.href = "/history"
+  }
+
+  pay70 = () => {
+    axios
+      .post("http://localhost:9000/api/pay70",{
+        id: this.state.jobID,
+      })
+      .then(res => console.res(res))
+      .catch(err => console.error(err));
+    window.location.href = "/history"
+  }
+
+  postUpload = (downloadURL) => {
+    axios
+      .post("http://localhost:9000/api/uploadFile",{
+        id: this.state.jobID,
+        resultURL: downloadURL
+      })
+      .then(res => console.res(res))
+      .catch(err => console.error(err));
+    window.location.href = "/history"
   }
 
   imgToBeUpload(e) {
@@ -64,9 +142,16 @@ class JobStatus extends Component {
           this.setState({ statusCode: 7 });
           //ใช้ตัวแปร downloadURL ได้เลยเพื่อส่งลิงก์
           //ส่งdownload urlให้employer แล้วdrop job นี้ออกจากตาราง แล้วไปเพิ่มใน history
+          this.postUpload(downloadURL)
         });
       }
     );
+  }
+
+  getStatusMessage = () => {
+    if(this.state.employerEmail == this.props.appState.email){
+      return this.getStatusMessageEmployer()
+    }else return this.getStatusMessagePhotographer()
   }
 
   getStatusMessagePhotographer() {
@@ -261,15 +346,16 @@ class JobStatus extends Component {
             <h3>
               {this.state.currency} {this.state.totalFees}
             </h3>
-            <button className="mr-3 btn btn-sm btn-outline-light">
+            <button className="mr-3 btn btn-sm btn-outline-light" onClick={this.handleAcceptJob}>
               Accept
             </button>
             {/* เขียนฟังก์ชันขึ้นมาเพื่อเปลี่ยนstatusCodeในdatabase */}
-            <button className="btn btn-sm btn-outline-warning">Decline</button>
+            <button className="btn btn-sm btn-outline-warning" onClick={this.handleDeclineJob}>Decline</button>
           </div>
         );
       case 3: //เคสนี้ก็ให้เปลี่ยนstatusCodeก็ต่อเมื่อจ่าย30%แล้ว
         //ถ้าถึงวันถ่ายแล้วไม่จ่ายให้drop job นี้ทิ้ง
+        const {totalFees , employer } = this.state
         return (
           <div>
             <h1>
@@ -288,15 +374,19 @@ class JobStatus extends Component {
               </span>{" "}
               from {this.state.currency} {this.state.totalFees}
             </h3>
-            <button className="mr-3 btn btn-sm btn-yellow">
+            <button className="mr-3 btn btn-sm btn-yellow" onClick={this.pay30}>
               <strong>
-                <ion-icon name="card-outline"></ion-icon> Pay via Credit Card
+                <Payment 
+                fee = {totalFees * 30}
+                name = {employer}
+                />
+                {/* <ion-icon name="card-outline"></ion-icon> Pay via Credit Card */}
               </strong>
             </button>
           </div>
         );
       case 4: //อันนี้ไม่มีอะไรแค่แสดงผลว่าให้รอถึงวันถ่ายภาพ กับบอกว่าวันนี้เป็นวันถ่ายภาพ
-        if (new Date().toString().substr(4, 11) !== this.state.date) {
+        if (new Date().toString().substr(5, 11) !== this.state.date) {
           return (
             <div>
               <h2>
@@ -345,12 +435,16 @@ class JobStatus extends Component {
             <h3>
               <span className="text-yellow">
                 {this.state.currency}
-                {this.state.totalFees - this.state.totalFees * 0.3}
+                {(this.state.totalFees - this.state.totalFees * 0.3)}
               </span>
             </h3>
-            <button className="mr-3 btn btn-sm btn-yellow">
+            <button className="mr-3 btn btn-sm btn-yellow" onClick={this.pay70}>
               <strong>
-                <ion-icon name="card-outline"></ion-icon> Pay via Credit Card
+                <Payment 
+                fee = {(this.state.totalFees - this.state.totalFees * 0.3)*100}
+                name = {this.state.employer}
+                />
+                {/* <ion-icon name="card-outline"></ion-icon> Pay via Credit Card */}
               </strong>
             </button>
           </div>
@@ -379,7 +473,7 @@ class JobStatus extends Component {
             </h2>
             <small>Download them</small>
             <p>
-              <button className="btn btn-light">
+              <button className="btn btn-light" onClick={() => window.location.href = this.state.resultURL}>
                 <ion-icon
                   name="download"
                   style={{ fontSize: "42px" }}
@@ -443,7 +537,7 @@ class JobStatus extends Component {
                 style={{ borderLeft: "2px solid white" }}
               ></div>
               <div className="col-md p-3 text-center my-auto">
-                {this.getStatusMessageEmployer()}
+                {this.getStatusMessage()}
                 {/* ตรงนี้จะให้เช็กว่าเป็นemployerหรือphotographerเพื่อแสดงผลjob status ตาม user type */}
               </div>
             </div>

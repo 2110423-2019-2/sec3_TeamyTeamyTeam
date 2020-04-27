@@ -72,7 +72,7 @@ class ManagePortfolio extends Component {
         _id: obj_id
       });
       axios.delete("http://localhost:9000/api/album/"+  albums_target[0]._id)
-    })
+    }).then(window.location.reload(false));
 
   }
 

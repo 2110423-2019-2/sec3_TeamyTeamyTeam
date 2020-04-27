@@ -14,15 +14,19 @@ export class CheckoutPage extends Component {
     super(props);
     this.state = {
       cart: {
-        email: "guest@test.com",
-        name: "Guest",
+        email: localStorage.email,
+        name: this.props.name,
         //items: [],
-        amount: 100000
+        amount: this.props.fee
         //totalQty: 0
         
       },
       charge: undefined
     };
+  }
+
+  componentDidMount(){
+    console.log(this.state)
   }
 
   change = () => {

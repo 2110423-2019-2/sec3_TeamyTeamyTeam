@@ -10,10 +10,9 @@ class EditEmployerProfile extends Component {
     this.state = {
       name: this.props.appState.name,
       profilePic:
-        "https://images.pexels.com/photos/4029925/pexels-photo-4029925.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+        "",
       email: this.props.appState.email,
       phoneNo: this.props.appState.phoneNo,
-      newName: "",
       newPhoneNo: "",
       newProfilePic: null,
       updateSuccess: false,
@@ -26,25 +25,14 @@ class EditEmployerProfile extends Component {
     this.UpdateProfile = this.UpdateProfile.bind(this);
   }
 
-  // getResult {
-  //   axios.put("http://localhost:9000/user/" + localStorage.getItem("email"))
-  //   .then(res =>{
-  //      tEmployer = res.data.data;
-  //      const {name,  interest, email, phoneNo} = tEmployer;
-  //      if (this.state.name[0] != "") {
-  //        firstName = this.state.name[0];
-  //      } if (this.state.name[1] != "") {
-  //        lastName = this.state.name[1];
-  //      } if (this.state.interest != "") {
-  //        interest = this.state.interest;
-  //      } if (this.state.email != "") {
-  //        email = this.state.email;
-  //      } if (this.state.phoneNo != "") {
-  //        phoneNo = this.state.phoneNo;
-  //      }
-  //      this.setState({name: name, interest: interest, email: email, phone: phone});
-  //   })
-  // }
+  componentDidMount(){
+    axios.get("http://localhost:9000/api/user/"+ localStorage.getItem("email"))
+    .then( (res) => {
+      console.log(res.data.data[0])
+      this.setState({profilePic:res.data.data[0].profileImage})
+    })
+  }
+
 
   onChange(e) {
     //ตรวจค่าของ name ใน username และ set ค่าตามไปเรื่อยๆ
@@ -77,7 +65,6 @@ class EditEmployerProfile extends Component {
       (snapshot) => {
         this.setState({ isUploading: true });
         document.getElementById("uploader").disabled = true;
-        document.getElementById("nameInput").disabled = true;
         document.getElementById("phoneNoInput").disabled = true;
         document.getElementById("updateBTN").disabled = true;
         document.getElementById("resetBTN").disabled = true;
@@ -93,18 +80,32 @@ class EditEmployerProfile extends Component {
           this.setState({ isUploading: false });
           this.setState({ uploadSuccess: true });
           document.getElementById("uploader").disabled = false;
-          document.getElementById("nameInput").disabled = false;
           document.getElementById("phoneNoInput").disabled = false;
           document.getElementById("updateBTN").disabled = false;
           document.getElementById("resetBTN").disabled = false;
-        });
+        }).then( () => {
+          console.log('this.state.newPhoneNo',this.state.newPhoneNo)
+          if (this.state.newPhoneNo == ""){
+            console.log("True >>>>>>> ")
+            axios.put("http://localhost:9000/api/user/" + localStorage.email , {
+              imageUrl : this.state.profilePic,
+              newPhoneNo : this.props.appState.phoneNo
+            });
+  
+          }else{
+            console.log("False >>>>>>> ")
+            axios.put("http://localhost:9000/api/user/" + localStorage.email , {
+              imageUrl : this.state.profilePic,
+              newPhoneNo : this.state.newPhoneNo
+            })
+          }
+        })
       }
     );
   }
 
   UpdateProfile() {
     if (
-      this.state.newName != "" ||
       this.state.newPhoneNo != "" ||
       this.state.newProfilePic != null ||
       !this.state.isUploading
@@ -168,17 +169,6 @@ class EditEmployerProfile extends Component {
           onChange={this.imgToBeUpload}
         />
         <form>
-          <div className="form-group">
-            <label>Name</label>
-            <input
-              id="nameInput"
-              className="form-control"
-              name="newName"
-              value={this.state.newName}
-              onChange={this.onChange}
-            />
-          </div>
-
           <div className="form-group">
             <label>Phone number</label>
             <input

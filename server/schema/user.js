@@ -12,7 +12,7 @@ var userSchema = new Schema({
   gender: { type: String, required: true },
   birthDate: { type: String, required: true },
   isPhotographer: { type: Boolean, required: true },
-  displayName: { type: String, required: true },
+  displayName: { type: String, required: true }, // Portfolio name 
   phoneNo: { type: String, required: true },
   introduction: { type: String, required: false },
   profileImage: { type: String, required: true },

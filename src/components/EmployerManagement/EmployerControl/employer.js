@@ -11,12 +11,12 @@ class Employer extends Component {
       name: this.props.appState.name,
       numberOfJob: 2, // from history that has the same employer's name
       style: [{ s: "Graduation" }, { s: "Portrait" }, { s: "Wedding" }], // default, can edit
-      email: localStorage.getItem("email"), // from sign up, can edit
+      email: '', // from sign up, can edit
       phone: localStorage.getItem("phoneNo"), // from sign up, can edit
-      firstRegister: "1/1/2019", //date of first register
-      latestOffer: "11/3/2020", //date of the latest offer base on photographers' history
-      image: ''
-
+      firstRegister: "", //date of first register
+      latestOffer: "No offer", //date of the latest offer base on photographers' history
+      image: '',
+      linkEdit : '',
     };
   }
 
@@ -26,8 +26,8 @@ class Employer extends Component {
       let offerStatus = await axios.get("http://localhost:9000/api/offer/"+ localStorage.getItem("email"))
     
       EmployeeResult = res.data;
-
-      const {firstName  , email ,phoneNo, profileImage} = EmployeeResult.data[0];
+      console.log('EmployeeResult',EmployeeResult)
+      const {displayName  , email ,phoneNo, profileImage} = EmployeeResult.data[0];
       const numberOfJob = offerStatus.data.data.length
       //gen date
       const firstRegis = EmployeeResult.timestamp.substring(8,10)+'/'+EmployeeResult.timestamp.substring(5,7)+'/' +EmployeeResult.timestamp.substring(0,4)
@@ -41,8 +41,8 @@ class Employer extends Component {
         this.setState({latestOffer:'No Offer'})
       }
 
-      this.setState({name: firstName ,numberOfJob:numberOfJob, email:email, phone:phoneNo ,firstRegister: firstRegis,image:profileImage})
-
+      this.setState({name: displayName ,numberOfJob:numberOfJob, email:email, phone:phoneNo ,firstRegister: firstRegis,image:profileImage})
+      this.setState({ linkEdit :"/profile/" + this.state.name + "/edit"})
       console.log('res',this.state.image)
       // console.log("numberOfJob",numberOfJob)
       // console.log('offerStatus',offerStatus.data)
@@ -84,14 +84,15 @@ class Employer extends Component {
                 }}
               >
                 {this.state.name}
-                <Link to="/editEmployerProfile">
-                  <button
-                    className="btn btn-outline-light mx-3"
-                    style={{ fontSize: "10px", marginLeft: "5vh" }}
-                  >
-                    Edit
-                  </button>
-                </Link>
+                  <Link to={{
+                      pathname: this.state.linkEdit,
+                      state: {
+                        url: this.state.image
+                      }
+                    }}
+                    >
+                    <button className="btn btn-outline-light mx-3" style={{ fontSize: "10px", marginLeft: "5vh" }}> Edit </button> 
+                  </Link>
               </div>
             </dt>
             <dt class="col-sm-6">Email:</dt>
@@ -114,9 +115,25 @@ class Employer extends Component {
             <dd class="col-sm-6" style={{ paddingBottom: "2vh" }}>
               {this.state.latestOffer}
             </dd>
-            <Link to="/editEmployerProfile">
-              <button className="btn btn-outline-dark"> Edit Profile</button>
-            </Link>
+
+
+            <div className="some-container">
+          {
+            (() => {
+                if ( localStorage.email == this.state.email)
+                    return <a >
+                            <Link to={this.state.linkEdit}>
+                              <button className="btn btn-outline-dark"> Edit Profile</button>
+                            </Link>
+                            </a>
+                else
+                    return <span>Three</span>
+            })()
+          }
+        </div>
+
+
+
           </div>
         </div>
       </div>

@@ -178,7 +178,7 @@ router.get("/offerid/:id", (req, res, next) => {
 
 router.get("/offer/:email", (req, res, next) => {
     portfolio.find({ email: req.params.email }).then(documents => {
-        if (documents.length >= 1) {
+        if (documents.length > 1) {
             offer.find({ $or: [{ employerEmail: req.params.email }, { portfolioName: documents[0].portfolioName }] }).then(documents2 => {
                 res.status(status_ok).json({
                     message: "Get Offer successfully!",
@@ -221,6 +221,7 @@ router.post("/offer", (req, res, next) => {
         portfolioName: req.body.portfolioName, // portfolioName == portfolioID
         portfolioEmail: req.body.portfolioEmail,
         employerEmail: req.body.employerEmail,
+        employerName: req.body.employerName,
         style: req.body.style,
         actDate: req.body.actDate, // data_tag in server !!!
         meetUpTime: req.body.meetUpTime, // meetUpTime เวลาที่มาเจอกัน
@@ -304,6 +305,94 @@ router.post("/photographerAccept", (req, res, next) => {
         isReply: false
     }).exec()
 });
+router.post("/employerAccept", (req, res, next) => {
+    offer.update({_id: req.body.id},{
+        progress: 3,
+    }).exec();
+    offer.findOne({_id: req.body.id}).then(repliedOffer => {
+        createNotify(
+            repliedOffer.portfolioEmail,
+            repliedOffer.title + ": " + "Waiting payment",
+            req.body.id,
+            false
+        )
+        createNotify(
+            repliedOffer.employerEmail,
+            repliedOffer.title + ": " + "Waiting payment",
+            req.body.id,
+            false
+        )
+    })
+    notify.update({redirectLink: req.body.id},{
+        isReply: false
+    }).exec()
+});
+
+router.post("/pay30", (req, res, next) => {
+    offer.update({_id: req.body.id},{
+        progress: 4,
+    }).exec();
+    offer.findOne({_id: req.body.id}).then(repliedOffer => {
+        createNotify(
+            repliedOffer.portfolioEmail,
+            repliedOffer.title + ": " + "Waiting appointment",
+            req.body.id,
+            false
+        )
+        createNotify(
+            repliedOffer.employerEmail,
+            repliedOffer.title + ": " + "Waiting appointment",
+            req.body.id,
+            false
+        )
+    })
+    notify.update({redirectLink: req.body.id},{
+        isReply: false
+    }).exec()
+});
+
+router.post("/pay70", (req, res, next) => {
+    console.log("pay the rest")
+    offer.update({_id: req.body.id},{
+        progress: 6,
+    }).exec();
+    offer.findOne({_id: req.body.id}).then(repliedOffer => {
+        createNotify(
+            repliedOffer.portfolioEmail,
+            repliedOffer.title + ": " + "Waiting your uploading",
+            req.body.id,
+            false
+        )
+        createNotify(
+            repliedOffer.employerEmail,
+            repliedOffer.title + ": " + "Waiting photographer upload your photo",
+            req.body.id,
+            false
+        )
+    })
+});
+
+router.post("/uploadFile", (req, res, next) => {
+    console.log("upload file")
+    offer.update({_id: req.body.id},{
+        progress: 7,
+        resultURL: req.body.resultURL
+    }).exec();
+    offer.findOne({_id: req.body.id}).then(repliedOffer => {
+        createNotify(
+            repliedOffer.portfolioEmail,
+            repliedOffer.title + ": " + "Complete",
+            req.body.id,
+            false
+        )
+        createNotify(
+            repliedOffer.employerEmail,
+            repliedOffer.title + ": " + "Complete",
+            req.body.id,
+            false
+        )
+    })
+});
 
 router.post("/declineOffer", (req, res, next) => {
     offer.findOne({_id: req.body.id}).then(repliedOffer => {
@@ -345,9 +434,22 @@ router.post("/report", (req, res, next) => {
             console.log(info);
     });
 });
-
+// 'Api to uploadImage() in editEmployee profile'
 router.put("/user/:email", (req, res, next) =>{
+    console.log('Api to uploadImage() in editEmployee profile')
+    user.find({ email: req.params.email }).then(documents => {
+        res.status(status_ok).json({
+            message: "get penalty  successfully!",
+        });
+        console.log(documents);
+        console.log(req.body.imageUrl)
+        documents[0].profileImage = req.body.imageUrl
+        documents[0].phoneNo = req.body.newPhoneNo
+        documents[0].save()
 
+    });
+        //doc.imageURLs = req.body.photoLists
+        //doc.save();
 })
 
 router.get("/user/:email", (req, res, next) => {
@@ -461,14 +563,15 @@ router.post("/album/:portfolioID", (req, res, next) => {
 // Api to uploadImage() & DeletePhoto() 
 router.put("/album/:portfolioID", (req, res, next) => {
     console.log('Api to uploadImage() & DeletePhoto()  in ManagePortfolio')
-    console.log(req.body._id)
+    console.log('req.body._id',req.body._id)
     album.findById(req.body._id, function (err, doc) {
         if (err) {
             res.status(status_ok).json({
                 message: "Fail to put portfolio album!",
             });
         }
-        console.log(req.body.photoLists)
+        // console.log('req.body.photoLists',req.body.photoLists)
+        // console.log('doc.imageURLs',doc.imageURLs)
         doc.imageURLs = req.body.photoLists
         doc.save();
     });
@@ -528,14 +631,25 @@ router.put("/portfolio/delete", (req, res, next) => {
         }
       });
 });
-// DeleteAlbum(id) delete portfolio in ManagePortfolio
-router.delete('/album/:portfolioID', (req, res, next) =>{
-    console.log('delete',req.params.portfolioID)
-    try {
-        album.findByIdAndDelete(req.params.portfolioID).exec()
-    }catch{
-    }
-})
+
+
+router.put("/portfolio/tag/", (req, res, next) => {
+    console.log('Api to add portfolio tags() in ManagePortfolio')
+    console.log(req.body._id)
+    portfolio.findById(req.body._id, function (err, doc) {
+        if (err) {
+            res.status(status_ok).json({
+                message: "Fail to put tag portfolio album!",
+            });
+        }
+        console.log(req.body.tags)
+        if (!doc.tags.includes(req.body.tags)){
+            doc.tags.push(req.body.tags)
+            doc.save();
+        }
+    });
+});
+
 
 
 router.put("/album/name/:obj_id", (req, res, next) => {
@@ -554,26 +668,52 @@ router.put("/album/name/:obj_id", (req, res, next) => {
 })
 
 
-// Test print all album
-router.get("/album/", (req, res, next) => {
-    console.log('Print All')
-    album.find().then(documents => {
-        res.status(status_ok).json({
-            message: "get album successfully!",
-            data: documents
-        });
-        console.log(documents);
+// DeleteAlbum(id) delete portfolio in ManagePortfolio
+router.delete('/album/:portfolioID', (req, res, next) =>{
+    console.log('delete',req.params.portfolioID)
+    try {
+        album.findByIdAndDelete(req.params.portfolioID).exec()
+    }catch{
+    }
+})
+
+
+
+// Api to componentDidMount() >> getPortfolio() in Portfolio 
+router.get("/portfolio/id/:id", (req, res, next) => {
+    console.log('Api to componentDidMount() >> getPortfolio() in Portfolio',req.params)
+    portfolio.find({ _id: req.params.id }).then(documents => {
+            res.status(status_ok).json({
+                message: "get portfolio in portfolio config successfully!",
+                data: documents[0]
+            });
+            console.log(documents[0]);
     });
 });
 
 
-router.delete('/album', (req, res, next) =>{
-    console.log('Delete test all album')
-    album.deleteMany({},res =>{
-        res.status(status_ok).json({
-            message: "delete album successfully!",
-        });
-    })
-})
+
+
+// Test print all album
+// router.get("/album/", (req, res, next) => {
+//     console.log('Print All')
+//     album.find().then(documents => {
+//         res.status(status_ok).json({
+//             message: "get album successfully!",
+//             data: documents
+//         });
+//         console.log(documents);
+//     });
+// });
+
+
+// router.delete('/album', (req, res, next) =>{
+//     console.log('Delete test all album')
+//     album.deleteMany({},res =>{
+//         res.status(status_ok).json({
+//             message: "delete album successfully!",
+//         });
+//     })
+// })
 
 module.exports = router;
