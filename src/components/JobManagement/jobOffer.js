@@ -27,7 +27,7 @@ class ProposedOffer extends Component {
     console.log(this.state.totalFees, this.state.currency);
   }
   
-  DeclineJob = () => {
+  handlePenalty = () => {
     //rejectOffer get ผ่าน put get ไม่ผ่าน Post
     var isGet ;
     axios
@@ -63,7 +63,7 @@ class ProposedOffer extends Component {
       .catch((err) => console.error(err));
 
     }
-
+    console.log("Handle Penalty Complete")
   }
 
   loadoffer = () => {
@@ -101,6 +101,7 @@ class ProposedOffer extends Component {
       })
       .then(res => console.res(res))
       .catch(err => console.error(err));
+    this.handlePenalty()
     window.location.href = "/"
   }
 

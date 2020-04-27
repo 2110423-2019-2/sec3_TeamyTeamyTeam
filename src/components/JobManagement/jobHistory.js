@@ -13,14 +13,14 @@ class JobHistory extends Component {
       currentJob: [], //ให้fetch job มาแสดงผล
       historyResult: [
         {
-          title: "Title2",
-          style: "Wedding",
-          user: "Ton",
-          meetUpTime: "Half day morning",
-          actDate: new Date().toString().substr(4, 11),
-          location: "123456",
-          status: "Cancelled",
-          resultURL: "url"
+          title: "-",
+          style: "-",
+          user: "-",
+          meetUpTime: "-",
+          actDate: "-",
+          location: "-",
+          status: "-",
+          resultURL: "-"
         }
       ],
       columns: [
