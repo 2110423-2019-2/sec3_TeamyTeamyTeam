@@ -76,25 +76,6 @@ class JobStatus extends Component {
     window.location.href = "/"
   }
 
-  pay30 = () => {
-    axios
-      .post("http://localhost:9000/api/pay30",{
-        id: this.state.jobID,
-      })
-      .then(res => console.res(res))
-      .catch(err => console.error(err));
-    window.location.href = "/history"
-  }
-
-  pay70 = () => {
-    axios
-      .post("http://localhost:9000/api/pay70",{
-        id: this.state.jobID,
-      })
-      .then(res => console.res(res))
-      .catch(err => console.error(err));
-    window.location.href = "/history"
-  }
 
   postUpload = (downloadURL) => {
     axios
@@ -374,9 +355,11 @@ class JobStatus extends Component {
               </span>{" "}
               from {this.state.currency} {this.state.totalFees}
             </h3>
-            <button className="mr-3 btn btn-sm btn-yellow" onClick={this.pay30}>
+            <button className="mr-3 btn btn-sm btn-yellow" >
               <strong>
-                <Payment 
+                <Payment
+                offer = {this.state.jobID}
+                mode = {30}
                 fee = {totalFees * 30}
                 name = {employer}
                 />
@@ -438,9 +421,11 @@ class JobStatus extends Component {
                 {(this.state.totalFees - this.state.totalFees * 0.3)}
               </span>
             </h3>
-            <button className="mr-3 btn btn-sm btn-yellow" onClick={this.pay70}>
+            <button className="mr-3 btn btn-sm btn-yellow" >
               <strong>
                 <Payment 
+                offer = {this.state.jobID}
+                mode = {70}
                 fee = {(this.state.totalFees - this.state.totalFees * 0.3)*100}
                 name = {this.state.employer}
                 />

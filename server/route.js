@@ -267,7 +267,7 @@ router.post("/notify", (req, res, next) => {
 })
 
 router.get("/notify/:email", (req, res, next) => {
-    notify.find({ email: req.params.email }).then(documents => {
+    notify.find({ email: req.params.email }).sort({_id: 1}).then(documents => {
         res.status(status_ok).json({
             message: "Get notify",
             data: documents

@@ -34,7 +34,7 @@ class Notification extends Component {
         let numberOfUnreadNotification = 0;
         //จะกำหนดให้แสดงผล10อันล่าสุดเท่านั้น แต่ตัวnotiที่ยังไม่อ่านจะแสดงตามจริง
         let toTalnotification = res.data.data.length;
-        for (let i = 0; i < Math.min(toTalnotification, 10); i += 1) {
+        for (let i = Math.max(toTalnotification-3, 0); i < toTalnotification ; i = i + 1) {
           notifications.push(res.data.data[i]);
           if (res.data.data[i].isRead == false) {
             numberOfUnreadNotification = numberOfUnreadNotification + 1;
