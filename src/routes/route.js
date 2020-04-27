@@ -98,7 +98,7 @@ export default class Routing extends React.Component {
 
         <Route
           exact
-          path="/offerID=:id"
+          path="/:id"
           render={(props) => <ProposedOffer {...this.props} {...props} />}
         />
 

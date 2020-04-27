@@ -29,17 +29,14 @@ class ProposedOffer extends Component {
   
   handlePenalty = () => {
     //rejectOffer get ผ่าน put get ไม่ผ่าน Post
-    var isGet ;
+    var isGet;
     axios
     .get("https://phomo-api.herokuapp.com/api/penalty/" + this.state.employerEmail)
     .then(console.log(this.state.keyword))
     .then((res) => {
       console.log(res.data.data);
       isGet = res.data.data;
-    })
-    .catch((err) => console.error(err));
-
-    if (!isGet){
+      if (!isGet){
       //Post
       axios
       .post("https://phomo-api.herokuapp.com/api/penalty/" + this.state.employerEmail,{
@@ -64,6 +61,8 @@ class ProposedOffer extends Component {
 
     }
     console.log("Handle Penalty Complete")
+    })
+    .catch((err) => console.error(err));
   }
 
   loadoffer = () => {
@@ -84,25 +83,29 @@ class ProposedOffer extends Component {
   }
 
   handleAcceptJob = () => {
+    console.log(this.props.match.params.id)
+    console.log("accept")
     axios
       .post("https://phomo-api.herokuapp.com/api/photographerAccept",{
-        id: this.props.match.params.offerID,
+        id: this.props.match.params.id,
         fee: this.state.totalFees
       })
-      .then(res => console.res(res))
+      .then(res => window.location.href = "/")
       .catch(err => console.error(err));
     window.location.href = "/"
   }
 
   handleDeclineJob = () => {
+    console.log(this.props.match.params.id)
     axios
       .post("https://phomo-api.herokuapp.com/api/declineOffer",{
-        id: this.props.match.params.offerID,
+        id: this.props.match.params.id,
       })
-      .then(res => console.res(res))
+      .then(res => {
+        this.handlePenalty()
+        window.location.href = "/"
+      })
       .catch(err => console.error(err));
-    this.handlePenalty()
-    window.location.href = "/"
   }
 
   componentDidMount(){

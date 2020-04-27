@@ -61,9 +61,8 @@ class JobStatus extends Component {
       .post("https://phomo-api.herokuapp.com/api/employerAccept",{
         id: this.state.jobID,
       })
-      .then(res => console.res(res))
+      .then(res => window.location.href = "/")
       .catch(err => console.error(err));
-    window.location.href = "/history"
   }
 
   handleDeclineJob = () => {
@@ -71,9 +70,8 @@ class JobStatus extends Component {
       .post("https://phomo-api.herokuapp.com/api/declineOffer",{
         id: this.state.jobID,
       })
-      .then(res => console.res(res))
+      .then(res => window.location.href = "/")
       .catch(err => console.error(err));
-    window.location.href = "/"
   }
 
 
@@ -83,9 +81,8 @@ class JobStatus extends Component {
         id: this.state.jobID,
         resultURL: downloadURL
       })
-      .then(res => console.res(res))
+      .then(res => window.location.href = "/history")
       .catch(err => console.error(err));
-    window.location.href = "/history"
   }
 
   imgToBeUpload(e) {

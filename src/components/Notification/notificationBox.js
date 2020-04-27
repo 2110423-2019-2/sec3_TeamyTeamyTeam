@@ -42,7 +42,7 @@ class NotificationBox extends Component {
   }
 
   handleReply = () => {
-    window.location.href = "/offerID="+this.state.redirectLink
+    window.location.href = "/"+this.state.redirectLink
   }
 
   handleRead = () => {

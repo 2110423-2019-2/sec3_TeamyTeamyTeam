@@ -19,9 +19,8 @@ export class Checkout extends Component {
       .post("https://phomo-api.herokuapp.com/api/pay30",{
         id: id,
       })
-      .then(res => console.res(res))
+      .then(res => window.location.href = "/history")
       .catch(err => console.error(err));
-    window.location.href = "/history"
   }
 
   pay70 = (id) => {
@@ -30,9 +29,8 @@ export class Checkout extends Component {
       .post("https://phomo-api.herokuapp.com/api/pay70",{
         id: id,
       })
-      .then(res => console.res(res))
+      .then(res => window.location.href = "/history")
       .catch(err => console.error(err));
-    window.location.href = "/history"
   }
 
   componentDidMount(){
