@@ -90,9 +90,10 @@ class ProposedOffer extends Component {
         id: this.props.match.params.id,
         fee: this.state.totalFees
       })
-      .then(res => window.location.href = "/")
+      .then(res => {
+        setTimeout(() => window.location.href = "/", 1000)
+      })
       .catch(err => console.error(err));
-    window.location.href = "/"
   }
 
   handleDeclineJob = () => {
