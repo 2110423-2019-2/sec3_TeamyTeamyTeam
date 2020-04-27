@@ -34,9 +34,8 @@ class Review extends Component {
         rating: this.state.stars,
         content: this.state.ReviewMsg
       })
-      .then(res => console.log(res))
+      .then(res => setTimeout(() => window.location.href = "/", 1000))
       .catch(err => console.error(err));
-      window.location.href = "/"
   }
 
   render() {
