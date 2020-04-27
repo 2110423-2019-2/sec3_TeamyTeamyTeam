@@ -86,7 +86,7 @@ class ProposedOffer extends Component {
   handleAcceptJob = () => {
     axios
       .post("https://phomo-api.herokuapp.com/api/photographerAccept",{
-        id: this.props.match.params.id,
+        id: this.props.match.params.offerID,
         fee: this.state.totalFees
       })
       .then(res => console.res(res))
@@ -97,7 +97,7 @@ class ProposedOffer extends Component {
   handleDeclineJob = () => {
     axios
       .post("https://phomo-api.herokuapp.com/api/declineOffer",{
-        id: this.props.match.params.id,
+        id: this.props.match.params.offerID,
       })
       .then(res => console.res(res))
       .catch(err => console.error(err));
