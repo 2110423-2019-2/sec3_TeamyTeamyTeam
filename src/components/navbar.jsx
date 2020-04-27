@@ -34,9 +34,11 @@ export default class Navbar extends Component {
               <a className="dropdown-item" href="/profile/user">
                 <ion-icon name="reader-outline"></ion-icon> Profile
               </a>
+              {(this.props.appState.isPhotographer) ?
               <a className="dropdown-item" href="/portfolio/users">
                 <ion-icon name="images-outline"></ion-icon> Portfolio
               </a>
+              : null}
               <a className="dropdown-item" href="/history">
                 <ion-icon name="file-tray-full-outline"></ion-icon> History
               </a>
