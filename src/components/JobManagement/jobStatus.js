@@ -58,7 +58,7 @@ class JobStatus extends Component {
 
   handleAcceptJob = () => {
     axios
-      .post("http://localhost:9000/api/employerAccept",{
+      .post("https://phomo-api.herokuapp.com/api/employerAccept",{
         id: this.state.jobID,
       })
       .then(res => console.res(res))
@@ -68,7 +68,7 @@ class JobStatus extends Component {
 
   handleDeclineJob = () => {
     axios
-      .post("http://localhost:9000/api/declineOffer",{
+      .post("https://phomo-api.herokuapp.com/api/declineOffer",{
         id: this.state.jobID,
       })
       .then(res => console.res(res))
@@ -79,7 +79,7 @@ class JobStatus extends Component {
 
   postUpload = (downloadURL) => {
     axios
-      .post("http://localhost:9000/api/uploadFile",{
+      .post("https://phomo-api.herokuapp.com/api/uploadFile",{
         id: this.state.jobID,
         resultURL: downloadURL
       })

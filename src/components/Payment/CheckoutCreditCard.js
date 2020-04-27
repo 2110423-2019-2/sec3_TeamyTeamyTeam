@@ -16,7 +16,7 @@ export class Checkout extends Component {
   pay30 = (id) => {
     console.log("pay30")
     axios
-      .post("http://localhost:9000/api/pay30",{
+      .post("https://phomo-api.herokuapp.com/api/pay30",{
         id: id,
       })
       .then(res => console.res(res))
@@ -27,7 +27,7 @@ export class Checkout extends Component {
   pay70 = (id) => {
     console.log("pay70")
     axios
-      .post("http://localhost:9000/api/pay70",{
+      .post("https://phomo-api.herokuapp.com/api/pay70",{
         id: id,
       })
       .then(res => console.res(res))

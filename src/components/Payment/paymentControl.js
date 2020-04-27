@@ -36,7 +36,7 @@ export class CheckoutPage extends Component {
     try {
       const res = await axios({
         method: "POST",
-        url: "http://localhost:9000/api/checkout-creditCard",
+        url: "https://phomo-api.herokuapp.com/api/checkout-creditCard",
         data: { email, name, amount, token },
         headers: {
           "Content-Type": "application/json"
@@ -56,7 +56,7 @@ export class CheckoutPage extends Component {
     try {
       const res = await axios({
         method: "POST",
-        url: "http://localhost:9000/api/checkout-internetBanking",
+        url: "https://phomo-api.herokuapp.com/api/checkout-internetBanking",
         data: { email, name, amount, token },
         headers: {
           "Content-Type": "application/json"

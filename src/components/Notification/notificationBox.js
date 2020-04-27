@@ -20,7 +20,7 @@ class NotificationBox extends Component {
   handleAcceptJob = () => {
     axios
       .get(
-        "http://localhost:9000/api/replyNotify/" +
+        "https://phomo-api.herokuapp.com/api/replyNotify/" +
           this.state.redirectLink +
           "." +
           "true"
@@ -32,7 +32,7 @@ class NotificationBox extends Component {
   handleDeclineJob = () => {
     axios
       .get(
-        "http://localhost:9000/api/replyNotify/" +
+        "https://phomo-api.herokuapp.com/api/replyNotify/" +
           this.state.redirectLink +
           "." +
           "false"

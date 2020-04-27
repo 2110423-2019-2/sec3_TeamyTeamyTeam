@@ -29,7 +29,7 @@ class Review extends Component {
 
   handleSubmit = () => {
     axios
-      .post("http://localhost:9000/api/review",{
+      .post("https://phomo-api.herokuapp.com/api/review",{
         portfolioName: this.state.Name,
         rating: this.state.stars,
         content: this.state.ReviewMsg

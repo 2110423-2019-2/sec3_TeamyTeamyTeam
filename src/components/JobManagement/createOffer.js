@@ -49,7 +49,7 @@ class JobOffer extends Component {
   
   componentDidMount() {
     axios
-      .get("http://localhost:9000/api/portfolioNameToEmail/"+this.state.photographer)
+      .get("https://phomo-api.herokuapp.com/api/portfolioNameToEmail/"+this.state.photographer)
       .then(res => {
         this.setState({
           portfolioEmail: res.data.data
@@ -67,7 +67,7 @@ class JobOffer extends Component {
     this.setState({ displayErrors: false });
     var date_str = this.state.date.toString().substring(0, 10);
     axios
-      .post("http://localhost:9000/api/offer", {
+      .post("https://phomo-api.herokuapp.com/api/offer", {
         title: this.state.title,
         portfolioName: this.state.photographer, // portfolioName == portfolioID
         portfolioEmail: this.state.portfolioEmail,

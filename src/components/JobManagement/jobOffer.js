@@ -31,7 +31,7 @@ class ProposedOffer extends Component {
     //rejectOffer get ผ่าน put get ไม่ผ่าน Post
     var isGet ;
     axios
-    .get("http://localhost:9000/api/penalty/" + this.state.employerEmail)
+    .get("https://phomo-api.herokuapp.com/api/penalty/" + this.state.employerEmail)
     .then(console.log(this.state.keyword))
     .then((res) => {
       console.log(res.data.data);
@@ -42,7 +42,7 @@ class ProposedOffer extends Component {
     if (!isGet){
       //Post
       axios
-      .post("http://localhost:9000/api/penalty/" + this.state.employerEmail,{
+      .post("https://phomo-api.herokuapp.com/api/penalty/" + this.state.employerEmail,{
         email: this.state.employerEmail,
         hibitScore: 1000,
         cancelJob: 0,
@@ -53,7 +53,7 @@ class ProposedOffer extends Component {
     }else{
       // Put
       axios
-      .put("http://localhost:9000/api/penalty/" + this.state.employerEmail,{
+      .put("https://phomo-api.herokuapp.com/api/penalty/" + this.state.employerEmail,{
         email: this.state.employerEmail,
         hibitScore: isGet.hibitScore,
         cancelJob: isGet.cancelJob,
@@ -68,7 +68,7 @@ class ProposedOffer extends Component {
 
   loadoffer = () => {
     axios
-      .get("http://localhost:9000/api/offerid/"+this.props.match.params.id)
+      .get("https://phomo-api.herokuapp.com/api/offerid/"+this.props.match.params.id)
       .then(res => {
         const offer = res.data.data[0]
         console.log(res)
@@ -85,7 +85,7 @@ class ProposedOffer extends Component {
 
   handleAcceptJob = () => {
     axios
-      .post("http://localhost:9000/api/photographerAccept",{
+      .post("https://phomo-api.herokuapp.com/api/photographerAccept",{
         id: this.props.match.params.id,
         fee: this.state.totalFees
       })
@@ -96,7 +96,7 @@ class ProposedOffer extends Component {
 
   handleDeclineJob = () => {
     axios
-      .post("http://localhost:9000/api/declineOffer",{
+      .post("https://phomo-api.herokuapp.com/api/declineOffer",{
         id: this.props.match.params.id,
       })
       .then(res => console.res(res))

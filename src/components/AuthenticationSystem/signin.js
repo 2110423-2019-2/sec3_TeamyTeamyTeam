@@ -37,7 +37,7 @@ class LoginForm extends React.Component {
     this.setState({ displayErrors: false });
     axios
       .get(
-        "http://localhost:9000/api/login/" +
+        "https://phomo-api.herokuapp.com/api/login/" +
           this.state.email +
           "." +
           this.state.password
