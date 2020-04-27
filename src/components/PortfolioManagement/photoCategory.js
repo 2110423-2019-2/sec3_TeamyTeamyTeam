@@ -5,7 +5,7 @@ class PhotoCategory extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      maxNumberOfPhoto: 2,
+      maxNumberOfPhoto: 9,
     };
     this.increaseNumberOfPhoto = this.increaseNumberOfPhoto.bind(this);
   }
