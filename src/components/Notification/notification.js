@@ -114,11 +114,6 @@ class Notification extends Component {
             )}
           </div>
 
-          <li className="footer bg-dark text-center">
-            <a href="/notifications" className="text-light">
-              View All
-            </a>
-          </li>
         </ul>
       </li>
     );
