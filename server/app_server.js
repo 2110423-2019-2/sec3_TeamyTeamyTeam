@@ -11,7 +11,7 @@ dropIfTimeOut = (off) => {
     const appointment = Date.parse(off.actDate)
     const currentDate = new Date()
     if(appointment < currentDate){
-        offer.remove({_id: off._id})
+        offer.remove({_id: off._id}).exec()
     }
 }
 

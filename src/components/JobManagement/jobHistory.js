@@ -34,8 +34,44 @@ class JobHistory extends Component {
         { dataField: "progress", text: "Status" },
         { dataField: "resultURL", text: "Download" }
       ],
-      index: 0
+      index: 0,
+      selectRow: {
+        mode: 'radio',
+        clickToSelect: true,
+        onSelect: this.handleOnSelect,
+        selected: ["wait"]
+      }
     };
+  }
+
+  selectRow = (id) => {
+    this.setState({
+      selectRow: {
+        mode: 'radio',
+        clickToSelect: true,
+        onSelect: this.handleOnSelect,
+        selected: [id]
+      }
+    })
+  }
+
+  selectIndex = (id) => {
+    for(var i=0; i < this.state.historyResult.length; i++){
+      if(this.state.historyResult[i]._id == id){
+        this.setState({
+          index: i
+        })
+        this.refs.jobStatus.updateData(this.state.historyResult[i])
+        console.log(this.state.historyResult[i].progress)
+      }
+    }
+  }
+  
+  handleOnSelect = (row, isSelect) => {
+    if (isSelect) {
+      this.selectRow(row._id)
+      this.selectIndex(row._id)
+    }
   }
 
   getResult() {
@@ -49,6 +85,7 @@ class JobHistory extends Component {
         console.log(res.data.data);
         //historyResult = res.data.data;
         //console.log(historyResult)
+        this.selectRow(res.data.data[0]._id)
         this.setState({
           historyResult: res.data.data
         });
@@ -117,6 +154,7 @@ class JobHistory extends Component {
             data={this.state.historyResult}
             columns={this.state.columns}
             pagination={paginationFactory(options)}
+            selectRow={this.state.selectRow}
           />
         </div>
       </div>
