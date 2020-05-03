@@ -35,11 +35,13 @@ class Portfolio extends Component {
     console.log(' From search  >>>>>>',this.props.match.params.name)
     console.log('Print Personal nick id should be == "5e67e17e6726591834031203" ',this.props.location.state)
     if (this.props.match.params.name == "users"){
+      console.log('User user -->')
       axios
       .get("https://phomo-api.herokuapp.com/api/portfolio/" + localStorage.email)
       .then((res) => {
         console.log('getPortfolio()',res.data.data)
         this.setState({albumlist: res.data.data.albums})
+        this.setState({photographerName:res.data.data.portfolioName})
       }).then( () =>{
         this.fetchPersonalData(localStorage.email)
       })
