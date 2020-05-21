@@ -16,23 +16,21 @@ export class Checkout extends Component {
   pay30 = (id) => {
     console.log("pay30")
     axios
-      .post("http://localhost:9000/api/pay30",{
+      .post("https://phomo-api.herokuapp.com/api/pay30",{
         id: id,
       })
-      .then(res => console.res(res))
+      .then(res => setTimeout(() => window.location.href = "/history", 1000))
       .catch(err => console.error(err));
-    window.location.href = "/history"
   }
 
   pay70 = (id) => {
     console.log("pay70")
     axios
-      .post("http://localhost:9000/api/pay70",{
+      .post("https://phomo-api.herokuapp.com/api/pay70",{
         id: id,
       })
-      .then(res => console.res(res))
+      .then(res => setTimeout(() => window.location.href = "/history", 1000))
       .catch(err => console.error(err));
-    window.location.href = "/history"
   }
 
   componentDidMount(){

@@ -13,14 +13,14 @@ class JobHistory extends Component {
       currentJob: [], //ให้fetch job มาแสดงผล
       historyResult: [
         {
-          title: "Title2",
-          style: "Wedding",
-          user: "Ton",
-          meetUpTime: "Half day morning",
-          actDate: new Date().toString().substr(4, 11),
-          location: "123456",
-          status: "Cancelled",
-          resultURL: "url"
+          title: "-",
+          style: "-",
+          user: "-",
+          meetUpTime: "-",
+          actDate: "-",
+          location: "-",
+          status: "-",
+          resultURL: "-"
         }
       ],
       columns: [
@@ -80,7 +80,7 @@ class JobHistory extends Component {
     let history = []; // use next sprint to match real case
     //Use this.state.keyword to query correct photographers
     axios
-      .get("http://localhost:9000/api/offerHistory/" + localStorage.getItem("email")) // ควรจะเป็น this.props.appState.email
+      .get("https://phomo-api.herokuapp.com/api/offerHistory/" + localStorage.getItem("email")) // ควรจะเป็น this.props.appState.email
       .then(res => {
         console.log(res.data.data);
         //historyResult = res.data.data;

@@ -23,7 +23,7 @@ class SearchResultCard extends Component {
     var tempEmail ;
     console.log('this.props._id',this.props.pid)
     await axios
-    .get("http://localhost:9000/api/portfolio/id/" + this.props.pid)
+    .get("https://phomo-api.herokuapp.com/api/portfolio/id/" + this.props.pid)
     .then((res) => {
       console.log('getPortfolio()',res.data.data)
       tempEmail = res.data.data.email;
@@ -36,7 +36,7 @@ class SearchResultCard extends Component {
     console.log('Use fetchPersonalData')
     // Get profile in portfolio
     await axios
-    .get("http://localhost:9000/api/user/" + email )  
+    .get("https://phomo-api.herokuapp.com/api/user/" + email )  
     .then((res) => {
       console.log('getUser()',res.data.data[0])
       var resData = res.data.data[0] ;

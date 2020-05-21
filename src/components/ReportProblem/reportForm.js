@@ -27,7 +27,7 @@ class ReportProblem extends Component {
   onSubmit = e => {
     e.preventDefault();
     axios
-      .post("http://localhost:9000/api/report",this.state)
+      .post("https://phomo-api.herokuapp.com/api/report",this.state)
       .then(res => {
         console.log(res);
       })

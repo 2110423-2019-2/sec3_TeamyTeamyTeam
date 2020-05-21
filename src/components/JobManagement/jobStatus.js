@@ -58,35 +58,32 @@ class JobStatus extends Component {
 
   handleAcceptJob = () => {
     axios
-      .post("http://localhost:9000/api/employerAccept",{
+      .post("https://phomo-api.herokuapp.com/api/employerAccept",{
         id: this.state.jobID,
       })
-      .then(res => console.res(res))
+      .then(res => setTimeout(() => window.location.href = "/history", 1000))
       .catch(err => console.error(err));
-    window.location.href = "/history"
   }
 
   handleDeclineJob = () => {
     axios
-      .post("http://localhost:9000/api/declineOffer",{
+      .post("https://phomo-api.herokuapp.com/api/declineOffer",{
         id: this.state.jobID,
         isPhotographer: false
       })
-      .then(res => console.res(res))
+      .then(res => setTimeout(() => window.location.href = "/", 1000))
       .catch(err => console.error(err));
-    window.location.href = "/"
   }
 
 
   postUpload = (downloadURL) => {
     axios
-      .post("http://localhost:9000/api/uploadFile",{
+      .post("https://phomo-api.herokuapp.com/api/uploadFile",{
         id: this.state.jobID,
         resultURL: downloadURL
       })
-      .then(res => console.res(res))
+      .then(res => setTimeout(() => window.location.href = "/history", 1000))
       .catch(err => console.error(err));
-    window.location.href = "/history"
   }
 
   imgToBeUpload(e) {

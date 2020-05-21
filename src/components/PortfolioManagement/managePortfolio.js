@@ -24,13 +24,13 @@ class ManagePortfolio extends Component {
   }
 
   async getAlbum(){
-    var res_port = await axios.get("http://localhost:9000/api/portfolio/" + localStorage.email)
+    var res_port = await axios.get("https://phomo-api.herokuapp.com/api/portfolio/" + localStorage.email)
     .catch((err) => console.error(err));
     let albumId = res_port.data.data.albums ; 
     console.log('albumId ',albumId)
     var albums = []
     for (let id of albumId) {
-      await axios.get("http://localhost:9000/api/album/" + id)
+      await axios.get("https://phomo-api.herokuapp.com/api/album/" + id)
       .then((res) =>{
         console.log(res.data.data)
         albums.push({ 
@@ -62,16 +62,16 @@ class ManagePortfolio extends Component {
     // console.log('albums',albums)
     // console.log(albums_target,albums_target[0]._id)
     await axios
-    .get("http://localhost:9000/api/portfolio/" + localStorage.email)
+    .get("https://phomo-api.herokuapp.com/api/portfolio/" + localStorage.email)
     .then((res) => {
       obj_id = res.data.data._id
       // console.log(obj_id)
       // console.log('albums_target',albums_target)
-      axios.put("http://localhost:9000/api/portfolio/delete",{
+      axios.put("https://phomo-api.herokuapp.com/api/portfolio/delete",{
         album_id: Result, 
         _id: obj_id
       });
-      axios.delete("http://localhost:9000/api/album/"+  albums_target[0]._id)
+      axios.delete("https://phomo-api.herokuapp.com/api/album/"+  albums_target[0]._id)
     }).then(window.location.reload(false));
 
   }
@@ -100,7 +100,7 @@ class ManagePortfolio extends Component {
     console.log('Album  in AddAblbum-->',albums)
     var obj_id ;
     await axios
-    .get("http://localhost:9000/api/portfolio/" + localStorage.email)
+    .get("https://phomo-api.herokuapp.com/api/portfolio/" + localStorage.email)
     .then((res) => {
       obj_id = res.data.data._id
     })
@@ -109,14 +109,14 @@ class ManagePortfolio extends Component {
     // put ใน Portfolio
     // console.log('AddAlbum put ---->',obj_id)
     // console.log(this.state.albums)
-    await axios.put("http://localhost:9000/api/portfolio/",
+    await axios.put("https://phomo-api.herokuapp.com/api/portfolio/",
     {
       album_id: localStorage.email.match(/[a-zA-Z0-9._-]+/) +this.state.name+'-'+ album.id, 
       _id: obj_id
     }).then((res)=>{
       console.log(res)
     })
-    .then( await axios.post("http://localhost:9000/api/album/"+  localStorage.email.match(/[a-zA-Z0-9._-]+/)+this.state.name+ '-'+album.id,
+    .then( await axios.post("https://phomo-api.herokuapp.com/api/album/"+  localStorage.email.match(/[a-zA-Z0-9._-]+/)+this.state.name+ '-'+album.id,
     {
       albumName: album.name,
       portfolioID: localStorage.email.match(/[a-zA-Z0-9._-]+/) +this.state.name+'-'+ album.id,

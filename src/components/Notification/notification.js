@@ -18,7 +18,7 @@ class Notification extends Component {
   readNotify = e => {
     e.preventDefault();
     axios.put(
-      "http://localhost:9000/api/readNotify/" + this.props.appState.email,
+      "https://phomo-api.herokuapp.com/api/readNotify/" + this.props.appState.email,
       {}
     );
     console.log("read notification");
@@ -26,7 +26,7 @@ class Notification extends Component {
 
   getNotify() {
     axios
-      .get("http://localhost:9000/api/notify/" + this.props.appState.email)
+      .get("https://phomo-api.herokuapp.com/api/notify/" + this.props.appState.email)
       .then(res => {
         console.log(res);
         //Retrieve notification's object
@@ -114,11 +114,6 @@ class Notification extends Component {
             )}
           </div>
 
-          <li className="footer bg-dark text-center">
-            <a href="/notifications" className="text-light">
-              View All
-            </a>
-          </li>
         </ul>
       </li>
     );
