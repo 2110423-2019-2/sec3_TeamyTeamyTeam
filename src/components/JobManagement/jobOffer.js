@@ -98,6 +98,7 @@ class ProposedOffer extends Component {
     axios
       .post("http://localhost:9000/api/declineOffer",{
         id: this.props.match.params.id,
+        isPhotographer: true
       })
       .then(res => console.res(res))
       .catch(err => console.error(err));

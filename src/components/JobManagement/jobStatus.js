@@ -70,6 +70,7 @@ class JobStatus extends Component {
     axios
       .post("http://localhost:9000/api/declineOffer",{
         id: this.state.jobID,
+        isPhotographer: false
       })
       .then(res => console.res(res))
       .catch(err => console.error(err));

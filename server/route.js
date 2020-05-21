@@ -45,6 +45,17 @@ createNotify = (email, content, redirectLink, isReply) => {
     notify_post.save()
 }
 
+createPenalty = (email) => {
+    const penalty_post = new penalty({
+        email: email,
+        hibitScore: 100,
+        acceptOffer: 0,
+        declineOffer: 0,
+    })
+    console.log(penalty_post)
+    penalty_post.save()
+}
+
 getPortfolioIDFromName = (name) => {
     portfolio.findOne({portfolioName: name}).then(document => {
         return document.portfolioName
@@ -85,6 +96,7 @@ router.post("/user", (req, res, next) => {
         });
         portfolio_post.save();
         console.log(portfolio_post);
+        createPenalty(req.body.email)
     }
     const user_post = new user({
         firstName: req.body.firstName,
@@ -301,6 +313,11 @@ router.post("/photographerAccept", (req, res, next) => {
             req.body.id,
             false
         )
+        penalty.update({email: repliedOffer.portfolioEmail},{$inc: {
+            'acceptOffer': 1,
+            'hibitScore': 1
+        }}).exec()
+        console.log("already scoring penalty")
     })
     notify.update({redirectLink: req.body.id},{
         isReply: false
@@ -412,6 +429,13 @@ router.post("/declineOffer", (req, res, next) => {
         offer.remove({_id: req.body.id},() => {
             console.log("remove declined offer complete")
         })
+        if(req.body.isPhotographer){
+            penalty.update({email: repliedOffer.portfolioEmail},{$inc: {
+                'declineOffer': 1,
+                'hibitScore': -1
+            }}).exec()
+            console.log("already scoring penalty")
+        }
     })
     notify.update({redirectLink: req.body.id},{
         isReply: false
@@ -471,7 +495,7 @@ router.post('/checkout-internetBanking', omiseCheckoutInternetBanking)
 router.post('/webhooks', omiseWebHooks)
 router.get('/bank-charge', getInternetBankingCharge)
 
-router.get("/penalty/:email", (req, res, next) => {
+/*router.get("/penalty/:email", (req, res, next) => {
     penalty.find({ email: req.params.email }).then(documents => {
         res.status(status_ok).json({
             message: "get penalty  successfully!",
@@ -503,7 +527,7 @@ router.put("/penalty/:email", (req, res, next) => {
             isRead: true
         })
         .exec();
-    });
+});*/
 
 
 router.get("/review/:portfolioName", (req, res, next) => {
